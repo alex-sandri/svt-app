@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Linea
 {
   final int direzione;
-  final int linea;
+  final String linea;
   final String destinazioneAndata;
   final String destinazioneRitorno;
   final String descrizione;
@@ -16,14 +16,11 @@ class Linea
     @required this.descrizione,
   });
 
-  factory Linea.fromJson(Map<String, dynamic> json)
-  {
-    return Linea(
-      direzione: json["Direzione"],
-      linea: json["CodLineaUtenza"],
-      destinazioneAndata: json["DestinazioneAndata"],
-      destinazioneRitorno: json["DestinazioneRitorno"],
-      descrizione: json["Descrizione"],
-    );
-  }
+  Linea.fromJson(Map<String, dynamic> json): this(
+    direzione: int.parse(json["Direzione"]),
+    linea: json["CodLineaUtenza"],
+    destinazioneAndata: json["DestinazioneAndata"],
+    destinazioneRitorno: json["DestinazioneRitorno"],
+    descrizione: json["Descrizione"],
+  );
 }
