@@ -17,6 +17,6 @@ class Api
 
     final json = jsonDecode(result.body);
 
-    return (json as List<dynamic>).map((linea) => Linea.fromJson(linea));
+    return (json as List<dynamic>).map((linea) => Linea.fromJson(linea)).toList();
   }
 }
