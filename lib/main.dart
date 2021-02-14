@@ -17,6 +17,13 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: "SVT",
+      theme: ThemeData.light().copyWith(
+        primaryColor: Colors.white,
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: AppBarTheme(
+          elevation: 0,
+        ),
+      ),
       home: Linee(),
     );
   }

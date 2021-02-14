@@ -8,7 +8,11 @@ class Linee extends StatelessWidget {
     return Material(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Linee"),
+          title: Image.asset(
+            "assets/svt.png",
+            height: 50,
+          ),
+          centerTitle: true,
         ),
         body: FutureBuilder<List<Linea>>(
           future: Api.ottieniLinee(),
