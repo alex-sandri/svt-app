@@ -1,13 +1,29 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart' as parser;
-
 import 'package:html/dom.dart';
-import 'package:html/parser.dart' as parser;
 import 'package:svt_app/models/Localita.dart';
 import 'package:svt_app/models/Orario.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:svt_app/models/Linea.dart';
 
-class Api {
+class Api
+{
+  static Future<List<Linea>> ottieniLinee() async
+  {
+    final result = await http.post("http://www.mobilitaveneto.net/TP/SVT/StampaOrari/GetDatiLineeSelezionate");
+
+    if (result.statusCode != 200)
+    {
+      throw Exception("Impossibile ottenere le linee");
+    }
+
+    final json = jsonDecode(result.body);
+
+    return (json as List<dynamic>).map((linea) => Linea.fromJson(linea)).toList();
+  }
+  
   static String _fixData(int parametro) => parametro.toString().padLeft(2, '0');
 
   static Future<List<Localita>> ottieniLocalita(int idLinea, int direzione) async {

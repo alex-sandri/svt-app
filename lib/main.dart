@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:svt_app/models/Api.dart';
+import 'package:flutter/services.dart';
+import 'package:svt_app/routes/Linee.dart';
 
 void main() async {
   runApp(MyApp());
@@ -8,9 +10,22 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ),
+    );
+
     return MaterialApp(
       title: "SVT",
-      home: Container(),
+      theme: ThemeData.light().copyWith(
+        primaryColor: Colors.white,
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: AppBarTheme(
+          elevation: 0,
+        ),
+      ),
+      home: Linee(),
     );
   }
 }
