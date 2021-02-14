@@ -15,4 +15,15 @@ class Linea
     @required this.destinazioneRitorno,
     @required this.descrizione,
   });
+
+  factory Linea.fromJson(Map<String, dynamic> json)
+  {
+    return Linea(
+      direzione: json["Direzione"],
+      linea: json["CodLineaUtenza"],
+      destinazioneAndata: json["DestinazioneAndata"],
+      destinazioneRitorno: json["DestinazioneRitorno"],
+      descrizione: json["Descrizione"],
+    );
+  }
 }
