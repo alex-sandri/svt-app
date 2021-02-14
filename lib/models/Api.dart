@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart';
