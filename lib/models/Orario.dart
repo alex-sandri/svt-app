@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 
 class Orario {
@@ -11,5 +13,10 @@ class Orario {
     String o = this.ora.toString().padLeft(2, '0');
 
     return "$o:$m";
+  }
+
+  factory Orario.fromString(String s) {
+    List<String> numeri = s.split(":");
+    return new Orario(ora: int.parse(numeri[0]), minuti: int.parse(numeri[1]));
   }
 }
