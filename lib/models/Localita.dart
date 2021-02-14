@@ -15,4 +15,14 @@ class Localita {
   String get nome => _nome;
 
   Orario operator [](int index) => _orari[index];
+
+  @override
+  String toString() {
+    String orario = "";
+    _orari.forEach((element) {
+      orario += element.toString() + " ; ";
+    });
+
+    return "$_nome;$orario";
+  }
 }

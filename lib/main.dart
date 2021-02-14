@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:svt_app/models/Api.dart';
 
-void main() {
+void main() async {
   runApp(MyApp());
 }
 
