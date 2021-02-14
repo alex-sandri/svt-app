@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:svt_app/models/Api.dart';
 import 'package:flutter/services.dart';
 import 'package:svt_app/routes/Linee.dart';
 
-void main() {
+void main() async {
   runApp(MyApp());
 }
 
