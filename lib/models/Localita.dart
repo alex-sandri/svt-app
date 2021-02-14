@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:html/dom.dart';
 import 'package:svt_app/models/Orario.dart';
-import 'package:html/parser.dart' as parser;
 
 class Localita {
   String _nome;
