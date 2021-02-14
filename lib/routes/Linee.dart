@@ -13,6 +13,16 @@ class Linee extends StatelessWidget {
             height: 50,
           ),
           centerTitle: true,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.search),
+              tooltip: "Cerca",
+              onPressed: () => showSearch(
+                context: context,
+                delegate: null, // TODO
+              ),
+            ),
+          ],
         ),
         body: FutureBuilder<List<Linea>>(
           future: Api.ottieniLinee(),
