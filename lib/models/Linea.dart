@@ -23,4 +23,14 @@ class Linea
     destinazioneRitorno: json["DestinazioneRitorno"],
     descrizione: json["Descrizione"],
   );
+
+  Widget toWidget()
+  {
+    return ListTile(
+      title: Text(codice),
+      onTap: () {
+        // TODO
+      },
+    );
+  }
 }
