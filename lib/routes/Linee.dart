@@ -24,7 +24,7 @@ class Linee extends StatelessWidget {
                 final Linea linea = snapshot.data[index];
 
                 return ListTile(
-                  title: Text(linea.linea.toString()),
+                  title: Text(linea.codice),
                   onTap: () {
                     // TODO
                   },
