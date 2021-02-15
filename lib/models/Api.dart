@@ -6,6 +6,7 @@ import 'package:svt_app/models/Localita.dart';
 import 'package:svt_app/models/Orario.dart';
 import 'package:svt_app/models/Linea.dart';
 
+
 class Api
 {
   static Stream<List<Linea>> ottieniLinee({ String query = "" }) async*
@@ -32,11 +33,12 @@ class Api
     await Hive.box("cache").put("linee", linee);
 
     yield _search(linee);
+
   }
 
   static String _fixData(int parametro) => parametro.toString().padLeft(2, '0');
 
-  static Future<List<Localita>> ottieniLocalita(int idLinea, int direzione) async {
+  static Future<List<Localita>> ottieniLocalita(String idLinea, int direzione) async {
     DateTime dataOdierna = DateTime.now();
     Dio dio = Dio();
     Map<String, dynamic> richiesta = new Map<String, dynamic>();
