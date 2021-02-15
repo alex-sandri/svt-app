@@ -7,38 +7,36 @@ part 'Localita.g.dart';
 @HiveType(typeId: 2)
 class Localita {
   @HiveField(0)
-  String _nome;
+  final String nome;
 
   @HiveField(1)
-  List<Orario> _orari;
+  final List<Orario> orari;
 
   Localita({
-    @required String nome,
-    @required List<Orario> orari,
+    @required this.nome,
+    @required this.orari,
   });
 
-  String get nome => _nome;
-
-  Orario operator [](int index) => _orari[index];
+  Orario operator [](int index) => orari[index];
 
   @override
   String toString() {
     String orario = "";
-    _orari.forEach((element) {
+    orari.forEach((element) {
       orario += element.toString() + " ; ";
     });
 
-    return "$_nome;$orario";
+    return "$nome;$orario";
   }
 
   Widget toWidget() {
-    return ExpansionTile(title: Text(_nome), children: [
+    return ExpansionTile(title: Text(nome), children: [
       Padding(
         padding: const EdgeInsets.only(bottom: 15),
         child: Wrap(
           spacing: 30,
           runSpacing: 10,
-          children: _orari
+          children: orari
               .map((e) => Text(
                     e.toString(),
                     style: TextStyle(fontSize: 20),
