@@ -4,11 +4,9 @@ import 'package:svt_app/models/Linea.dart';
 import 'package:svt_app/models/Localita.dart';
 
 class LocalitaView extends StatelessWidget {
-  Linea _linea;
+  final Linea _linea;
 
-  LocalitaView(Linea linea) {
-    _linea = linea;
-  }
+  LocalitaView(this._linea);
 
   @override
   Widget build(BuildContext context) {
