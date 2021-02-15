@@ -33,6 +33,7 @@ class Linee extends StatelessWidget {
                     },
                     title: linea.titolo,
                     subtitle: linea.sottotitlo,
+                    isThreeLine: true,
                   ),
 
                 ),
@@ -52,6 +53,7 @@ class Linee extends StatelessWidget {
               itemBuilder: (context, index) => ListTile(
                 title: snapshot.data[index].titolo,
                 subtitle: snapshot.data[index].sottotitlo,
+                isThreeLine: true,
                 onTap: () {
                   Navigator.push(
                       context,
