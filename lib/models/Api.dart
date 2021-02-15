@@ -9,7 +9,7 @@ import 'package:svt_app/models/Linea.dart';
 
 class Api
 {
-  static Future<List<Linea>> ottieniLinee() async
+  static Future<List<Linea>> ottieniLinee({ String query = "" }) async
   {
     final result = await http.post("http://www.mobilitaveneto.net/TP/SVT/StampaOrari/GetDatiLineeSelezionate");
 
@@ -20,9 +20,14 @@ class Api
 
     final json = jsonDecode(result.body);
 
-    return (json as List<dynamic>).map((linea) => Linea.fromJson(linea)).toList();
+    return (json as List<dynamic>)
+      .map((linea) => Linea.fromJson(linea))
+      .where((linea) =>
+        linea.destinazioneAndata.toLowerCase().contains(query.toLowerCase())
+        || linea.destinazioneRitorno.toLowerCase().contains(query.toLowerCase()))
+      .toList();
   }
-  
+
   static String _fixData(int parametro) => parametro.toString().padLeft(2, '0');
 
   static Future<List<Localita>> ottieniLocalita(int idLinea, int direzione) async {
