@@ -1,27 +1,39 @@
 import 'package:dio/dio.dart';
+import 'package:hive/hive.dart';
 import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart';
 import 'package:svt_app/models/Localita.dart';
 import 'package:svt_app/models/Orario.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:svt_app/models/Linea.dart';
 
-class Api {
-  static Future<List<Linea>> ottieniLinee({String query = ""}) async {
-    final result = await http.post("http://www.mobilitaveneto.net/TP/SVT/StampaOrari/GetDatiLineeSelezionate");
 
-    if (result.statusCode != 200) {
+class Api
+{
+  static Stream<List<Linea>> ottieniLinee({ String query = "" }) async*
+  {
+    List<Linea> _search(List<Linea> linee) {
+      return linee
+        ?.where((linea) =>
+          linea.destinazioneAndata.toLowerCase().contains(query.toLowerCase())
+          || linea.destinazioneRitorno.toLowerCase().contains(query.toLowerCase()))
+        ?.toList();
+    }
+
+    yield _search((Hive.box("cache").get("linee") as List)?.whereType<Linea>()?.toList());
+
+    final response = await Dio().post("http://www.mobilitaveneto.net/TP/SVT/StampaOrari/GetDatiLineeSelezionate");
+
+    if (response.statusCode != 200)
+    {
       throw Exception("Impossibile ottenere le linee");
     }
 
-    final json = jsonDecode(result.body);
+    final List<Linea> linee = (response.data as List).map((linea) => Linea.fromJson(linea)).toList();
 
-    return (json as List<dynamic>)
-        .map((linea) => Linea.fromJson(linea))
-        .where((linea) =>
-            linea.destinazioneAndata.toLowerCase().contains(query.toLowerCase()) || linea.destinazioneRitorno.toLowerCase().contains(query.toLowerCase()))
-        .toList();
+    await Hive.box("cache").put("linee", linee);
+
+    yield _search(linee);
+
   }
 
   static String _fixData(int parametro) => parametro.toString().padLeft(2, '0');

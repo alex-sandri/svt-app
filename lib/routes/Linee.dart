@@ -34,13 +34,14 @@ class Linee extends StatelessWidget {
                     title: linea.titolo,
                     subtitle: linea.sottotitlo,
                   ),
+
                 ),
               ),
             ),
           ],
         ),
-        body: FutureBuilder<List<Linea>>(
-          future: Api.ottieniLinee(),
+        body: StreamBuilder<List<Linea>>(
+          stream: Api.ottieniLinee(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return LinearProgressIndicator();

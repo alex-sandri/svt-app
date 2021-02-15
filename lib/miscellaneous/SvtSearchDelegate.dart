@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class SvtSearchDelegate<T> extends SearchDelegate
 {
-  final Future<List<T>> Function(String) future;
+  final Stream<List<T>> Function(String) stream;
 
   final Widget Function(T) builder;
 
   SvtSearchDelegate({
-    @required this.future,
+    @required this.stream,
     @required this.builder,
   });
   
@@ -27,8 +27,8 @@ class SvtSearchDelegate<T> extends SearchDelegate
   
   @override
   Widget buildResults(BuildContext context) {
-    return FutureBuilder<List<T>>(
-      future: future(query),
+    return StreamBuilder<List<T>>(
+      stream: stream(query),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
         {
