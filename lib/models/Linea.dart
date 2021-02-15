@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
+part 'Linea.g.dart';
+
 @HiveType(typeId: 0)
 class Linea
 {
