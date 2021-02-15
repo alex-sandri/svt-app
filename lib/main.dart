@@ -20,6 +20,8 @@ class MyApp extends StatelessWidget {
       title: "SVT",
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: Colors.white,
+        accentColor: Colors.red,
+        backgroundColor: Colors.orange,
         appBarTheme: AppBarTheme(
           brightness: Brightness.light,
           color: Colors.white,
