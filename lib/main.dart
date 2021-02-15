@@ -18,9 +18,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "SVT",
       theme: ThemeData.light().copyWith(
-        primaryColor: Colors.white,
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: AppBarTheme(
+          brightness: Brightness.light,
+          color: Colors.white,
           actionsIconTheme: IconThemeData(
             color: Colors.black,
           ),
