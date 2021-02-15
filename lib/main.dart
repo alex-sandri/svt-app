@@ -4,12 +4,16 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:svt_app/models/Linea.dart';
+import 'package:svt_app/models/Localita.dart';
+import 'package:svt_app/models/Orario.dart';
 import 'package:svt_app/routes/Linee.dart';
 
 void main() async {
   await Hive.initFlutter();
 
-  Hive.registerAdapter(LineaAdapter());
+  Hive.registerAdapter(LineaAdapter()); // 0
+  Hive.registerAdapter(OrarioAdapter()); // 1
+  Hive.registerAdapter(LocalitaAdapter()); // 2
 
   await Hive.openBox("cache");
 

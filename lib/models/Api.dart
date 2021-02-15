@@ -73,7 +73,7 @@ class Api
       tabellaOrari.nodes[0].nodes[i].nodes.forEach((element) {
         if (element.text.trim() != "") orari.add(Orario.fromString(element.text.replaceFirst("&nbsp;", "")));
       });
-      localita.add(new Localita(nomi[i], orari));
+      localita.add(Localita(nome: nomi[i], orari: orari));
     }
 
     return localita;
