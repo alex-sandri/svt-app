@@ -38,6 +38,9 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
           brightness: Brightness.light,
           color: Colors.white,
+          iconTheme: IconThemeData(
+            color: Colors.black,
+          ),
           actionsIconTheme: IconThemeData(
             color: Colors.black,
           ),
