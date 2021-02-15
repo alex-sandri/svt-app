@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:svt_app/models/Visualizzabile.dart';
 
-class Linea
-{
+class Linea implements Visualizzabile {
   final int direzione;
   final String codice;
   final String destinazioneAndata;
@@ -16,19 +16,17 @@ class Linea
     @required this.descrizione,
   });
 
-  Linea.fromJson(Map<String, dynamic> json): this(
-    direzione: int.parse(json["Direzione"]),
-    codice: json["CodLineaUtenza"],
-    destinazioneAndata: json["DestinazioneAndata"],
-    destinazioneRitorno: json["DestinazioneRitorno"],
-    descrizione: json["Descrizione"],
-  );
+  Linea.fromJson(Map<String, dynamic> json)
+      : this(
+          direzione: int.parse(json["Direzione"]),
+          codice: json["CodLineaUtenza"],
+          destinazioneAndata: json["DestinazioneAndata"],
+          destinazioneRitorno: json["DestinazioneRitorno"],
+          descrizione: json["Descrizione"],
+        );
 
-  Widget toWidget()
-  {
-    return ListTile(
-      title: Text(codice),
-      subtitle: Column(
+  @override
+  Widget get sottotitlo => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -42,11 +40,8 @@ class Linea
             overflow: TextOverflow.ellipsis,
           ),
         ],
-      ),
-      isThreeLine: true,
-      onTap: () {
-        // TODO
-      },
-    );
-  }
+      );
+
+  @override
+  Widget get titolo => Text(codice);
 }

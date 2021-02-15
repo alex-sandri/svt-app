@@ -22,7 +22,10 @@ class Linee extends StatelessWidget {
                 context: context,
                 delegate: SvtSearchDelegate<Linea>(
                   future: (query) => Api.ottieniLinee(query: query),
-                  builder: (linea) => linea.toWidget(),
+                  builder: (linea) => ListTile(
+                    title: linea.titolo,
+                    subtitle: linea.sottotitlo,
+                  ),
                 ),
               ),
             ),
@@ -31,14 +34,16 @@ class Linee extends StatelessWidget {
         body: FutureBuilder<List<Linea>>(
           future: Api.ottieniLinee(),
           builder: (context, snapshot) {
-            if (!snapshot.hasData)
-            {
+            if (!snapshot.hasData) {
               return LinearProgressIndicator();
             }
 
             return ListView.builder(
               itemCount: snapshot.data.length,
-              itemBuilder: (context, index) => snapshot.data[index].toWidget(),
+              itemBuilder: (context, index) => ListTile(
+                title: snapshot.data[index].titolo,
+                subtitle: snapshot.data[index].sottotitlo,
+              ),
             );
           },
         ),
