@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:svt_app/miscellaneous/SvtSearchDelegate.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/Linea.dart';
 
@@ -13,6 +14,19 @@ class Linee extends StatelessWidget {
             height: 50,
           ),
           centerTitle: true,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.search),
+              tooltip: "Cerca",
+              onPressed: () => showSearch(
+                context: context,
+                delegate: SvtSearchDelegate<Linea>(
+                  future: (query) => Api.ottieniLinee(query: query),
+                  builder: (linea) => linea.toWidget(),
+                ),
+              ),
+            ),
+          ],
         ),
         body: FutureBuilder<List<Linea>>(
           future: Api.ottieniLinee(),
@@ -24,16 +38,7 @@ class Linee extends StatelessWidget {
 
             return ListView.builder(
               itemCount: snapshot.data.length,
-              itemBuilder: (context, index) {
-                final Linea linea = snapshot.data[index];
-
-                return ListTile(
-                  title: Text(linea.codice),
-                  onTap: () {
-                    // TODO
-                  },
-                );
-              },
+              itemBuilder: (context, index) => snapshot.data[index].toWidget(),
             );
           },
         ),

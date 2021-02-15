@@ -21,6 +21,9 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.white,
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: AppBarTheme(
+          actionsIconTheme: IconThemeData(
+            color: Colors.black,
+          ),
           elevation: 0,
         ),
       ),

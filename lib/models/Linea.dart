@@ -23,4 +23,21 @@ class Linea
     destinazioneRitorno: json["DestinazioneRitorno"],
     descrizione: json["Descrizione"],
   );
+
+  Widget toWidget()
+  {
+    return ListTile(
+      title: Text(codice),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(destinazioneAndata),
+          Text(destinazioneRitorno),
+        ],
+      ),
+      onTap: () {
+        // TODO
+      },
+    );
+  }
 }
