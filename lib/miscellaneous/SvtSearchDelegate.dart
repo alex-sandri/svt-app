@@ -30,12 +30,16 @@ class SvtSearchDelegate<T> extends SearchDelegate
     return FutureBuilder<List<T>>(
       future: future(query),
       builder: (context, snapshot) {
-        if (!snapshot.hasData) return LinearProgressIndicator();
+        if (!snapshot.hasData)
+        {
+          return Column(
+            children: [ LinearProgressIndicator() ],
+          );
+        }
 
         final List<T> items = snapshot.data;
 
-        return ListView.separated(
-          separatorBuilder: (context, index) => Divider(),
+        return ListView.builder(
           itemCount: items.isNotEmpty
             ? items.length
             : 1,
