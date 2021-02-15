@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:svt_app/routes/Linee.dart';
 
 void main() async {
@@ -28,6 +29,14 @@ class MyApp extends StatelessWidget {
           elevation: 0,
         ),
       ),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale("it"),
+      ],
       home: Linee(),
     );
   }
