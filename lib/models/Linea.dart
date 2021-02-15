@@ -31,10 +31,19 @@ class Linea
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(destinazioneAndata),
-          Text(destinazioneRitorno),
+          Text(
+            destinazioneAndata,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Text(
+            destinazioneRitorno,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ],
       ),
+      isThreeLine: true,
       onTap: () {
         // TODO
       },
