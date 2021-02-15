@@ -20,6 +20,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light().copyWith(
         primaryColor: Colors.white,
         scaffoldBackgroundColor: Colors.white,
+        accentColor: Colors.red,
+        backgroundColor: Colors.orange,
         appBarTheme: AppBarTheme(
           actionsIconTheme: IconThemeData(
             color: Colors.black,
