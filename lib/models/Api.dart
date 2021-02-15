@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:hive/hive.dart';
 import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart';
 import 'package:svt_app/models/Localita.dart';
@@ -20,8 +21,11 @@ class Api
 
     final json = jsonDecode(result.body);
 
-    return (json as List<dynamic>)
-      .map((linea) => Linea.fromJson(linea))
+    final linee = (json as List).map((linea) => Linea.fromJson(linea));
+
+    await Hive.box("cache").addAll(linee);
+
+    return linee
       .where((linea) =>
         linea.destinazioneAndata.toLowerCase().contains(query.toLowerCase())
         || linea.destinazioneRitorno.toLowerCase().contains(query.toLowerCase()))
