@@ -10,8 +10,18 @@ import 'package:svt_app/models/Linea.dart';
 
 class Api
 {
-  static Future<List<Linea>> ottieniLinee({ String query = "" }) async
+  static Stream<List<Linea>> ottieniLinee({ String query = "" }) async*
   {
+    List<Linea> _search(List<Linea> linee) {
+      return linee
+        ?.where((linea) =>
+          linea.destinazioneAndata.toLowerCase().contains(query.toLowerCase())
+          || linea.destinazioneRitorno.toLowerCase().contains(query.toLowerCase()))
+        ?.toList();
+    }
+
+    yield _search((Hive.box("cache").get("linee") as List)?.whereType<Linea>()?.toList());
+
     final result = await http.post("http://www.mobilitaveneto.net/TP/SVT/StampaOrari/GetDatiLineeSelezionate");
 
     if (result.statusCode != 200)
@@ -21,15 +31,11 @@ class Api
 
     final json = jsonDecode(result.body);
 
-    final linee = (json as List).map((linea) => Linea.fromJson(linea));
+    final List<Linea> linee = (json as List).map((linea) => Linea.fromJson(linea)).toList();
 
-    await Hive.box("cache").addAll(linee);
+    await Hive.box("cache").put("linee", linee);
 
-    return linee
-      .where((linea) =>
-        linea.destinazioneAndata.toLowerCase().contains(query.toLowerCase())
-        || linea.destinazioneRitorno.toLowerCase().contains(query.toLowerCase()))
-      .toList();
+    yield _search(linee);
   }
 
   static String _fixData(int parametro) => parametro.toString().padLeft(2, '0');
