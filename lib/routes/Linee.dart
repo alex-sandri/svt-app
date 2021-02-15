@@ -21,15 +21,15 @@ class Linee extends StatelessWidget {
               onPressed: () => showSearch(
                 context: context,
                 delegate: SvtSearchDelegate<Linea>(
-                  future: (query) => Api.ottieniLinee(query: query),
+                  stream: (query) => Api.ottieniLinee(query: query),
                   builder: (linea) => linea.toWidget(),
                 ),
               ),
             ),
           ],
         ),
-        body: FutureBuilder<List<Linea>>(
-          future: Api.ottieniLinee(),
+        body: StreamBuilder<List<Linea>>(
+          stream: Api.ottieniLinee(),
           builder: (context, snapshot) {
             if (!snapshot.hasData)
             {

@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
+part 'Linea.g.dart';
+
+@HiveType(typeId: 0)
 class Linea
 {
+  @HiveField(0)
   final int direzione;
+
+  @HiveField(1)
   final String codice;
+
+  @HiveField(2)
   final String destinazioneAndata;
+
+  @HiveField(3)
   final String destinazioneRitorno;
+
+  @HiveField(4)
   final String descrizione;
 
   const Linea({
