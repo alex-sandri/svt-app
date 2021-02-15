@@ -34,8 +34,7 @@ class SvtSearchDelegate<T> extends SearchDelegate
 
         final List<T> items = snapshot.data;
 
-        return ListView.separated(
-          separatorBuilder: (context, index) => Divider(),
+        return ListView.builder(
           itemCount: items.isNotEmpty
             ? items.length
             : 1,
