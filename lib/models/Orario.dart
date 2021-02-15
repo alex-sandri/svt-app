@@ -1,9 +1,20 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
+part 'Orario.g.dart';
+
+@HiveType(typeId: 1)
 class Orario {
-  final int ora, minuti;
+  @HiveField(0)
+  final int ora;
 
-  Orario({@required this.ora, @required this.minuti});
+  @HiveField(1)
+  final int minuti;
+
+  Orario({
+    @required this.ora,
+    @required this.minuti,
+  });
 
   @override
   String toString() {
