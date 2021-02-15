@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:svt_app/miscellaneous/SvtSearchDelegate.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/Linea.dart';
+import 'package:svt_app/routes/Localit%C3%A0.dart';
 
 class Linee extends StatelessWidget {
   @override
@@ -23,6 +24,13 @@ class Linee extends StatelessWidget {
                 delegate: SvtSearchDelegate<Linea>(
                   future: (query) => Api.ottieniLinee(query: query),
                   builder: (linea) => ListTile(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LocalitaView(linea),
+                          ));
+                    },
                     title: linea.titolo,
                     subtitle: linea.sottotitlo,
                   ),
@@ -43,6 +51,13 @@ class Linee extends StatelessWidget {
               itemBuilder: (context, index) => ListTile(
                 title: snapshot.data[index].titolo,
                 subtitle: snapshot.data[index].sottotitlo,
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LocalitaView(snapshot.data[index]),
+                      ));
+                },
               ),
             );
           },

@@ -7,30 +7,26 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:svt_app/models/Linea.dart';
 
-class Api
-{
-  static Future<List<Linea>> ottieniLinee({ String query = "" }) async
-  {
+class Api {
+  static Future<List<Linea>> ottieniLinee({String query = ""}) async {
     final result = await http.post("http://www.mobilitaveneto.net/TP/SVT/StampaOrari/GetDatiLineeSelezionate");
 
-    if (result.statusCode != 200)
-    {
+    if (result.statusCode != 200) {
       throw Exception("Impossibile ottenere le linee");
     }
 
     final json = jsonDecode(result.body);
 
     return (json as List<dynamic>)
-      .map((linea) => Linea.fromJson(linea))
-      .where((linea) =>
-        linea.destinazioneAndata.toLowerCase().contains(query.toLowerCase())
-        || linea.destinazioneRitorno.toLowerCase().contains(query.toLowerCase()))
-      .toList();
+        .map((linea) => Linea.fromJson(linea))
+        .where((linea) =>
+            linea.destinazioneAndata.toLowerCase().contains(query.toLowerCase()) || linea.destinazioneRitorno.toLowerCase().contains(query.toLowerCase()))
+        .toList();
   }
 
   static String _fixData(int parametro) => parametro.toString().padLeft(2, '0');
 
-  static Future<List<Localita>> ottieniLocalita(int idLinea, int direzione) async {
+  static Future<List<Localita>> ottieniLocalita(String idLinea, int direzione) async {
     DateTime dataOdierna = DateTime.now();
     Dio dio = Dio();
     Map<String, dynamic> richiesta = new Map<String, dynamic>();
