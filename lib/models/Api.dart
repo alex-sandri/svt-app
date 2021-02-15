@@ -4,8 +4,6 @@ import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart';
 import 'package:svt_app/models/Localita.dart';
 import 'package:svt_app/models/Orario.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:svt_app/models/Linea.dart';
 
 class Api
@@ -22,16 +20,14 @@ class Api
 
     yield _search((Hive.box("cache").get("linee") as List)?.whereType<Linea>()?.toList());
 
-    final result = await http.post("http://www.mobilitaveneto.net/TP/SVT/StampaOrari/GetDatiLineeSelezionate");
+    final response = await Dio().post("http://www.mobilitaveneto.net/TP/SVT/StampaOrari/GetDatiLineeSelezionate");
 
-    if (result.statusCode != 200)
+    if (response.statusCode != 200)
     {
       throw Exception("Impossibile ottenere le linee");
     }
 
-    final json = jsonDecode(result.body);
-
-    final List<Linea> linee = (json as List).map((linea) => Linea.fromJson(linea)).toList();
+    final List<Linea> linee = (response.data as List).map((linea) => Linea.fromJson(linea)).toList();
 
     await Hive.box("cache").put("linee", linee);
 
