@@ -5,6 +5,7 @@ import 'package:html/dom.dart';
 import 'package:svt_app/models/Localita.dart';
 import 'package:svt_app/models/Orario.dart';
 import 'package:svt_app/models/Linea.dart';
+import 'package:svt_app/models/SearchResult.dart';
 
 
 class Api
@@ -27,7 +28,7 @@ class Api
     yield linee;
   }
 
-  static Future<List<TODO>> ricerca(String query) async
+  static Future<List<SearchResult>> ricerca(String query) async
   {
     // TODO
   }

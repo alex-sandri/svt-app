@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:svt_app/miscellaneous/SvtSearchDelegate.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/Linea.dart';
+import 'package:svt_app/models/SearchResult.dart';
 import 'package:svt_app/widgets/Loading.dart';
 import 'package:svt_app/routes/LocalitaView.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
@@ -18,19 +19,10 @@ class Linee extends StatelessWidget {
               tooltip: "Cerca",
               onPressed: () => showSearch(
                 context: context,
-                delegate: SvtSearchDelegate<TODO>(
+                delegate: SvtSearchDelegate<SearchResult>(
                   stream: (query) => Api.ricerca(query).asStream(),
                   builder: (linea) => ListTile(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LocalitaView(linea),
-                          ));
-                    },
-                    title: linea.titolo,
-                    subtitle: linea.sottotitlo,
-                    isThreeLine: true,
+                    // TODO
                   ),
                 ),
               ),
