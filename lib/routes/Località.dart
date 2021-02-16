@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/Linea.dart';
 import 'package:svt_app/models/Localita.dart';
+import 'package:svt_app/routes/Loading.dart';
 
 class LocalitaView extends StatelessWidget {
   final Linea _linea;
@@ -13,17 +14,23 @@ class LocalitaView extends StatelessWidget {
     return Material(
       child: Scaffold(
         appBar: AppBar(
-          title: Image.asset(
-            "assets/svt.png",
-            height: 50,
-          ),
-          centerTitle: true,
-        ),
+            title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Image.asset(
+              "assets/svt.png",
+              width: 100,
+            ),
+            Text(
+              "Linea: " + _linea.codice,
+              style: TextStyle(color: Colors.black),
+            )
+          ],
+        )),
         body: FutureBuilder(
           future: Api.ottieniLocalita(_linea.codice, _linea.direzione),
           builder: (context, snapshot) {
-            if (!snapshot.hasData) return LinearProgressIndicator();
-
+            if (!snapshot.hasData) return Loading();
             List<Localita> localita = snapshot.data;
 
             return ListView.builder(
