@@ -64,7 +64,7 @@ class Api
 
     List<String> nomi = new List<String>();
     tabellaNomi.nodes[0].nodes.forEach((riga) {
-      nomi.add(riga.text);
+      if (riga.text.trim() != "") nomi.add(riga.text);
     });
 
     Element tabellaOrari = dati[1];
