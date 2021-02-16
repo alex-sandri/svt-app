@@ -7,7 +7,11 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
+  bool _canSearch = false;
   bool _isLoading = false;
+
+  TextEditingController _partenzaController = TextEditingController();
+  TextEditingController _destinazioneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,21 +27,35 @@ class _SearchState extends State<Search> {
               child: Column(
                 children: [
                   TextFormField(
+                    controller: _partenzaController,
                     decoration: InputDecoration(
                       labelText: "Partenza",
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
+                  SizedBox(height: 10),
+                  DropdownButtonFormField(
+                    items: [],
+                    onChanged: (selected) {
+
+                    },
                   ),
+
+                  SizedBox(height: 20),
+
                   TextFormField(
+                    controller: _destinazioneController,
                     decoration: InputDecoration(
                       labelText: "Destinazione",
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
+                  SizedBox(height: 10),
+                  DropdownButtonFormField(
+                    items: [],
+                    onChanged: (selected) {
+
+                    },
                   ),
+                  SizedBox(height: 10),
 
                   if (_isLoading)
                     CircularProgressIndicator(),
@@ -52,6 +70,9 @@ class _SearchState extends State<Search> {
                           setState(() {
                             _isLoading = true;
                           });
+
+                          print(_partenzaController.text);
+                          print(_destinazioneController.text);
 
                           await Future.delayed(Duration(seconds: 2));
 
