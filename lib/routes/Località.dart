@@ -13,12 +13,19 @@ class LocalitaView extends StatelessWidget {
     return Material(
       child: Scaffold(
         appBar: AppBar(
-          title: Image.asset(
-            "assets/svt.png",
-            height: 50,
-          ),
-          centerTitle: true,
-        ),
+            title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Image.asset(
+              "assets/svt.png",
+              width: 100,
+            ),
+            Text(
+              "Linea: " + _linea.codice,
+              style: TextStyle(color: Colors.black),
+            )
+          ],
+        )),
         body: FutureBuilder(
           future: Api.ottieniLocalita(_linea.codice, _linea.direzione),
           builder: (context, snapshot) {

@@ -35,7 +35,6 @@ class Linee extends StatelessWidget {
                     subtitle: linea.sottotitlo,
                     isThreeLine: true,
                   ),
-
                 ),
               ),
             ),
