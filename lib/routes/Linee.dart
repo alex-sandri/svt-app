@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:svt_app/miscellaneous/SvtSearchDelegate.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/Linea.dart';
-import 'package:svt_app/models/SearchResult.dart';
+import 'package:svt_app/routes/Search.dart';
 import 'package:svt_app/widgets/Loading.dart';
 import 'package:svt_app/routes/LocalitaView.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
@@ -17,15 +16,13 @@ class Linee extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.search),
               tooltip: "Cerca",
-              onPressed: () => showSearch(
-                context: context,
-                delegate: SvtSearchDelegate<SearchResult>(
-                  stream: (query) => Api.ricerca(query).asStream(),
-                  builder: (linea) => ListTile(
-                    // TODO
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => Search(),
                   ),
-                ),
-              ),
+                );
+              },
             ),
           ],
         ),
