@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:svt_app/miscellaneous/SvtSearchDelegate.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/Linea.dart';
-import 'package:svt_app/routes/Loading.dart';
+import 'package:svt_app/widgets/Loading.dart';
 import 'package:svt_app/routes/Localit%C3%A0.dart';
 
 class Linee extends StatelessWidget {

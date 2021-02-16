@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/Linea.dart';
 import 'package:svt_app/models/Localita.dart';
-import 'package:svt_app/routes/Loading.dart';
+import 'package:svt_app/widgets/Loading.dart';
 
 class LocalitaView extends StatelessWidget {
   final Linea _linea;
