@@ -73,9 +73,11 @@ class Api
 
     for (int i = 0; i < nomi.length; i++) {
       List<Orario> orari = [];
-      tabellaOrari.nodes[0].nodes[i].nodes.forEach((element) {
-        if (element.text.trim() != "") orari.add(Orario.fromString(element.text.replaceFirst("&nbsp;", "")));
+
+      tabellaOrari.querySelectorAll("tr:nth-child(${i + 1}) > td").forEach((element) {
+        if (element.text.trim() != "") orari.add(Orario.fromString(element.text));
       });
+
       localita.add(Localita(nome: nomi[i], orari: orari));
     }
 
