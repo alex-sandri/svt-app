@@ -3,7 +3,7 @@ import 'package:svt_app/miscellaneous/SvtSearchDelegate.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/Linea.dart';
 import 'package:svt_app/widgets/Loading.dart';
-import 'package:svt_app/routes/Localita.dart';
+import 'package:svt_app/routes/LocalitaView.dart';
 
 class Linee extends StatelessWidget {
   @override
