@@ -18,8 +18,8 @@ class Linee extends StatelessWidget {
               tooltip: "Cerca",
               onPressed: () => showSearch(
                 context: context,
-                delegate: SvtSearchDelegate<Linea>(
-                  stream: (query) => Api.ottieniLinee(query: query),
+                delegate: SvtSearchDelegate<TODO>(
+                  stream: (query) => Api.ricerca(query).asStream(),
                   builder: (linea) => ListTile(
                     onTap: () {
                       Navigator.push(

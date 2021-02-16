@@ -9,18 +9,9 @@ import 'package:svt_app/models/Linea.dart';
 
 class Api
 {
-  static Stream<List<Linea>> ottieniLinee({ String query = "" }) async*
+  static Stream<List<Linea>> ottieniLinee() async*
   {
-    List<Linea> _search(List<Linea> linee) {
-      return linee
-        ?.where((linea) =>
-          linea.destinazioneAndata.toLowerCase().contains(query.toLowerCase())
-          || linea.destinazioneRitorno.toLowerCase().contains(query.toLowerCase())
-          || linea.codice.toLowerCase().contains(query.toLowerCase()))
-        ?.toList();
-    }
-
-    yield _search((Hive.box("cache").get("linee") as List)?.whereType<Linea>()?.toList());
+    yield (Hive.box("cache").get("linee") as List)?.whereType<Linea>()?.toList();
 
     final response = await Dio().post("http://www.mobilitaveneto.net/TP/SVT/StampaOrari/GetDatiLineeSelezionate");
 
@@ -33,7 +24,12 @@ class Api
 
     await Hive.box("cache").put("linee", linee);
 
-    yield _search(linee);
+    yield linee;
+  }
+
+  static Future<List<TODO>> ricerca(String query) async
+  {
+    // TODO
   }
 
   static String _fixData(int parametro) => parametro.toString().padLeft(2, '0');
