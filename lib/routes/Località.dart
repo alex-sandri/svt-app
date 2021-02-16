@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/Linea.dart';
 import 'package:svt_app/models/Localita.dart';
+import 'package:svt_app/routes/Loading.dart';
 
 class LocalitaView extends StatelessWidget {
   final Linea _linea;
@@ -29,8 +30,7 @@ class LocalitaView extends StatelessWidget {
         body: FutureBuilder(
           future: Api.ottieniLocalita(_linea.codice, _linea.direzione),
           builder: (context, snapshot) {
-            if (!snapshot.hasData) return LinearProgressIndicator();
-
+            if (!snapshot.hasData) return Loading();
             List<Localita> localita = snapshot.data;
 
             return ListView.builder(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:svt_app/miscellaneous/SvtSearchDelegate.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/Linea.dart';
+import 'package:svt_app/routes/Loading.dart';
 import 'package:svt_app/routes/Localit%C3%A0.dart';
 
 class Linee extends StatelessWidget {
@@ -44,7 +45,7 @@ class Linee extends StatelessWidget {
           stream: Api.ottieniLinee(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return LinearProgressIndicator();
+              return Loading();
             }
 
             return ListView.builder(
