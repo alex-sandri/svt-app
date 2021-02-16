@@ -74,6 +74,10 @@ class _SearchState extends State<Search> {
                           final String partenza = _partenzaController.text;
                           final String destinazione = _destinazioneController.text;
 
+                          setState(() {
+                            _errorePartenza = _erroreDestinazione = null;
+                          });
+
                           if (partenza.isEmpty)
                           {
                             _errorePartenza = "La partenza non può essere vuota";
@@ -90,8 +94,6 @@ class _SearchState extends State<Search> {
 
                             return;
                           }
-
-                          _errorePartenza = _erroreDestinazione = null;
 
                           setState(() {
                             _isLoading = true;
