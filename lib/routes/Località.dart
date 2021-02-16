@@ -27,8 +27,8 @@ class LocalitaView extends StatelessWidget {
             )
           ],
         )),
-        body: FutureBuilder(
-          future: Api.ottieniLocalita(_linea.codice, _linea.direzione),
+        body: StreamBuilder(
+          stream: Api.ottieniLocalita(_linea.codice, _linea.direzione),
           builder: (context, snapshot) {
             if (!snapshot.hasData) return Loading();
             List<Localita> localita = snapshot.data;
