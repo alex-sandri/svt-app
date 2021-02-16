@@ -47,6 +47,9 @@ class MyApp extends StatelessWidget {
           elevation: 0,
         ),
         inputDecorationTheme: InputDecorationTheme(
+          labelStyle: TextStyle(
+            color: Colors.black,
+          ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
           ),
