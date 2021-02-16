@@ -33,12 +33,13 @@ class Api
     await Hive.box("cache").put("linee", linee);
 
     yield _search(linee);
-
   }
 
   static String _fixData(int parametro) => parametro.toString().padLeft(2, '0');
 
-  static Future<List<Localita>> ottieniLocalita(String idLinea, int direzione) async {
+  static Stream<List<Localita>> ottieniLocalita(String idLinea, int direzione) async* {
+    yield (Hive.box("cache").get("localita-$idLinea-$direzione") as List)?.whereType<Localita>()?.toList();
+
     DateTime dataOdierna = DateTime.now();
     Dio dio = Dio();
     Map<String, dynamic> richiesta = new Map<String, dynamic>();
@@ -78,6 +79,8 @@ class Api
       localita.add(Localita(nome: nomi[i], orari: orari));
     }
 
-    return localita;
+    await Hive.box("cache").put("localita-$idLinea-$direzione", localita);
+
+    yield localita;
   }
 }
