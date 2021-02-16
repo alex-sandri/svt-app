@@ -7,7 +7,45 @@ class Search extends StatelessWidget {
     return Material(
       child: Scaffold(
         appBar: SvtAppBar(),
-        body: Container(),
+        body: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: FocusScope.of(context).unfocus,
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Form(
+              child: Column(
+                children: [
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: "Partenza",
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: "Destinazione",
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    child: TextButton.icon(
+                      icon: Icon(Icons.search),
+                      label: Text("Cerca"),
+                      onPressed: () {
+                        // TODO
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
