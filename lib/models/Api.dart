@@ -15,7 +15,8 @@ class Api
       return linee
         ?.where((linea) =>
           linea.destinazioneAndata.toLowerCase().contains(query.toLowerCase())
-          || linea.destinazioneRitorno.toLowerCase().contains(query.toLowerCase()))
+          || linea.destinazioneRitorno.toLowerCase().contains(query.toLowerCase())
+          || linea.codice.toLowerCase().contains(query.toLowerCase()))
         ?.toList();
     }
 
