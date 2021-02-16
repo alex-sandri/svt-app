@@ -13,9 +13,8 @@ class SvtAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Image.asset(
         "assets/svt.png",
-        height: 50,
+        height: preferredSize.height - 15,
       ),
-      centerTitle: true,
       actions: this.actions,
     );
   }
