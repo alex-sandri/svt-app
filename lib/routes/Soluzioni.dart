@@ -28,7 +28,7 @@ class Soluzioni extends StatelessWidget {
                 SizedBox(height: 30),
                 ...soluzioni.map((soluzione) {
                   return ListTile(
-                    leading: Icon(Icons.arrow_upward),
+                    leading: Icon(Icons.north_east),
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -43,11 +43,11 @@ class Soluzioni extends StatelessWidget {
                     subtitle: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(soluzione.localitaSalita),
-                        Text(soluzione.localitaDiscesa),
+                        Expanded(child: Text(soluzione.localitaSalita)),
+                        Expanded(child: Text(soluzione.localitaDiscesa)),
                       ],
                     ),
-                    trailing: Icon(Icons.arrow_downward),
+                    trailing: Icon(Icons.south_east),
                   );
                 }),
               ],
