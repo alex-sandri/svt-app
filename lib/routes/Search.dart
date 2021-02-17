@@ -20,6 +20,9 @@ class _SearchState extends State<Search> {
   List<SearchResult> _partenze = [];
   List<SearchResult> _destinazioni = [];
 
+  SearchResult _partenzaSelezionata;
+  SearchResult _destinazioneSelezionata;
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -47,10 +50,11 @@ class _SearchState extends State<Search> {
                     },
                   ),
                   SizedBox(height: 10),
-                  DropdownButtonFormField(
+                  DropdownButtonFormField<SearchResult>(
                     isExpanded: true,
                     items: _partenze.map((item) {
                       return DropdownMenuItem(
+                        value: item,
                         child: Text(
                           item.descrizione,
                           overflow: TextOverflow.ellipsis,
@@ -58,7 +62,7 @@ class _SearchState extends State<Search> {
                       );
                     }).toList(),
                     onChanged: (selected) {
-
+                      setState(() { _partenzaSelezionata = selected; });
                     },
                   ),
 
@@ -78,10 +82,11 @@ class _SearchState extends State<Search> {
                     },
                   ),
                   SizedBox(height: 10),
-                  DropdownButtonFormField(
+                  DropdownButtonFormField<SearchResult>(
                     isExpanded: true,
                     items: _destinazioni.map((item) {
                       return DropdownMenuItem(
+                        value: item,
                         child: Text(
                           item.descrizione,
                           overflow: TextOverflow.ellipsis,
@@ -89,7 +94,7 @@ class _SearchState extends State<Search> {
                       );
                     }).toList(),
                     onChanged: (selected) {
-
+                      setState(() { _destinazioneSelezionata = selected; });
                     },
                   ),
                   SizedBox(height: 10),
@@ -132,8 +137,8 @@ class _SearchState extends State<Search> {
                             _isLoading = true;
                           });
 
-                          print(partenza);
-                          print(destinazione);
+                          print(_partenzaSelezionata.descrizione);
+                          print(_destinazioneSelezionata.descrizione);
 
                           await Future.delayed(Duration(seconds: 2));
 

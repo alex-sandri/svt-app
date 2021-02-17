@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
 import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart';
+import 'package:svt_app/models/Coordinate.dart';
 import 'package:svt_app/models/Localita.dart';
 import 'package:svt_app/models/Orario.dart';
 import 'package:svt_app/models/Linea.dart';
@@ -39,6 +40,16 @@ class Api
     final List<SearchResult> items = (response.data["rows"] as List).map((item) => SearchResult.fromJson(item)).toList();
 
     return items;
+  }
+
+  static Future<Coordinate> ottieniCoordinate(String comuneIstat, String idVia) async
+  {
+    final response = await Dio().get("http://veneto.mycicero.it/PlusGeocoderWS/geocoderws.svc/sgc/$comuneIstat/$idVia/");
+
+    return Coordinate(
+      latitudine: response.data["Coordinate"]["Latitude"],
+      longitudine: response.data["Coordinate"]["Longitude"],
+    );
   }
 
   static String _fixData(int parametro) => parametro.toString().padLeft(2, '0');
