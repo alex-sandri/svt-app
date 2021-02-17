@@ -14,35 +14,32 @@ class LocalitaView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: Scaffold(
-        appBar: SvtAppBar(
-          actions: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: Text(
-                    "Linea: ${_linea.codice}",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+        appBar: SvtAppBar(),
         body: StreamBuilder(
           stream: Api.ottieniLocalita(_linea.codice, _linea.direzione),
           builder: (context, snapshot) {
             if (!snapshot.hasData) return Loading();
             List<Localita> localita = snapshot.data;
 
-            return ListView.builder(
-              itemCount: localita.length,
-              itemBuilder: (context, index) => localita[index].toWidget(),
+            return ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    "Linea ${_linea.codice}",
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: localita.length,
+                  itemBuilder: (context, index) => localita[index].toWidget(),
+                ),
+              ],
             );
           },
         ),

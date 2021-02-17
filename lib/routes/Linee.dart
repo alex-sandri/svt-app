@@ -33,21 +33,37 @@ class Linee extends StatelessWidget {
               return Loading();
             }
 
-            return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) => ListTile(
-                title: snapshot.data[index].titolo,
-                subtitle: snapshot.data[index].sottotitlo,
-                isThreeLine: true,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LocalitaView(snapshot.data[index]),
+            return ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    "Linee",
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
                     ),
-                  );
-                },
-              ),
+                  ),
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) => ListTile(
+                    title: snapshot.data[index].titolo,
+                    subtitle: snapshot.data[index].sottotitlo,
+                    isThreeLine: true,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LocalitaView(snapshot.data[index]),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
             );
           },
         ),
