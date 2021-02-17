@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/SearchResult.dart';
+import 'package:svt_app/routes/Soluzioni.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 
 class Search extends StatefulWidget {
@@ -192,6 +193,10 @@ class _SearchState extends State<Search> {
                             setState(() {
                               _isLoading = false;
                             });
+
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Soluzioni(soluzioni),
+                            ));
                           },
                         ),
                       ),
