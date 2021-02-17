@@ -7,6 +7,7 @@ import 'package:svt_app/models/Localita.dart';
 import 'package:svt_app/models/Orario.dart';
 import 'package:svt_app/models/Linea.dart';
 import 'package:svt_app/models/SearchResult.dart';
+import 'package:svt_app/models/SoluzioneDiViaggio.dart';
 
 
 class Api
@@ -62,7 +63,7 @@ class Api
     );
   }
 
-  static Future<void> cercaSoluzioniDiViaggio(SearchResult partenza, SearchResult destinazione) async
+  static Future<List<SoluzioneDiViaggio>> cercaSoluzioniDiViaggio(SearchResult partenza, SearchResult destinazione) async
   {
     final DateTime date = DateTime.now();
 
@@ -84,7 +85,7 @@ class Api
       }),
     );
 
-    print(response.data);
+    return (response.data["solutions"] as List).map((item) => SoluzioneDiViaggio.fromJson(item)).toList();
   }
 
   static String _fixData(int parametro) => parametro.toString().padLeft(2, '0');
