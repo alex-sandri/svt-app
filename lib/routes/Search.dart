@@ -30,6 +30,7 @@ class _SearchState extends State<Search> {
                 children: [
                   TextFormField(
                     controller: _partenzaController,
+                    textInputAction: TextInputAction.search,
                     decoration: InputDecoration(
                       labelText: "Partenza",
                       errorText: _errorePartenza,
@@ -47,6 +48,7 @@ class _SearchState extends State<Search> {
 
                   TextFormField(
                     controller: _destinazioneController,
+                    textInputAction: TextInputAction.search,
                     decoration: InputDecoration(
                       labelText: "Destinazione",
                       errorText: _erroreDestinazione,
