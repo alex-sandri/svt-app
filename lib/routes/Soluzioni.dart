@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:svt_app/models/SoluzioneDiViaggio.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 
@@ -32,12 +33,8 @@ class Soluzioni extends StatelessWidget {
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "${soluzione.oraPartenza.hour}:${soluzione.oraPartenza.minute}",
-                        ),
-                        Text(
-                          "${soluzione.oraArrivo.hour}:${soluzione.oraArrivo.minute}"
-                        ),
+                        Text(DateFormat.Hm().format(soluzione.oraPartenza)),
+                        Text(DateFormat.Hm().format(soluzione.oraArrivo)),
                       ],
                     ),
                     subtitle: Row(
