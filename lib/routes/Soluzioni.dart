@@ -45,7 +45,10 @@ class Soluzioni extends StatelessWidget {
                           child: Text(soluzione.localitaSalita),
                         ),
                         Expanded(
-                          child: Text(soluzione.localitaDiscesa),
+                          child: Text(
+                            soluzione.localitaDiscesa,
+                            textAlign: TextAlign.end,
+                          ),
                         ),
                       ],
                     ),
