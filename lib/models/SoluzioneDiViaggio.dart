@@ -43,7 +43,7 @@ class SoluzioneDiViaggio
           .replaceFirst(")/", ""),
       ),
     ),
-    oraArrivo: DateTime.fromMicrosecondsSinceEpoch(
+    oraArrivo: DateTime.fromMillisecondsSinceEpoch(
       int.parse(
         (json["DataOraArrivo"] as String)
           .replaceFirst("/Date(", "")
