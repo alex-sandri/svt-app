@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class Coordinate
 {
-  final double latitudine;
-  final double longitudine;
+  final num latitudine;
+  final num longitudine;
 
   Coordinate({
     @required this.latitudine,
