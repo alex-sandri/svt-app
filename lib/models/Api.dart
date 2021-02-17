@@ -52,6 +52,31 @@ class Api
     );
   }
 
+  static Future<void> cercaSoluzioniDiViaggio(SearchResult partenza, SearchResult destinazione) async
+  {
+    final DateTime date = DateTime.now();
+
+    final Coordinate coordinatePartenza = await partenza.ottieniCoordinate();
+    final Coordinate coordinateDestinazione = await destinazione.ottieniCoordinate();
+
+    final response = await Dio().post(
+      "http://www.mobilitaveneto.net/TP/SVT/Tp/TrovaSoluzioniViaggio",
+      data: FormData.fromMap({
+        "pLat": coordinatePartenza.latitudine,
+        "pLng": coordinatePartenza.longitudine,
+        "dLat": coordinateDestinazione.latitudine,
+        "dLng": coordinateDestinazione.longitudine,
+        "data": "${_fixData(date.day)}/${_fixData(date.month)}/${date.year}",
+        "ora": "00:00",
+        "tipoMezzo": -1,
+        "tipoSoluzione": 0,
+        "jsonTappe": "[]",
+      }),
+    );
+
+    print(response.data);
+  }
+
   static String _fixData(int parametro) => parametro.toString().padLeft(2, '0');
 
   static Stream<List<Localita>> ottieniLocalita(String idLinea, int direzione) async* {

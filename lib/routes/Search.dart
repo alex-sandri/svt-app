@@ -187,10 +187,7 @@ class _SearchState extends State<Search> {
                               _isLoading = true;
                             });
 
-                            print(_partenzaSelezionata.descrizione);
-                            print(_destinazioneSelezionata.descrizione);
-
-                            await Future.delayed(Duration(seconds: 2));
+                            final soluzioni = await Api.cercaSoluzioniDiViaggio(_partenzaSelezionata, _destinazioneSelezionata);
 
                             setState(() {
                               _isLoading = false;
