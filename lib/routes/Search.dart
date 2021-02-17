@@ -131,7 +131,10 @@ class _SearchState extends State<Search> {
                     SizedBox(height: 30),
 
                     if (_isLoading)
-                      CircularProgressIndicator(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [ CircularProgressIndicator() ],
+                      ),
 
                     if (!_isLoading)
                       Container(
