@@ -48,9 +48,13 @@ class _SearchState extends State<Search> {
                   ),
                   SizedBox(height: 10),
                   DropdownButtonFormField(
+                    isExpanded: true,
                     items: _partenze.map((item) {
                       return DropdownMenuItem(
-                        child: Text(item.descrizione),
+                        child: Text(
+                          item.descrizione,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       );
                     }).toList(),
                     onChanged: (selected) {
@@ -75,9 +79,13 @@ class _SearchState extends State<Search> {
                   ),
                   SizedBox(height: 10),
                   DropdownButtonFormField(
+                    isExpanded: true,
                     items: _destinazioni.map((item) {
                       return DropdownMenuItem(
-                        child: Text(item.descrizione),
+                        child: Text(
+                          item.descrizione,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       );
                     }).toList(),
                     onChanged: (selected) {
