@@ -58,6 +58,6 @@ class SoluzioneDiViaggio
     minutiTotali: json["MinutiTotali"],
     tratte: (json["Tratte"] as List).map((tratta) {
       return Linea.fromJson(tratta["Linea"]);
-    }),
+    }).toList(),
   );
 }
