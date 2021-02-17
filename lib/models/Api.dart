@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
 import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart';
+import 'package:intl/intl.dart';
 import 'package:svt_app/models/Coordinate.dart';
 import 'package:svt_app/models/Localita.dart';
 import 'package:svt_app/models/Orario.dart';
@@ -65,8 +66,6 @@ class Api
 
   static Future<List<SoluzioneDiViaggio>> cercaSoluzioniDiViaggio(SearchResult partenza, SearchResult destinazione) async
   {
-    final DateTime date = DateTime.now();
-
     final Coordinate coordinatePartenza = await partenza.ottieniCoordinate();
     final Coordinate coordinateDestinazione = await destinazione.ottieniCoordinate();
 
@@ -77,7 +76,7 @@ class Api
         "pLng": coordinatePartenza.longitudine,
         "dLat": coordinateDestinazione.latitudine,
         "dLng": coordinateDestinazione.longitudine,
-        "data": "${_fixData(date.day)}/${_fixData(date.month)}/${date.year}",
+        "data": DateFormat("dd/MM/yyyy").format(DateTime.now()),
         "ora": "00:00",
         "tipoMezzo": -1,
         "tipoSoluzione": 0,
@@ -88,18 +87,15 @@ class Api
     return (response.data["solutions"] as List).map((item) => SoluzioneDiViaggio.fromJson(item)).toList();
   }
 
-  static String _fixData(int parametro) => parametro.toString().padLeft(2, '0');
-
   static Stream<List<Localita>> ottieniLocalita(String idLinea, int direzione) async* {
     yield (Hive.box("cache").get("localita-$idLinea-$direzione") as List)?.whereType<Localita>()?.toList();
 
-    DateTime dataOdierna = DateTime.now();
     Dio dio = Dio();
     Map<String, dynamic> richiesta = new Map<String, dynamic>();
 
     richiesta["linea"] = idLinea;
     richiesta["direzione"] = direzione;
-    richiesta["di"] = "${_fixData(dataOdierna.day)}/${_fixData(dataOdierna.month)}/${dataOdierna.year}";
+    richiesta["di"] = DateFormat("dd/MM/yyyy").format(DateTime.now());
     richiesta["codLineaUtenza"] = idLinea;
     richiesta["vector"] = "SOCIETA VICENTINA TRASPORTI s.r.l.";
     richiesta["codAzienda"] = "SVT";
