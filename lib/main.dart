@@ -46,6 +46,43 @@ class MyApp extends StatelessWidget {
           ),
           elevation: 0,
         ),
+        inputDecorationTheme: InputDecorationTheme(
+          labelStyle: TextStyle(
+            color: Colors.black,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.red,
+            ),
+            borderRadius: BorderRadius.circular(5),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.red,
+            ),
+            borderRadius: BorderRadius.circular(5),
+          ),
+        ),
+        cursorColor: Colors.orange,
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all(Colors.white),
+            backgroundColor: MaterialStateProperty.all(Colors.red),
+            padding: MaterialStateProperty.all(EdgeInsets.all(15)),
+            textStyle: MaterialStateProperty.all(TextStyle(
+              fontSize: 20,
+            )),
+            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            )),
+          ),
+        ),
       ),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

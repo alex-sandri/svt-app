@@ -2,25 +2,20 @@ import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
 import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart';
+import 'package:intl/intl.dart';
+import 'package:svt_app/models/Coordinate.dart';
 import 'package:svt_app/models/Localita.dart';
 import 'package:svt_app/models/Orario.dart';
 import 'package:svt_app/models/Linea.dart';
+import 'package:svt_app/models/SearchResult.dart';
+import 'package:svt_app/models/SoluzioneDiViaggio.dart';
 
 
 class Api
 {
-  static Stream<List<Linea>> ottieniLinee({ String query = "" }) async*
+  static Stream<List<Linea>> ottieniLinee() async*
   {
-    List<Linea> _search(List<Linea> linee) {
-      return linee
-        ?.where((linea) =>
-          linea.destinazioneAndata.toLowerCase().contains(query.toLowerCase())
-          || linea.destinazioneRitorno.toLowerCase().contains(query.toLowerCase())
-          || linea.codice.toLowerCase().contains(query.toLowerCase()))
-        ?.toList();
-    }
-
-    yield _search((Hive.box("cache").get("linee") as List)?.whereType<Linea>()?.toList());
+    yield (Hive.box("cache").get("linee") as List)?.whereType<Linea>()?.toList();
 
     final response = await Dio().post("http://www.mobilitaveneto.net/TP/SVT/StampaOrari/GetDatiLineeSelezionate");
 
@@ -33,21 +28,74 @@ class Api
 
     await Hive.box("cache").put("linee", linee);
 
-    yield _search(linee);
+    yield linee;
   }
 
-  static String _fixData(int parametro) => parametro.toString().padLeft(2, '0');
+  static Future<List<SearchResult>> ricerca(String query) async
+  {
+    final response = await Dio().post("http://www.mobilitaveneto.net/TP/SVT/Search/Search", queryParameters: {
+      "page": 1,
+      "rows": 15,
+      "searchTerm": query,
+    });
+
+    final List<SearchResult> items = (response.data["rows"] as List).map((item) => SearchResult.fromJson(item)).toList();
+
+    return items;
+  }
+
+  static Future<Coordinate> ottieniCoordinate(String comuneIstat, String idVia) async
+  {
+    final response = await Dio().get("http://ro.autobus.it//PlusGeocoderWS/geocoderws.svc/sgc/$comuneIstat/$idVia/");
+
+    return Coordinate(
+      latitudine: response.data["Coordinate"]["Latitude"],
+      longitudine: response.data["Coordinate"]["Longitude"],
+    );
+  }
+
+  static Future<Coordinate> fromEpsg32632ToEpsg4326(Coordinate coordinate) async
+  {
+    final response = await Dio().get("https://epsg.io/trans?x=${coordinate.longitudine}&y=${coordinate.latitudine}&s_srs=32632&t_srs=4326&format=json");
+
+    return Coordinate(
+      latitudine: num.parse(response.data["y"]),
+      longitudine: num.parse(response.data["x"]),
+    );
+  }
+
+  static Future<List<SoluzioneDiViaggio>> cercaSoluzioniDiViaggio(SearchResult partenza, SearchResult destinazione) async
+  {
+    final Coordinate coordinatePartenza = await partenza.ottieniCoordinate();
+    final Coordinate coordinateDestinazione = await destinazione.ottieniCoordinate();
+
+    final response = await Dio().post(
+      "http://www.mobilitaveneto.net/TP/SVT/Tp/TrovaSoluzioniViaggio",
+      data: FormData.fromMap({
+        "pLat": coordinatePartenza.latitudine,
+        "pLng": coordinatePartenza.longitudine,
+        "dLat": coordinateDestinazione.latitudine,
+        "dLng": coordinateDestinazione.longitudine,
+        "data": DateFormat("dd/MM/yyyy").format(DateTime.now()),
+        "ora": "00:00",
+        "tipoMezzo": -1,
+        "tipoSoluzione": 0,
+        "jsonTappe": "[]",
+      }),
+    );
+
+    return (response.data["solutions"] as List).map((item) => SoluzioneDiViaggio.fromJson(item)).toList();
+  }
 
   static Stream<List<Localita>> ottieniLocalita(String idLinea, int direzione) async* {
     yield (Hive.box("cache").get("localita-$idLinea-$direzione") as List)?.whereType<Localita>()?.toList();
 
-    DateTime dataOdierna = DateTime.now();
     Dio dio = Dio();
     Map<String, dynamic> richiesta = new Map<String, dynamic>();
 
     richiesta["linea"] = idLinea;
     richiesta["direzione"] = direzione;
-    richiesta["di"] = "${_fixData(dataOdierna.day)}/${_fixData(dataOdierna.month)}/${dataOdierna.year}";
+    richiesta["di"] = DateFormat("dd/MM/yyyy").format(DateTime.now());
     richiesta["codLineaUtenza"] = idLinea;
     richiesta["vector"] = "SOCIETA VICENTINA TRASPORTI s.r.l.";
     richiesta["codAzienda"] = "SVT";
