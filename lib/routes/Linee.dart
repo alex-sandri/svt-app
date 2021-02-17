@@ -41,10 +41,11 @@ class Linee extends StatelessWidget {
                 isThreeLine: true,
                 onTap: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LocalitaView(snapshot.data[index]),
-                      ));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LocalitaView(snapshot.data[index]),
+                    ),
+                  );
                 },
               ),
             );

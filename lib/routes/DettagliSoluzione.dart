@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:svt_app/models/SoluzioneDiViaggio.dart';
+import 'package:svt_app/routes/LocalitaView.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 
 class DettagliSoluzione extends StatelessWidget {
@@ -57,6 +58,23 @@ class DettagliSoluzione extends StatelessWidget {
                   Text("${soluzione.metriBordo} a bordo"),
                 ],
               ),
+            ),
+            ExpansionTile(
+              leading: Icon(Icons.directions_bus),
+              title: Text("Tratte"),
+              children: soluzione.tratte.map((tratta) {
+                return ListTile(
+                  title: tratta.titolo,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LocalitaView(tratta),
+                      ),
+                    );
+                  },
+                );
+              }).toList(),
             ),
           ],
         ),
