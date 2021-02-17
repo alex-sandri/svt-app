@@ -33,10 +33,10 @@ class Soluzioni extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "${soluzione.oraPartenza.hour.toString()}:${soluzione.oraPartenza.minute.toString()}",
+                          "${soluzione.oraPartenza.hour}:${soluzione.oraPartenza.minute}",
                         ),
                         Text(
-                          "${soluzione.oraArrivo.hour.toString()}:${soluzione.oraArrivo.minute.toString()}"
+                          "${soluzione.oraArrivo.hour}:${soluzione.oraArrivo.minute}"
                         ),
                       ],
                     ),
