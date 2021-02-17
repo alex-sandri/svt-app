@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:svt_app/models/SoluzioneDiViaggio.dart';
+import 'package:svt_app/routes/DettagliSoluzione.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 
 class Soluzioni extends StatelessWidget {
@@ -53,6 +54,13 @@ class Soluzioni extends StatelessWidget {
                       ],
                     ),
                     trailing: Icon(Icons.south_east),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => DettagliSoluzione(soluzione),
+                        ),
+                      );
+                    },
                   );
                 }),
               ],
