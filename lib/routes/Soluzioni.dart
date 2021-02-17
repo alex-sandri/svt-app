@@ -39,9 +39,14 @@ class Soluzioni extends StatelessWidget {
                     ),
                     subtitle: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(child: Text(soluzione.localitaSalita)),
-                        Expanded(child: Text(soluzione.localitaDiscesa)),
+                        Expanded(
+                          child: Text(soluzione.localitaSalita),
+                        ),
+                        Expanded(
+                          child: Text(soluzione.localitaDiscesa),
+                        ),
                       ],
                     ),
                     trailing: Icon(Icons.south_east),
