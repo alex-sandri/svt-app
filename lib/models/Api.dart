@@ -30,7 +30,15 @@ class Api
 
   static Future<List<SearchResult>> ricerca(String query) async
   {
-    // TODO
+    final response = await Dio().post("http://www.mobilitaveneto.net/TP/SVT/Search/Search", queryParameters: {
+      "page": 1,
+      "rows": 15,
+      "searchTerm": query,
+    });
+
+    final List<SearchResult> items = (response.data as List).map((item) => SearchResult.fromJson(item)).toList();
+
+    return items;
   }
 
   static String _fixData(int parametro) => parametro.toString().padLeft(2, '0');

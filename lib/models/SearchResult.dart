@@ -15,6 +15,19 @@ class SearchResult
     @required this.comune,
     @required this.indirizzo,
   });
+
+  SearchResult.fromJson(Map<String, dynamic> json): this(
+    tipo: json["Tipo"] == "LOCALITA"
+      ? SearchResultType.LOCALITA
+      : (json["Tipo"] == "INDIRIZZO"
+        ? SearchResultType.INDIRIZZO
+        : SearchResultType.FERMATA
+      ),
+    nome: json["Nome"],
+    descrizione: json["Descrizione"],
+    comune: json["Comune"],
+    indirizzo: json["Indirizzo"],
+  );
 }
 
 enum SearchResultType
