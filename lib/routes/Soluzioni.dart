@@ -12,7 +12,48 @@ class Soluzioni extends StatelessWidget {
     return Material(
       child: Scaffold(
         appBar: SvtAppBar(),
-        body: Container(),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Soluzioni di viaggio",
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 30),
+                ...soluzioni.map((soluzione) {
+                  return ListTile(
+                    leading: Icon(Icons.arrow_upward),
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "${soluzione.oraPartenza.hour.toString()}:${soluzione.oraPartenza.minute.toString()}",
+                        ),
+                        Text(
+                          "${soluzione.oraArrivo.hour.toString()}:${soluzione.oraArrivo.minute.toString()}"
+                        ),
+                      ],
+                    ),
+                    subtitle: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(soluzione.localitaSalita),
+                        Text(soluzione.localitaDiscesa),
+                      ],
+                    ),
+                    trailing: Icon(Icons.arrow_downward),
+                  );
+                }),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

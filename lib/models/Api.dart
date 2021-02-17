@@ -45,7 +45,7 @@ class Api
 
   static Future<Coordinate> ottieniCoordinate(String comuneIstat, String idVia) async
   {
-    final response = await Dio().get("http://veneto.mycicero.it/PlusGeocoderWS/geocoderws.svc/sgc/$comuneIstat/$idVia/");
+    final response = await Dio().get("http://ro.autobus.it//PlusGeocoderWS/geocoderws.svc/sgc/$comuneIstat/$idVia/");
 
     return Coordinate(
       latitudine: response.data["Coordinate"]["Latitude"],
