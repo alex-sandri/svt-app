@@ -151,7 +151,13 @@ class _SearchState extends State<Search> {
                             _erroreDestinazioneDropdown = "Seleziona una destinazione";
                           }
 
-                          if (partenza.isEmpty || destinazione.isEmpty)
+                          if
+                          (
+                            partenza.isEmpty
+                            || _partenzaSelezionata == null
+                            || destinazione.isEmpty
+                            || _destinazioneSelezionata == null
+                          )
                           {
                             setState(() {});
 
