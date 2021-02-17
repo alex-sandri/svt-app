@@ -42,14 +42,14 @@ class SoluzioneDiViaggio
           .replaceFirst("/Date(", "")
           .replaceFirst(")/", ""),
       ),
-    ),
+    ).add(Duration(hours: 1)),
     oraArrivo: DateTime.fromMillisecondsSinceEpoch(
       int.parse(
         (json["DataOraArrivo"] as String)
           .replaceFirst("/Date(", "")
           .replaceFirst(")/", ""),
       ),
-    ),
+    ).add(Duration(hours: 1)),
     metriBordo: json["MetriBordo"],
     metriPiedi: json["MetriPiedi"],
     metriTotali: json["MetriTotali"],
