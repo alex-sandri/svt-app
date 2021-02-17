@@ -52,26 +52,30 @@ class _SearchState extends State<Search> {
                       setState(() { _partenze = result; });
                     },
                   ),
-                  SizedBox(height: 10),
-                  DropdownButtonFormField<SearchResult>(
-                    isExpanded: true,
-                    decoration: InputDecoration(
-                      labelText: "Seleziona una partenza",
-                      errorText: _errorePartenzaDropdown,
+
+                  if (_partenze.isNotEmpty)
+                    SizedBox(height: 10),
+
+                  if (_partenze.isNotEmpty)
+                    DropdownButtonFormField<SearchResult>(
+                      isExpanded: true,
+                      decoration: InputDecoration(
+                        labelText: "Seleziona una partenza",
+                        errorText: _errorePartenzaDropdown,
+                      ),
+                      items: _partenze.map((item) {
+                        return DropdownMenuItem(
+                          value: item,
+                          child: Text(
+                            item.descrizione,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (selected) {
+                        setState(() { _partenzaSelezionata = selected; });
+                      },
                     ),
-                    items: _partenze.map((item) {
-                      return DropdownMenuItem(
-                        value: item,
-                        child: Text(
-                          item.descrizione,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (selected) {
-                      setState(() { _partenzaSelezionata = selected; });
-                    },
-                  ),
 
                   SizedBox(height: 20),
 
@@ -88,27 +92,32 @@ class _SearchState extends State<Search> {
                       setState(() { _destinazioni = result; });
                     },
                   ),
-                  SizedBox(height: 10),
-                  DropdownButtonFormField<SearchResult>(
-                    isExpanded: true,
-                    decoration: InputDecoration(
-                      labelText: "Seleziona una destinazione",
-                      errorText: _erroreDestinazioneDropdown,
+
+                  if (_destinazioni.isNotEmpty)
+                    SizedBox(height: 10),
+
+                  if (_destinazioni.isNotEmpty)
+                    DropdownButtonFormField<SearchResult>(
+                      isExpanded: true,
+                      decoration: InputDecoration(
+                        labelText: "Seleziona una destinazione",
+                        errorText: _erroreDestinazioneDropdown,
+                      ),
+                      items: _destinazioni.map((item) {
+                        return DropdownMenuItem(
+                          value: item,
+                          child: Text(
+                            item.descrizione,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (selected) {
+                        setState(() { _destinazioneSelezionata = selected; });
+                      },
                     ),
-                    items: _destinazioni.map((item) {
-                      return DropdownMenuItem(
-                        value: item,
-                        child: Text(
-                          item.descrizione,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (selected) {
-                      setState(() { _destinazioneSelezionata = selected; });
-                    },
-                  ),
-                  SizedBox(height: 10),
+
+                  SizedBox(height: 30),
 
                   if (_isLoading)
                     CircularProgressIndicator(),
