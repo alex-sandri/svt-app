@@ -52,6 +52,16 @@ class Api
     );
   }
 
+  static Future<Coordinate> fromEpsg32632ToEpsg4326(Coordinate coordinate) async
+  {
+    final response = await Dio().get("https://epsg.io/trans?x=${coordinate.longitudine}&y=${coordinate.latitudine}&s_srs=32632&t_srs=4326&format=json");
+
+    return Coordinate(
+      latitudine: num.parse(response.data["y"]),
+      longitudine: num.parse(response.data["x"]),
+    );
+  }
+
   static Future<void> cercaSoluzioniDiViaggio(SearchResult partenza, SearchResult destinazione) async
   {
     final DateTime date = DateTime.now();

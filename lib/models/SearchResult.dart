@@ -46,7 +46,7 @@ class SearchResult
   Future<Coordinate> ottieniCoordinate() async {
     if (tipo != SearchResultType.INDIRIZZO)
     {
-      return coordinate;
+      return Api.fromEpsg32632ToEpsg4326(coordinate);
     }
 
     return Api.ottieniCoordinate(comuneIstat, idVia);
