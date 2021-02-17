@@ -1,4 +1,4 @@
-package com.example.svt_app
+package com.alexsandri.svt_app
 
 import io.flutter.embedding.android.FlutterActivity
 
