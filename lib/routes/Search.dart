@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:svt_app/models/Api.dart';
+import 'package:svt_app/models/SearchResult.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 
 class Search extends StatefulWidget {
@@ -14,6 +16,9 @@ class _SearchState extends State<Search> {
 
   String _errorePartenza;
   String _erroreDestinazione;
+
+  List<SearchResult> _partenze = [];
+  List<SearchResult> _destinazioni = [];
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +40,19 @@ class _SearchState extends State<Search> {
                       labelText: "Partenza",
                       errorText: _errorePartenza,
                     ),
+                    onFieldSubmitted: (value) async {
+                      final result = await Api.ricerca(value);
+
+                      setState(() { _partenze = result; });
+                    },
                   ),
                   SizedBox(height: 10),
                   DropdownButtonFormField(
-                    items: [],
+                    items: _partenze.map((item) {
+                      return DropdownMenuItem(
+                        child: Text(item.descrizione),
+                      );
+                    }).toList(),
                     onChanged: (selected) {
 
                     },
@@ -53,10 +67,19 @@ class _SearchState extends State<Search> {
                       labelText: "Destinazione",
                       errorText: _erroreDestinazione,
                     ),
+                    onFieldSubmitted: (value) async {
+                      final result = await Api.ricerca(value);
+
+                      setState(() { _destinazioni = result; });
+                    },
                   ),
                   SizedBox(height: 10),
                   DropdownButtonFormField(
-                    items: [],
+                    items: _destinazioni.map((item) {
+                      return DropdownMenuItem(
+                        child: Text(item.descrizione),
+                      );
+                    }).toList(),
                     onChanged: (selected) {
 
                     },

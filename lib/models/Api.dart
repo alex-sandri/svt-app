@@ -36,7 +36,7 @@ class Api
       "searchTerm": query,
     });
 
-    final List<SearchResult> items = (response.data as List).map((item) => SearchResult.fromJson(item)).toList();
+    final List<SearchResult> items = (response.data["rows"] as List).map((item) => SearchResult.fromJson(item)).toList();
 
     return items;
   }
