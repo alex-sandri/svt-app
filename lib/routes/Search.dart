@@ -38,7 +38,16 @@ class _SearchState extends State<Search> {
             padding: const EdgeInsets.all(10),
             child: Form(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    "Cerca soluzioni di viaggio",
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 30),
                   TextFormField(
                     controller: _partenzaController,
                     textInputAction: TextInputAction.search,
