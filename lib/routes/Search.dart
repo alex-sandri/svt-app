@@ -15,7 +15,10 @@ class _SearchState extends State<Search> {
   TextEditingController _destinazioneController = TextEditingController();
 
   String _errorePartenza;
+  String _errorePartenzaDropdown;
+
   String _erroreDestinazione;
+  String _erroreDestinazioneDropdown;
 
   List<SearchResult> _partenze = [];
   List<SearchResult> _destinazioni = [];
@@ -52,6 +55,10 @@ class _SearchState extends State<Search> {
                   SizedBox(height: 10),
                   DropdownButtonFormField<SearchResult>(
                     isExpanded: true,
+                    decoration: InputDecoration(
+                      labelText: "Seleziona una partenza",
+                      errorText: _errorePartenzaDropdown,
+                    ),
                     items: _partenze.map((item) {
                       return DropdownMenuItem(
                         value: item,
@@ -84,6 +91,10 @@ class _SearchState extends State<Search> {
                   SizedBox(height: 10),
                   DropdownButtonFormField<SearchResult>(
                     isExpanded: true,
+                    decoration: InputDecoration(
+                      labelText: "Seleziona una destinazione",
+                      errorText: _erroreDestinazioneDropdown,
+                    ),
                     items: _destinazioni.map((item) {
                       return DropdownMenuItem(
                         value: item,
@@ -113,7 +124,11 @@ class _SearchState extends State<Search> {
                           final String destinazione = _destinazioneController.text;
 
                           setState(() {
-                            _errorePartenza = _erroreDestinazione = null;
+                            _errorePartenza
+                              = _errorePartenzaDropdown
+                              = _erroreDestinazione
+                              = _erroreDestinazioneDropdown
+                              = null;
                           });
 
                           if (partenza.isEmpty)
@@ -121,9 +136,19 @@ class _SearchState extends State<Search> {
                             _errorePartenza = "La partenza non può essere vuota";
                           }
 
+                          if (_partenzaSelezionata == null)
+                          {
+                            _errorePartenzaDropdown = "Seleziona una partenza";
+                          }
+
                           if (destinazione.isEmpty)
                           {
                             _erroreDestinazione = "La destinazione non può essere vuota";
+                          }
+
+                          if (_destinazioneSelezionata == null)
+                          {
+                            _erroreDestinazioneDropdown = "Seleziona una destinazione";
                           }
 
                           if (partenza.isEmpty || destinazione.isEmpty)
