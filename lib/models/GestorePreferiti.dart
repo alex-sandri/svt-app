@@ -14,8 +14,8 @@ class GestorePreferiti {
 
   void aggiungiPreferito(Preferito preferito) async {
     if (!_preferiti.contains(preferito)) {
-      await _aggiornaCache();
       _preferiti.add(preferito);
+      await _aggiornaCache();
     }
   }
 
@@ -32,13 +32,10 @@ class GestorePreferiti {
   }
 
   Future<void> ripristinaPreferiti() async {
-    _preferiti = await Hive.box("preferiti").get("soluzioni") ?? [];
+    _preferiti = (await Hive.box("preferiti").get("soluzioni") as List)?.whereType<Preferito>()?.toList() ?? [];
   }
 
   Preferito operator [](int index) => _preferiti[index];
 
-  int get quantita {
-    print(this._preferiti.length);
-    return this._preferiti.length;
-  }
+  int get quantita => this._preferiti.length;
 }

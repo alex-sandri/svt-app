@@ -40,7 +40,6 @@ class _SearchState extends State<Search> {
 
   _SearchState() {
     _gestorePreferiti = Status.gestorePreferiti;
-    print(_gestorePreferiti.quantita);
   }
 
   @override
