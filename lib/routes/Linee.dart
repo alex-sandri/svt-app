@@ -6,6 +6,8 @@ import 'package:svt_app/routes/LocalitaView.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 
 class Linee extends StatelessWidget {
+  final TextEditingController _searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -41,9 +43,16 @@ class Linee extends StatelessWidget {
                         children: [
                           Expanded(
                             child: TextField(
+                              controller: _searchController,
                               decoration: InputDecoration(
                                 labelText: "Cerca",
                                 enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(5),
                                     bottomLeft: Radius.circular(5),
@@ -67,7 +76,7 @@ class Linee extends StatelessWidget {
                               ),
                               child: Icon(Icons.search),
                               onPressed: () {
-                                // TODO
+                                print(_searchController.text);
                               },
                             ),
                           ),
