@@ -11,9 +11,21 @@ class Linee extends StatefulWidget {
 }
 
 class _LineeState extends State<Linee> {
+  List<Linea> _lineeSnapshot = [];
+
   List<Linea> linee = [];
 
   final TextEditingController _searchController = TextEditingController();
+
+  void _search(String value) {
+    setState(() {
+      linee = _lineeSnapshot.where((linea) =>
+        linea.codice.toLowerCase().contains(value.toLowerCase())
+        || linea.destinazioneAndata.toLowerCase().contains(value.toLowerCase())
+        || linea.destinazioneRitorno.toLowerCase().contains(value.toLowerCase())
+      ).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +42,12 @@ class _LineeState extends State<Linee> {
                 return Loading();
               }
 
-              linee = snapshot.data;
+              _lineeSnapshot = snapshot.data;
+
+              if (linee.isEmpty)
+              {
+                linee = _lineeSnapshot;
+              }
 
               return ListView(
                 children: [
@@ -53,16 +70,7 @@ class _LineeState extends State<Linee> {
                           Expanded(
                             child: TextField(
                               controller: _searchController,
-                              onChanged: (value) {
-
-                                setState(() {
-                                  linee = linee.where((linea) =>
-                                    linea.codice.toLowerCase().contains(value.toLowerCase())
-                                    || linea.destinazioneAndata.toLowerCase().contains(value.toLowerCase())
-                                    || linea.destinazioneRitorno.toLowerCase().contains(value.toLowerCase())
-                                  ).toList();
-                                });
-                              },
+                              textInputAction: TextInputAction.search,
                               decoration: InputDecoration(
                                 labelText: "Cerca",
                                 enabledBorder: OutlineInputBorder(
@@ -78,6 +86,7 @@ class _LineeState extends State<Linee> {
                                   ),
                                 ),
                               ),
+                              onSubmitted: _search,
                             ),
                           ),
                           Container(
@@ -94,18 +103,7 @@ class _LineeState extends State<Linee> {
                                 ),
                               ),
                               child: Icon(Icons.search),
-                              onPressed: () {
-                                final String value = _searchController.text;
-
-                                setState(() {
-                                  linee = linee.where((linea) =>
-                                    linea.codice.toLowerCase().contains(value.toLowerCase())
-                                    || linea.destinazioneAndata.toLowerCase().contains(value.toLowerCase())
-                                    || linea.destinazioneRitorno.toLowerCase().contains(value.toLowerCase())
-                                  ).toList();
-                                  print(linee.length);
-                                });
-                              },
+                              onPressed: () => _search(_searchController.text),
                             ),
                           ),
                         ],
@@ -119,28 +117,19 @@ class _LineeState extends State<Linee> {
                     itemBuilder: (context, index) {
                       final Linea linea = linee[index];
 
-                      if (
-                        linea.codice.toLowerCase().contains(_searchController.text.toLowerCase())
-                        || linea.destinazioneAndata.toLowerCase().contains(_searchController.text.toLowerCase())
-                        || linea.destinazioneRitorno.toLowerCase().contains(_searchController.text.toLowerCase())
-                      )
-                      {
-                        return ListTile(
-                          title: linea.titolo,
-                          subtitle: linea.sottotitlo,
-                          isThreeLine: true,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LocalitaView(linea),
-                              ),
-                            );
-                          },
-                        );
-                      }
-
-                      return Container();
+                      return ListTile(
+                        title: linea.titolo,
+                        subtitle: linea.sottotitlo,
+                        isThreeLine: true,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LocalitaView(linea),
+                            ),
+                          );
+                        },
+                      );
                     }
                   ),
                 ],
