@@ -35,9 +35,43 @@ class Linee extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        labelText: "Cerca",
+                    child: Container(
+                      height: 60,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                labelText: "Cerca",
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: double.infinity,
+                            child: TextButton(
+                              style: ButtonStyle(
+                                shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(5),
+                                      bottomRight: Radius.circular(5),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              child: Icon(Icons.search),
+                              onPressed: () {
+                                // TODO
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
