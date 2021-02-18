@@ -10,17 +10,13 @@ import 'package:svt_app/models/Linea.dart';
 import 'package:svt_app/models/SearchResult.dart';
 import 'package:svt_app/models/SoluzioneDiViaggio.dart';
 
-
-class Api
-{
-  static Stream<List<Linea>> ottieniLinee() async*
-  {
+class Api {
+  static Stream<List<Linea>> ottieniLinee() async* {
     yield (Hive.box("cache").get("linee") as List)?.whereType<Linea>()?.toList();
 
     final response = await Dio().post("http://www.mobilitaveneto.net/TP/SVT/StampaOrari/GetDatiLineeSelezionate");
 
-    if (response.statusCode != 200)
-    {
+    if (response.statusCode != 200) {
       throw Exception("Impossibile ottenere le linee");
     }
 
@@ -31,8 +27,7 @@ class Api
     yield linee;
   }
 
-  static Future<List<SearchResult>> ricerca(String query) async
-  {
+  static Future<List<SearchResult>> ricerca(String query) async {
     final response = await Dio().post("http://www.mobilitaveneto.net/TP/SVT/Search/Search", queryParameters: {
       "page": 1,
       "rows": 15,
@@ -44,8 +39,7 @@ class Api
     return items;
   }
 
-  static Future<Coordinate> ottieniCoordinate(String comuneIstat, String idVia) async
-  {
+  static Future<Coordinate> ottieniCoordinate(String comuneIstat, String idVia) async {
     final response = await Dio().get("http://ro.autobus.it//PlusGeocoderWS/geocoderws.svc/sgc/$comuneIstat/$idVia/");
 
     return Coordinate(
@@ -54,8 +48,7 @@ class Api
     );
   }
 
-  static Future<Coordinate> fromEpsg32632ToEpsg4326(Coordinate coordinate) async
-  {
+  static Future<Coordinate> fromEpsg32632ToEpsg4326(Coordinate coordinate) async {
     final response = await Dio().get("https://epsg.io/trans?x=${coordinate.longitudine}&y=${coordinate.latitudine}&s_srs=32632&t_srs=4326&format=json");
 
     return Coordinate(
@@ -64,8 +57,7 @@ class Api
     );
   }
 
-  static Future<List<SoluzioneDiViaggio>> cercaSoluzioniDiViaggio(SearchResult partenza, SearchResult destinazione) async
-  {
+  static Future<List<SoluzioneDiViaggio>> cercaSoluzioniDiViaggio(SearchResult partenza, SearchResult destinazione) async {
     final Coordinate coordinatePartenza = await partenza.ottieniCoordinate();
     final Coordinate coordinateDestinazione = await destinazione.ottieniCoordinate();
 

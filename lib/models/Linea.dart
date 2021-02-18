@@ -4,10 +4,8 @@ import 'package:hive/hive.dart';
 
 part 'Linea.g.dart';
 
-
 @HiveType(typeId: 0)
-class Linea implements Visualizzabile 
-{
+class Linea implements Visualizzabile {
   @HiveField(0)
   final int direzione;
 
@@ -31,30 +29,31 @@ class Linea implements Visualizzabile
     @required this.descrizione,
   });
 
-  Linea.fromJson(Map<String, dynamic> json): this(
-    direzione: int.parse(json["Direzione"]),
-    codice: json["CodLineaUtenza"],
-    destinazioneAndata: json["DestinazioneAndata"],
-    destinazioneRitorno: json["DestinazioneRitorno"],
-    descrizione: json["Descrizione"],
-  );
+  Linea.fromJson(Map<String, dynamic> json)
+      : this(
+          direzione: int.parse(json["Direzione"]),
+          codice: json["CodLineaUtenza"],
+          destinazioneAndata: json["DestinazioneAndata"],
+          destinazioneRitorno: json["DestinazioneRitorno"],
+          descrizione: json["Descrizione"],
+        );
 
   @override
   Widget get sottotitlo => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        destinazioneAndata,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
-      Text(
-        destinazioneRitorno,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
-    ],
-  );
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            destinazioneAndata,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Text(
+            destinazioneRitorno,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      );
 
   @override
   Widget get titolo => Text(codice);
