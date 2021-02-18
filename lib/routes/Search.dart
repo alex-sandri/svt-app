@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/SearchResult.dart';
+import 'package:svt_app/routes/Linee.dart';
 import 'package:svt_app/routes/Soluzioni.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 
@@ -31,7 +32,21 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     return Material(
       child: Scaffold(
-        appBar: SvtAppBar(),
+        appBar: SvtAppBar(
+          actions: [
+            IconButton(
+              icon: Icon(Icons.list),
+              tooltip: "Linee",
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => Linee(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
         body: GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: FocusScope.of(context).unfocus,

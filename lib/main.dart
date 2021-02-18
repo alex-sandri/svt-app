@@ -6,7 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:svt_app/models/Linea.dart';
 import 'package:svt_app/models/Localita.dart';
 import 'package:svt_app/models/Orario.dart';
-import 'package:svt_app/routes/Linee.dart';
+import 'package:svt_app/routes/Search.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -92,7 +92,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: [
         const Locale("it"),
       ],
-      home: Linee(),
+      home: Search(),
     );
   }
 }
