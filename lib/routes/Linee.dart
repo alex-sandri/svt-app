@@ -5,7 +5,14 @@ import 'package:svt_app/widgets/Loading.dart';
 import 'package:svt_app/routes/LocalitaView.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 
-class Linee extends StatelessWidget {
+class Linee extends StatefulWidget {
+  @override
+  _LineeState createState() => _LineeState();
+}
+
+class _LineeState extends State<Linee> {
+  List<Linea> linee = [];
+
   final TextEditingController _searchController = TextEditingController();
 
   @override
@@ -22,6 +29,8 @@ class Linee extends StatelessWidget {
               if (!snapshot.hasData) {
                 return Loading();
               }
+
+              linee = snapshot.data;
 
               return ListView(
                 children: [
@@ -44,6 +53,16 @@ class Linee extends StatelessWidget {
                           Expanded(
                             child: TextField(
                               controller: _searchController,
+                              onChanged: (value) {
+
+                                setState(() {
+                                  linee = linee.where((linea) =>
+                                    linea.codice.toLowerCase().contains(value.toLowerCase())
+                                    || linea.destinazioneAndata.toLowerCase().contains(value.toLowerCase())
+                                    || linea.destinazioneRitorno.toLowerCase().contains(value.toLowerCase())
+                                  ).toList();
+                                });
+                              },
                               decoration: InputDecoration(
                                 labelText: "Cerca",
                                 enabledBorder: OutlineInputBorder(
@@ -76,7 +95,16 @@ class Linee extends StatelessWidget {
                               ),
                               child: Icon(Icons.search),
                               onPressed: () {
-                                print(_searchController.text);
+                                final String value = _searchController.text;
+
+                                setState(() {
+                                  linee = linee.where((linea) =>
+                                    linea.codice.toLowerCase().contains(value.toLowerCase())
+                                    || linea.destinazioneAndata.toLowerCase().contains(value.toLowerCase())
+                                    || linea.destinazioneRitorno.toLowerCase().contains(value.toLowerCase())
+                                  ).toList();
+                                  print(linee.length);
+                                });
                               },
                             ),
                           ),
@@ -87,20 +115,33 @@ class Linee extends StatelessWidget {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (context, index) => ListTile(
-                      title: snapshot.data[index].titolo,
-                      subtitle: snapshot.data[index].sottotitlo,
-                      isThreeLine: true,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LocalitaView(snapshot.data[index]),
-                          ),
+                    itemCount: linee.length,
+                    itemBuilder: (context, index) {
+                      final Linea linea = linee[index];
+
+                      if (
+                        linea.codice.toLowerCase().contains(_searchController.text.toLowerCase())
+                        || linea.destinazioneAndata.toLowerCase().contains(_searchController.text.toLowerCase())
+                        || linea.destinazioneRitorno.toLowerCase().contains(_searchController.text.toLowerCase())
+                      )
+                      {
+                        return ListTile(
+                          title: linea.titolo,
+                          subtitle: linea.sottotitlo,
+                          isThreeLine: true,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LocalitaView(linea),
+                              ),
+                            );
+                          },
                         );
-                      },
-                    ),
+                      }
+
+                      return Container();
+                    }
                   ),
                 ],
               );
