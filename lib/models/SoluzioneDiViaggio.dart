@@ -3,6 +3,9 @@ import 'package:svt_app/models/Linea.dart';
 
 class SoluzioneDiViaggio
 {
+  final String contesto;
+  final int indice;
+
   final String localitaSalita;
   final String localitaDiscesa;
 
@@ -20,6 +23,8 @@ class SoluzioneDiViaggio
   final List<Linea> tratte;
 
   SoluzioneDiViaggio({
+    @required this.contesto,
+    @required this.indice,
     @required this.localitaSalita,
     @required this.localitaDiscesa,
     @required this.oraPartenza,
@@ -33,7 +38,9 @@ class SoluzioneDiViaggio
     @required this.tratte,
   });
 
-  SoluzioneDiViaggio.fromJson(Map<String, dynamic> json): this(
+  SoluzioneDiViaggio.fromJson(Map<String, dynamic> json, String contesto, int indice): this(
+    contesto: contesto,
+    indice: indice,
     localitaSalita: json["LocalitaSalita"],
     localitaDiscesa: json["LocalitaDiscesa"],
     oraPartenza: DateTime.fromMillisecondsSinceEpoch(
