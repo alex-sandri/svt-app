@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:svt_app/models/Api.dart';
+import 'package:svt_app/models/GestorePreferiti.dart';
 import 'package:svt_app/models/SearchResult.dart';
+import 'package:svt_app/models/Status.dart';
 import 'package:svt_app/routes/Linee.dart';
 import 'package:svt_app/routes/Soluzioni.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
@@ -14,6 +16,8 @@ class Search extends StatefulWidget {
 
 class _SearchState extends State<Search> {
   bool _isLoading = false;
+
+  GestorePreferiti _gestorePreferiti;
 
   final Duration delay = Duration(seconds: 1);
 
@@ -33,6 +37,11 @@ class _SearchState extends State<Search> {
   SearchResult _destinazioneSelezionata;
 
   Timer _timerDestinazione, _timerPartenza;
+
+  _SearchState() {
+    _gestorePreferiti = Status.gestorePreferiti;
+    print(_gestorePreferiti.quantita);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -212,6 +221,21 @@ class _SearchState extends State<Search> {
                           },
                         ),
                       ),
+                    SizedBox(height: 50),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Preferiti",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        ListView.builder(
+                            shrinkWrap: true, itemCount: _gestorePreferiti.quantita, itemBuilder: (context, index) => Text(_gestorePreferiti[index].nome))
+                      ],
+                    )
                   ],
                 ),
               ),

@@ -6,6 +6,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:svt_app/models/Linea.dart';
 import 'package:svt_app/models/Localita.dart';
 import 'package:svt_app/models/Orario.dart';
+import 'package:svt_app/models/Preferito.dart';
+import 'package:svt_app/models/SoluzioneDiViaggio.dart';
+import 'package:svt_app/models/Status.dart';
 import 'package:svt_app/routes/Search.dart';
 
 void main() async {
@@ -14,9 +17,13 @@ void main() async {
   Hive.registerAdapter(LineaAdapter()); // 0
   Hive.registerAdapter(OrarioAdapter()); // 1
   Hive.registerAdapter(LocalitaAdapter()); // 2
+  Hive.registerAdapter(PreferitoAdapter());
+  Hive.registerAdapter(SoluzioneDiViaggioAdapter());
 
   await Hive.openBox("cache");
+  await Hive.openBox("preferiti");
 
+  await Status.gestorePreferiti.ripristinaPreferiti();
   runApp(MyApp());
 }
 
