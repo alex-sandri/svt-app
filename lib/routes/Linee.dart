@@ -38,7 +38,6 @@ class Linee extends StatelessWidget {
                     child: TextField(
                       decoration: InputDecoration(
                         labelText: "Cerca",
-                        prefixIcon: Icon(Icons.search),
                       ),
                     ),
                   ),
