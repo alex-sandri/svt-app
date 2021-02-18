@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/SearchResult.dart';
@@ -11,6 +13,8 @@ class Search extends StatefulWidget {
 
 class _SearchState extends State<Search> {
   bool _isLoading = false;
+
+  final Duration delay = Duration(seconds: 1);
 
   TextEditingController _partenzaController = TextEditingController();
   TextEditingController _destinazioneController = TextEditingController();
@@ -26,6 +30,8 @@ class _SearchState extends State<Search> {
 
   SearchResult _partenzaSelezionata;
   SearchResult _destinazioneSelezionata;
+
+  Timer _timerDestinazione, _timerPartenza;
 
   @override
   Widget build(BuildContext context) {
@@ -57,16 +63,18 @@ class _SearchState extends State<Search> {
                         labelText: "Partenza",
                         errorText: _errorePartenza,
                       ),
-                      onFieldSubmitted: (value) async {
-                        final result = await Api.ricerca(value);
-
-                        setState(() { _partenze = result; });
+                      onChanged: (value) async {
+                        _timerPartenza?.cancel();
+                        _timerPartenza = Timer(delay, () async {
+                          print("eseguito");
+                          final result = await Api.ricerca(value);
+                          setState(() {
+                            _partenze = result;
+                          });
+                        });
                       },
                     ),
-
-                    if (_partenze.isNotEmpty)
-                      SizedBox(height: 10),
-
+                    if (_partenze.isNotEmpty) SizedBox(height: 10),
                     if (_partenze.isNotEmpty)
                       DropdownButtonFormField<SearchResult>(
                         isExpanded: true,
@@ -84,12 +92,12 @@ class _SearchState extends State<Search> {
                           );
                         }).toList(),
                         onChanged: (selected) {
-                          setState(() { _partenzaSelezionata = selected; });
+                          setState(() {
+                            _partenzaSelezionata = selected;
+                          });
                         },
                       ),
-
                     SizedBox(height: 20),
-
                     TextFormField(
                       controller: _destinazioneController,
                       textInputAction: TextInputAction.search,
@@ -97,16 +105,18 @@ class _SearchState extends State<Search> {
                         labelText: "Destinazione",
                         errorText: _erroreDestinazione,
                       ),
-                      onFieldSubmitted: (value) async {
-                        final result = await Api.ricerca(value);
+                      onChanged: (value) async {
+                        _timerDestinazione?.cancel();
 
-                        setState(() { _destinazioni = result; });
+                        _timerDestinazione = Timer(delay, () async {
+                          final result = await Api.ricerca(value);
+                          setState(() {
+                            _destinazioni = result;
+                          });
+                        });
                       },
                     ),
-
-                    if (_destinazioni.isNotEmpty)
-                      SizedBox(height: 10),
-
+                    if (_destinazioni.isNotEmpty) SizedBox(height: 10),
                     if (_destinazioni.isNotEmpty)
                       DropdownButtonFormField<SearchResult>(
                         isExpanded: true,
@@ -124,18 +134,17 @@ class _SearchState extends State<Search> {
                           );
                         }).toList(),
                         onChanged: (selected) {
-                          setState(() { _destinazioneSelezionata = selected; });
+                          setState(() {
+                            _destinazioneSelezionata = selected;
+                          });
                         },
                       ),
-
                     SizedBox(height: 30),
-
                     if (_isLoading)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [ CircularProgressIndicator() ],
+                        children: [CircularProgressIndicator()],
                       ),
-
                     if (!_isLoading)
                       Container(
                         width: double.infinity,
@@ -147,41 +156,26 @@ class _SearchState extends State<Search> {
                             final String destinazione = _destinazioneController.text;
 
                             setState(() {
-                              _errorePartenza
-                                = _errorePartenzaDropdown
-                                = _erroreDestinazione
-                                = _erroreDestinazioneDropdown
-                                = null;
+                              _errorePartenza = _errorePartenzaDropdown = _erroreDestinazione = _erroreDestinazioneDropdown = null;
                             });
 
-                            if (partenza.isEmpty)
-                            {
+                            if (partenza.isEmpty) {
                               _errorePartenza = "La partenza non può essere vuota";
                             }
 
-                            if (_partenzaSelezionata == null)
-                            {
+                            if (_partenzaSelezionata == null) {
                               _errorePartenzaDropdown = "Seleziona una partenza";
                             }
 
-                            if (destinazione.isEmpty)
-                            {
+                            if (destinazione.isEmpty) {
                               _erroreDestinazione = "La destinazione non può essere vuota";
                             }
 
-                            if (_destinazioneSelezionata == null)
-                            {
+                            if (_destinazioneSelezionata == null) {
                               _erroreDestinazioneDropdown = "Seleziona una destinazione";
                             }
 
-                            if
-                            (
-                              partenza.isEmpty
-                              || _partenzaSelezionata == null
-                              || destinazione.isEmpty
-                              || _destinazioneSelezionata == null
-                            )
-                            {
+                            if (partenza.isEmpty || _partenzaSelezionata == null || destinazione.isEmpty || _destinazioneSelezionata == null) {
                               setState(() {});
 
                               return;
