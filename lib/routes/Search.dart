@@ -84,7 +84,7 @@ class _SearchState extends State<Search> {
                         return Text(item.descrizione);
                       },
                       onSuggestionSelected: (suggestion) {
-                        print(suggestion);
+                        _partenzaSelezionata = suggestion;
                       },
                       suggestionsCallback: Api.ricerca,
                     ),
@@ -101,7 +101,7 @@ class _SearchState extends State<Search> {
                         return Text(item.descrizione);
                       },
                       onSuggestionSelected: (suggestion) {
-                        print(suggestion);
+                        _destinazioneSelezionata = suggestion;
                       },
                       suggestionsCallback: Api.ricerca,
                     ),
