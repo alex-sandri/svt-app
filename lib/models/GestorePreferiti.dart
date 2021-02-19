@@ -16,7 +16,8 @@ class GestorePreferiti {
     if (!_preferiti.contains(preferito)) {
       _preferiti.add(preferito);
       await _aggiornaCache();
-    }
+    } else
+      throw new Exception("nome o percorso gia salvati");
   }
 
   Future<bool> rimuoviPreferito(Preferito preferito) async {

@@ -28,7 +28,7 @@ class Preferito {
       throw Exception("il nome non puo essere vuoto e deve contenere meno di 20 caratteri");
   }
 
-  get soluzione => _soluzione;
+  SoluzioneDiViaggio get soluzione => _soluzione;
 
   bool operator ==(other) => other._nome == this._nome;
 

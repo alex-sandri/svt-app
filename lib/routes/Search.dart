@@ -7,6 +7,7 @@ import 'package:svt_app/models/GestorePreferiti.dart';
 import 'package:svt_app/models/SearchResult.dart';
 import 'package:svt_app/models/Status.dart';
 import 'package:svt_app/routes/DettagliSoluzione.dart';
+import 'package:svt_app/routes/GestionePreferiti.dart';
 import 'package:svt_app/routes/Linee.dart';
 import 'package:svt_app/routes/Soluzioni.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
@@ -224,12 +225,30 @@ class _SearchState extends State<Search> {
                         ),
                       ),
                     SizedBox(height: 50),
-                    Text(
-                      "Preferiti",
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Preferiti",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            await Navigator.push(context, MaterialPageRoute(builder: (context) => GestionePreferiti()));
+                            setState(() {});
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Text(
+                              "Gestisci",
+                              style: TextStyle(color: Colors.blue, fontSize: 15),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 15,
@@ -238,7 +257,7 @@ class _SearchState extends State<Search> {
                       height: 150,
                       child: ListView.builder(
                           shrinkWrap: true,
-                          itemCount: _gestorePreferiti.quantita,
+                          itemCount: _gestorePreferiti.quantita <= 5 ? _gestorePreferiti.quantita : 5,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             return _gestorePreferiti[index].toWidget(onTap: () {
