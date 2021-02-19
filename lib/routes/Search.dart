@@ -76,7 +76,10 @@ class _SearchState extends State<Search> {
                       },
                       suggestionsCallback: Api.ricerca,
                       noItemsFoundBuilder: (context) {
-                        return Text("Nessun risultato");
+                        return ListTile(
+                          leading: Icon(Icons.clear),
+                          title: Text("Nessun risultato"),
+                        );
                       },
                     ),
                     SizedBox(height: 20),
@@ -95,7 +98,10 @@ class _SearchState extends State<Search> {
                       },
                       suggestionsCallback: Api.ricerca,
                       noItemsFoundBuilder: (context) {
-                        return Text("Nessun risultato");
+                        return ListTile(
+                          leading: Icon(Icons.clear),
+                          title: Text("Nessun risultato"),
+                        );
                       },
                     ),
                     SizedBox(height: 30),
