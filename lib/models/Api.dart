@@ -102,11 +102,9 @@ class Api {
 
     final document = parser.parse(response.data);
 
-    document.querySelectorAll(".action").forEach((action) {
-      print(action.text);
-    });
-
-    return [];
+    return document.querySelectorAll(".action").map((action) {
+      return action.text;
+    }).toList();
   }
 
   static Stream<List<Localita>> ottieniLocalita(String idLinea, int direzione) async* {

@@ -77,13 +77,23 @@ class DettagliSoluzione extends StatelessWidget {
                 );
               }).toList(),
             ),
-            FutureBuilder(
+            FutureBuilder<List<String>>(
               future: Api.ottieniIstruzioniSoluzione(soluzione),
               builder: (context, snapshot) {
+                if (!snapshot.hasData)
+                {
+                  return Container();
+                }
+
                 return ExpansionTile(
                   leading: Icon(Icons.directions),
                   title: Text("Istruzioni"),
-                  children: [],
+                  children: snapshot.data.map((istruzione) {
+                    return ListTile(
+                      leading: Icon(Icons.circle),
+                      title: Text(istruzione),
+                    );
+                  }).toList(),
                 );
               },
             ),
