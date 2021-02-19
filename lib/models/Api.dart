@@ -90,9 +90,9 @@ class Api {
     return soluzioni;
   }
 
-  static Future<void> ottieniIstruzioniSoluzione(SoluzioneDiViaggio soluzione) async {
+  static Future<List<String>> ottieniIstruzioniSoluzione(SoluzioneDiViaggio soluzione) async {
     final response = await Dio().post(
-      "http://www.mobilitaveneto.net/TP/SVT/Tp/TrovaSoluzioniViaggio",
+      "http://www.mobilitaveneto.net/TP/SVT/Tp/GetSolutionDetail",
       data: FormData.fromMap({
         "contesto": soluzione.contesto,
         "numSoluzione": soluzione.indice,
@@ -100,7 +100,13 @@ class Api {
       }),
     );
 
-    return response.data;
+    final document = parser.parse(response.data);
+
+    document.querySelectorAll(".action").forEach((action) {
+      print(action.text);
+    });
+
+    return [];
   }
 
   static Stream<List<Localita>> ottieniLocalita(String idLinea, int direzione) async* {

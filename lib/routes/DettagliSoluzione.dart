@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/SoluzioneDiViaggio.dart';
 import 'package:svt_app/routes/LocalitaView.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
@@ -75,6 +76,16 @@ class DettagliSoluzione extends StatelessWidget {
                   },
                 );
               }).toList(),
+            ),
+            FutureBuilder(
+              future: Api.ottieniIstruzioniSoluzione(soluzione),
+              builder: (context, snapshot) {
+                return ExpansionTile(
+                  leading: Icon(Icons.directions),
+                  title: Text("Istruzioni"),
+                  children: [],
+                );
+              },
             ),
           ],
         ),
