@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:svt_app/models/GestorePreferiti.dart';
+import 'package:svt_app/models/Preferito.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/SoluzioneDiViaggio.dart';
+import 'package:svt_app/models/Status.dart';
+import 'package:svt_app/routes/AggiungiPreferito.dart';
 import 'package:svt_app/routes/LocalitaView.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 
 class DettagliSoluzione extends StatelessWidget {
   final SoluzioneDiViaggio soluzione;
+  final GestorePreferiti gestorePreferiti = Status.gestorePreferiti;
 
   DettagliSoluzione(this.soluzione);
 
@@ -15,6 +20,16 @@ class DettagliSoluzione extends StatelessWidget {
     return Material(
       child: Scaffold(
         appBar: SvtAppBar(),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(
+            Icons.star,
+            size: 30,
+          ),
+          onPressed: () async {
+            Preferito p = await showModalBottomSheet(context: context, builder: (context) => AggiungiPreferito(soluzione)) as Preferito;
+            if (p != null) gestorePreferiti.aggiungiPreferito(p);
+          },
+        ),
         body: ListView(
           padding: const EdgeInsets.all(10),
           children: [

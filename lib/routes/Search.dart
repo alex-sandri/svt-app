@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:svt_app/models/Api.dart';
+import 'package:svt_app/models/GestorePreferiti.dart';
 import 'package:svt_app/models/SearchResult.dart';
+import 'package:svt_app/models/Status.dart';
+import 'package:svt_app/routes/DettagliSoluzione.dart';
+import 'package:svt_app/routes/GestionePreferiti.dart';
 import 'package:svt_app/routes/Linee.dart';
 import 'package:svt_app/routes/Soluzioni.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
@@ -14,6 +19,11 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   bool _isLoading = false;
 
+
+  GestorePreferiti _gestorePreferiti;
+
+  final Duration delay = Duration(seconds: 1);
+
   TextEditingController _partenzaController = TextEditingController();
   TextEditingController _destinazioneController = TextEditingController();
 
@@ -23,6 +33,13 @@ class _SearchState extends State<Search> {
 
   SearchResult _partenzaSelezionata;
   SearchResult _destinazioneSelezionata;
+  
+  Timer _timerDestinazione, _timerPartenza;
+
+  _SearchState() {
+    _gestorePreferiti = Status.gestorePreferiti;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -138,9 +155,66 @@ class _SearchState extends State<Search> {
                                 builder: (context) => Soluzioni(soluzioni),
                               ));
                             }
+
+                            setState(() {
+                              _isLoading = true;
+                            });
+
+                            final soluzioni = await Api.cercaSoluzioniDiViaggio(_partenzaSelezionata, _destinazioneSelezionata);
+
+                            setState(() {
+                              _isLoading = false;
+                            });
+
+                            await Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Soluzioni(soluzioni),
+                            ));
+                            setState(() {});
+
                           },
                         ),
                       ),
+                    SizedBox(height: 50),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Preferiti",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            await Navigator.push(context, MaterialPageRoute(builder: (context) => GestionePreferiti()));
+                            setState(() {});
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Text(
+                              "Gestisci",
+                              style: TextStyle(color: Colors.blue, fontSize: 15),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      height: 150,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: _gestorePreferiti.quantita <= 5 ? _gestorePreferiti.quantita : 5,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return _gestorePreferiti[index].toWidget(onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => DettagliSoluzione(_gestorePreferiti[index].soluzione)));
+                            });
+                          }),
+                    )
                   ],
                 ),
               ),

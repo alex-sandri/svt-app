@@ -1,25 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:svt_app/models/Linea.dart';
 
-class SoluzioneDiViaggio
-{
-  final String contesto;
-  final int indice;
+part 'SoluzioneDiViaggio.g.dart';
 
+@HiveType(typeId: 4)
+class SoluzioneDiViaggio {
+  
+  @HiveField(0)
   final String localitaSalita;
+  @HiveField(1)
   final String localitaDiscesa;
 
+  @HiveField(2)
   final DateTime oraPartenza;
+  @HiveField(3)
   final DateTime oraArrivo;
 
+  @HiveField(4)
   final int metriBordo;
+  @HiveField(6)
   final int metriPiedi;
+  @HiveField(7)
   final int metriTotali;
 
+  @HiveField(8)
   final int minutiBordo;
+  @HiveField(9)
   final int minutiPiedi;
+  @HiveField(10)
   final int minutiTotali;
 
+  @HiveField(11)
   final List<Linea> tratte;
 
   SoluzioneDiViaggio({
@@ -37,6 +49,7 @@ class SoluzioneDiViaggio
     @required this.minutiTotali,
     @required this.tratte,
   });
+
 
   SoluzioneDiViaggio.fromJson(Map<String, dynamic> json, String contesto, int indice): this(
     contesto: contesto,
