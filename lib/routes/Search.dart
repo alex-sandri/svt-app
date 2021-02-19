@@ -6,6 +6,7 @@ import 'package:svt_app/models/SearchResult.dart';
 import 'package:svt_app/routes/Linee.dart';
 import 'package:svt_app/routes/Soluzioni.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -71,89 +72,39 @@ class _SearchState extends State<Search> {
                       ),
                     ),
                     SizedBox(height: 30),
-                    TextFormField(
-                      controller: _partenzaController,
-                      textInputAction: TextInputAction.search,
-                      decoration: InputDecoration(
-                        labelText: "Partenza",
-                        errorText: _errorePartenza,
-                      ),
-                      onChanged: (value) async {
-                        _timerPartenza?.cancel();
-                        _timerPartenza = Timer(delay, () async {
-                          print("eseguito");
-                          final result = await Api.ricerca(value);
-                          setState(() {
-                            _partenze = result;
-                          });
-                        });
-                      },
-                    ),
-                    if (_partenze.isNotEmpty) SizedBox(height: 10),
-                    if (_partenze.isNotEmpty)
-                      DropdownButtonFormField<SearchResult>(
-                        isExpanded: true,
+                    TypeAheadFormField<SearchResult>(
+                      textFieldConfiguration: TextFieldConfiguration(
+                        controller: _partenzaController,
                         decoration: InputDecoration(
-                          labelText: "Seleziona una partenza",
-                          errorText: _errorePartenzaDropdown,
+                          labelText: "Partenza",
+                          errorText: _errorePartenza,
                         ),
-                        items: _partenze.map((item) {
-                          return DropdownMenuItem(
-                            value: item,
-                            child: Text(
-                              item.descrizione,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (selected) {
-                          setState(() {
-                            _partenzaSelezionata = selected;
-                          });
-                        },
                       ),
+                      itemBuilder: (context, itemData) {
+                        return Text(itemData.comune);
+                      },
+                      onSuggestionSelected: (suggestion) {
+                        print(suggestion);
+                      },
+                      suggestionsCallback: Api.ricerca,
+                    ),
                     SizedBox(height: 20),
-                    TextFormField(
-                      controller: _destinazioneController,
-                      textInputAction: TextInputAction.search,
-                      decoration: InputDecoration(
-                        labelText: "Destinazione",
-                        errorText: _erroreDestinazione,
-                      ),
-                      onChanged: (value) async {
-                        _timerDestinazione?.cancel();
-
-                        _timerDestinazione = Timer(delay, () async {
-                          final result = await Api.ricerca(value);
-                          setState(() {
-                            _destinazioni = result;
-                          });
-                        });
-                      },
-                    ),
-                    if (_destinazioni.isNotEmpty) SizedBox(height: 10),
-                    if (_destinazioni.isNotEmpty)
-                      DropdownButtonFormField<SearchResult>(
-                        isExpanded: true,
+                    TypeAheadFormField<SearchResult>(
+                      textFieldConfiguration: TextFieldConfiguration(
+                        controller: _partenzaController,
                         decoration: InputDecoration(
-                          labelText: "Seleziona una destinazione",
-                          errorText: _erroreDestinazioneDropdown,
+                          labelText: "Destinazione",
+                          errorText: _erroreDestinazione,
                         ),
-                        items: _destinazioni.map((item) {
-                          return DropdownMenuItem(
-                            value: item,
-                            child: Text(
-                              item.descrizione,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (selected) {
-                          setState(() {
-                            _destinazioneSelezionata = selected;
-                          });
-                        },
                       ),
+                      itemBuilder: (context, itemData) {
+                        return Text(itemData.comune);
+                      },
+                      onSuggestionSelected: (suggestion) {
+                        print(suggestion);
+                      },
+                      suggestionsCallback: Api.ricerca,
+                    ),
                     SizedBox(height: 30),
                     if (_isLoading)
                       Row(
