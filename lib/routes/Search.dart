@@ -107,40 +107,27 @@ class _SearchState extends State<Search> {
                           icon: Icon(Icons.search),
                           label: Text("Cerca"),
                           onPressed: () async {
-                            final String partenza = _partenzaController.text;
-                            final String destinazione = _destinazioneController.text;
-
                             setState(() {
-                              _errorePartenza = _erroreDestinazione = null;
+                              _errorePartenza = _partenzaSelezionata == null ? "Seleziona la partenza" : null;
+                              _erroreDestinazione = _destinazioneSelezionata == null ? "Seleziona la destinazione" : null;
                             });
 
-                            if (partenza.isEmpty) {
-                              _errorePartenza = "La partenza non può essere vuota";
+                            if (_partenzaSelezionata != null && _destinazioneSelezionata != null)
+                            {
+                              setState(() {
+                                _isLoading = true;
+                              });
+
+                              final soluzioni = await Api.cercaSoluzioniDiViaggio(_partenzaSelezionata, _destinazioneSelezionata);
+
+                              setState(() {
+                                _isLoading = false;
+                              });
+
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Soluzioni(soluzioni),
+                              ));
                             }
-
-                            if (destinazione.isEmpty) {
-                              _erroreDestinazione = "La destinazione non può essere vuota";
-                            }
-
-                            if (partenza.isEmpty || _partenzaSelezionata == null || destinazione.isEmpty || _destinazioneSelezionata == null) {
-                              setState(() {});
-
-                              return;
-                            }
-
-                            setState(() {
-                              _isLoading = true;
-                            });
-
-                            final soluzioni = await Api.cercaSoluzioniDiViaggio(_partenzaSelezionata, _destinazioneSelezionata);
-
-                            setState(() {
-                              _isLoading = false;
-                            });
-
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => Soluzioni(soluzioni),
-                            ));
                           },
                         ),
                       ),
