@@ -20,9 +20,12 @@ class DettagliSoluzione extends StatelessWidget {
       child: Scaffold(
         appBar: SvtAppBar(),
         floatingActionButton: FloatingActionButton(
-          child: Text("+"),
+          child: Icon(
+            Icons.star,
+            size: 30,
+          ),
           onPressed: () async {
-            Preferito p = await showDialog(context: context, builder: (context) => AggiungiPreferito(soluzione)) as Preferito;
+            Preferito p = await showModalBottomSheet(context: context, builder: (context) => AggiungiPreferito(soluzione)) as Preferito;
             if (p != null) gestorePreferiti.aggiungiPreferito(p);
           },
         ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:svt_app/models/Preferito.dart';
 import 'package:svt_app/models/SoluzioneDiViaggio.dart';
-import 'package:svt_app/widgets/SvtAppBar.dart';
 
 class AggiungiPreferito extends StatefulWidget {
   final SoluzioneDiViaggio soluzioneDiViaggio;
@@ -14,28 +13,48 @@ class AggiungiPreferito extends StatefulWidget {
 class _AggiungiPreferitoState extends State<AggiungiPreferito> {
   final SoluzioneDiViaggio soluzioneDiViaggio;
   TextEditingController etNome = TextEditingController();
+  String _errore = "";
 
   _AggiungiPreferitoState(this.soluzioneDiViaggio);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SvtAppBar(),
-      body: Column(
-        children: [
-          Text("aggiungi preferito"),
-          TextField(
-            controller: etNome,
-            decoration: InputDecoration(hintText: "Nome"),
-          ),
-          FlatButton(
-              onPressed: () {
-                Preferito p = Preferito(etNome.text, soluzioneDiViaggio);
-                Navigator.pop(context, p);
-              },
-              child: Text("aggiungi"))
-        ],
-      ),
+      body: SingleChildScrollView(
+          child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30),
+              child: Text(
+                "aggiungi preferito",
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              ),
+            ),
+            TextField(
+              controller: etNome,
+              decoration: InputDecoration(labelText: "nome", errorText: _errore),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            TextButton.icon(
+                onPressed: () {
+                  try {
+                    Preferito p = Preferito.create(etNome.text, soluzioneDiViaggio);
+                    Navigator.pop(context, p);
+                  } catch (e) {
+                    setState(() {
+                      _errore = e.message;
+                    });
+                  }
+                },
+                icon: Icon(Icons.add),
+                label: Text("aggiungi"))
+          ],
+        ),
+      )),
     );
   }
 }

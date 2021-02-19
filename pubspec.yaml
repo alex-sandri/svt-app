@@ -26,6 +26,7 @@ dependencies:
   hive: ^1.4.4+1
   hive_flutter: ^0.3.1
   intl: ^0.16.1
+  flutter_svg: 
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -55,6 +56,8 @@ flutter:
 
   assets:
     - assets/svt.png
+    - assets/heart.svg
+    - assets/star.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

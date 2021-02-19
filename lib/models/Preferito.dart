@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:svt_app/models/SoluzioneDiViaggio.dart';
 
@@ -19,6 +21,7 @@ class Preferito {
 
   get nome => _nome;
   set nome(String nome) {
+    nome = nome.trim();
     if (nome.length <= 20 && nome.isNotEmpty)
       _nome = nome;
     else
@@ -27,7 +30,50 @@ class Preferito {
 
   get soluzione => _soluzione;
 
-  bool operator ==(other) {
-    return other._nome == this._nome;
-  }
+  bool operator ==(other) => other._nome == this._nome;
+
+  Widget toWidget({Function() onTap}) => SizedBox(
+        width: 250,
+        child: Card(
+            color: Colors.white,
+            child: ListTile(
+              onTap: onTap,
+              title: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      _nome,
+                      style: TextStyle(fontSize: 30),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.trip_origin,
+                          size: 20,
+                        ),
+                        SizedBox(width: 5),
+                        Text(_soluzione.localitaSalita, maxLines: 1, overflow: TextOverflow.ellipsis),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.place,
+                          size: 20,
+                        ),
+                        SizedBox(width: 5),
+                        Text(_soluzione.localitaDiscesa, maxLines: 1, overflow: TextOverflow.ellipsis),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            )),
+      );
 }

@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/GestorePreferiti.dart';
 import 'package:svt_app/models/SearchResult.dart';
 import 'package:svt_app/models/Status.dart';
+import 'package:svt_app/routes/DettagliSoluzione.dart';
 import 'package:svt_app/routes/Linee.dart';
 import 'package:svt_app/routes/Soluzioni.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
@@ -221,19 +223,27 @@ class _SearchState extends State<Search> {
                         ),
                       ),
                     SizedBox(height: 50),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Preferiti",
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        ListView.builder(
-                            shrinkWrap: true, itemCount: _gestorePreferiti.quantita, itemBuilder: (context, index) => Text(_gestorePreferiti[index].nome))
-                      ],
+                    Text(
+                      "Preferiti",
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      height: 150,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: _gestorePreferiti.quantita,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return _gestorePreferiti[index].toWidget(onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => DettagliSoluzione(_gestorePreferiti[index].soluzione)));
+                            });
+                          }),
                     )
                   ],
                 ),
