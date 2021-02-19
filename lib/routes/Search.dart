@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/SearchResult.dart';
@@ -16,24 +14,15 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   bool _isLoading = false;
 
-  final Duration delay = Duration(seconds: 1);
-
   TextEditingController _partenzaController = TextEditingController();
   TextEditingController _destinazioneController = TextEditingController();
 
   String _errorePartenza;
-  String _errorePartenzaDropdown;
 
   String _erroreDestinazione;
-  String _erroreDestinazioneDropdown;
-
-  List<SearchResult> _partenze = [];
-  List<SearchResult> _destinazioni = [];
 
   SearchResult _partenzaSelezionata;
   SearchResult _destinazioneSelezionata;
-
-  Timer _timerDestinazione, _timerPartenza;
 
   @override
   Widget build(BuildContext context) {
@@ -122,23 +111,15 @@ class _SearchState extends State<Search> {
                             final String destinazione = _destinazioneController.text;
 
                             setState(() {
-                              _errorePartenza = _errorePartenzaDropdown = _erroreDestinazione = _erroreDestinazioneDropdown = null;
+                              _errorePartenza = _erroreDestinazione = null;
                             });
 
                             if (partenza.isEmpty) {
                               _errorePartenza = "La partenza non può essere vuota";
                             }
 
-                            if (_partenzaSelezionata == null) {
-                              _errorePartenzaDropdown = "Seleziona una partenza";
-                            }
-
                             if (destinazione.isEmpty) {
                               _erroreDestinazione = "La destinazione non può essere vuota";
-                            }
-
-                            if (_destinazioneSelezionata == null) {
-                              _erroreDestinazioneDropdown = "Seleziona una destinazione";
                             }
 
                             if (partenza.isEmpty || _partenzaSelezionata == null || destinazione.isEmpty || _destinazioneSelezionata == null) {
