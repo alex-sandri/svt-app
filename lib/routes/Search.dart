@@ -91,7 +91,7 @@ class _SearchState extends State<Search> {
                     SizedBox(height: 20),
                     TypeAheadFormField<SearchResult>(
                       textFieldConfiguration: TextFieldConfiguration(
-                        controller: _partenzaController,
+                        controller: _destinazioneController,
                         decoration: InputDecoration(
                           labelText: "Destinazione",
                           errorText: _erroreDestinazione,
