@@ -69,9 +69,7 @@ class _SearchState extends State<Search> {
                           errorText: _errorePartenza,
                         ),
                       ),
-                      itemBuilder: (context, item) {
-                        return Text(item.descrizione);
-                      },
+                      itemBuilder: (context, item) => item.toWidget(),
                       onSuggestionSelected: (suggestion) {
                         _partenzaSelezionata = suggestion;
                       },
@@ -89,9 +87,7 @@ class _SearchState extends State<Search> {
                           errorText: _erroreDestinazione,
                         ),
                       ),
-                      itemBuilder: (context, item) {
-                        return Text(item.descrizione);
-                      },
+                      itemBuilder: (context, item) => item.toWidget(),
                       onSuggestionSelected: (suggestion) {
                         _destinazioneSelezionata = suggestion;
                       },
