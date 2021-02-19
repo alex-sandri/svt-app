@@ -83,7 +83,7 @@ class Api {
       soluzioni.add(SoluzioneDiViaggio.fromJson(
         response.data["solutions"][i],
         response.data["contextName"],
-        i,
+        i + 1,
       ));
     }
 
