@@ -78,7 +78,7 @@ class DettagliSoluzione extends StatelessWidget {
               }).toList(),
             ),
             FutureBuilder<List<String>>(
-              future: Api.ottieniIstruzioniSoluzione(soluzione),
+              future: Api.ottieniIndicazioniSoluzione(soluzione),
               builder: (context, snapshot) {
                 if (!snapshot.hasData)
                 {
@@ -87,11 +87,11 @@ class DettagliSoluzione extends StatelessWidget {
 
                 return ExpansionTile(
                   leading: Icon(Icons.directions),
-                  title: Text("Istruzioni"),
-                  children: snapshot.data.map((istruzione) {
+                  title: Text("Indicazioni"),
+                  children: snapshot.data.map((indicazione) {
                     return ListTile(
                       leading: Icon(Icons.circle),
-                      title: Text(istruzione),
+                      title: Text(indicazione),
                     );
                   }).toList(),
                 );

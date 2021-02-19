@@ -90,7 +90,7 @@ class Api {
     return soluzioni;
   }
 
-  static Future<List<String>> ottieniIstruzioniSoluzione(SoluzioneDiViaggio soluzione) async {
+  static Future<List<String>> ottieniIndicazioniSoluzione(SoluzioneDiViaggio soluzione) async {
     final response = await Dio().post(
       "http://www.mobilitaveneto.net/TP/SVT/Tp/GetSolutionDetail",
       data: FormData.fromMap({
