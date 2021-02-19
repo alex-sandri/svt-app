@@ -32,48 +32,51 @@ class Preferito {
 
   bool operator ==(other) => other._nome == this._nome;
 
-  Widget toWidget({Function() onTap}) => SizedBox(
-        width: 250,
-        child: Card(
-            color: Colors.white,
-            child: ListTile(
-              onTap: onTap,
-              title: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      _nome,
-                      style: TextStyle(fontSize: 30),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.trip_origin,
-                          size: 20,
-                        ),
-                        SizedBox(width: 5),
-                        Text(_soluzione.localitaSalita, maxLines: 1, overflow: TextOverflow.ellipsis),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.place,
-                          size: 20,
-                        ),
-                        SizedBox(width: 5),
-                        Text(_soluzione.localitaDiscesa, maxLines: 1, overflow: TextOverflow.ellipsis),
-                      ],
-                    ),
-                  ],
-                ),
+  Widget toWidget({Function() onTap}) => Card(
+        color: Colors.white,
+        child: SizedBox(
+          width: 250,
+          child: InkWell(
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    _nome,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 30),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.trip_origin,
+                        size: 20,
+                      ),
+                      SizedBox(width: 5),
+                      Text(_soluzione.localitaSalita, maxLines: 1, overflow: TextOverflow.ellipsis),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.place,
+                        size: 20,
+                      ),
+                      SizedBox(width: 5),
+                      Text(_soluzione.localitaDiscesa, maxLines: 1, overflow: TextOverflow.ellipsis),
+                    ],
+                  ),
+                ],
               ),
-            )),
+            ),
+          ),
+        ),
       );
 }

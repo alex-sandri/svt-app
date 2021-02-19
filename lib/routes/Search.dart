@@ -216,9 +216,10 @@ class _SearchState extends State<Search> {
                               _isLoading = false;
                             });
 
-                            Navigator.of(context).push(MaterialPageRoute(
+                            await Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => Soluzioni(soluzioni),
                             ));
+                            setState(() {});
                           },
                         ),
                       ),
