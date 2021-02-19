@@ -71,7 +71,7 @@ class _SearchState extends State<Search> {
                       ),
                       itemBuilder: (context, item) => item.toWidget(),
                       onSuggestionSelected: (suggestion) {
-                        _partenzaController.text = suggestion.descrizione;
+                        _partenzaController.text = suggestion.nome;
                         _partenzaSelezionata = suggestion;
                       },
                       suggestionsCallback: Api.ricerca,
@@ -93,7 +93,7 @@ class _SearchState extends State<Search> {
                       ),
                       itemBuilder: (context, item) => item.toWidget(),
                       onSuggestionSelected: (suggestion) {
-                        _destinazioneController.text = suggestion.descrizione;
+                        _destinazioneController.text = suggestion.nome;
                         _destinazioneSelezionata = suggestion;
                       },
                       suggestionsCallback: Api.ricerca,
