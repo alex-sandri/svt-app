@@ -51,6 +51,21 @@ class SearchResult
 
     return Api.ottieniCoordinate(comuneIstat, idVia);
   }
+
+  Widget toWidget() {
+    return ListTile(
+      leading: Icon(
+        tipo == SearchResultType.FERMATA
+          ? Icons.directions_bus_rounded
+          : (
+            tipo == SearchResultType.INDIRIZZO
+              ? Icons.home
+              : Icons.place
+          ),
+      ),
+      title: Text(descrizione),
+    );
+  }
 }
 
 enum SearchResultType
