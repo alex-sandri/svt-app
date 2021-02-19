@@ -90,7 +90,18 @@ class DettagliSoluzione extends StatelessWidget {
                   title: Text("Indicazioni"),
                   children: snapshot.data.map((indicazione) {
                     return ListTile(
-                      leading: Icon(Icons.circle),
+                      leading: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Icon(Icons.circle),
+                          Text(
+                            "${snapshot.data.indexOf(indicazione) + 1}",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
                       title: Text(indicazione),
                     );
                   }).toList(),
