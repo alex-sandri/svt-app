@@ -103,7 +103,10 @@ class Api {
     final document = parser.parse(response.data);
 
     return document.querySelectorAll(".action").map((action) {
-      return action.text;
+      return action.text
+        .replaceFirst("( Mappa )", "")
+        .replaceFirst("( Orario - Mappa )", "")
+        .trim();
     }).toList();
   }
 
