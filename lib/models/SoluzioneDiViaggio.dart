@@ -6,7 +6,6 @@ part 'SoluzioneDiViaggio.g.dart';
 
 @HiveType(typeId: 4)
 class SoluzioneDiViaggio {
-  
   @HiveField(0)
   final String localitaSalita;
   @HiveField(1)
@@ -19,6 +18,7 @@ class SoluzioneDiViaggio {
 
   @HiveField(4)
   final int metriBordo;
+
   @HiveField(6)
   final int metriPiedi;
   @HiveField(7)
@@ -33,6 +33,12 @@ class SoluzioneDiViaggio {
 
   @HiveField(11)
   final List<Linea> tratte;
+
+  @HiveField(12)
+  final String contesto;
+
+  @HiveField(13)
+  final int indice;
 
   SoluzioneDiViaggio({
     @required this.contesto,
@@ -50,34 +56,30 @@ class SoluzioneDiViaggio {
     @required this.tratte,
   });
 
-
-  SoluzioneDiViaggio.fromJson(Map<String, dynamic> json, String contesto, int indice): this(
-    contesto: contesto,
-    indice: indice,
-    localitaSalita: json["LocalitaSalita"],
-    localitaDiscesa: json["LocalitaDiscesa"],
-    oraPartenza: DateTime.fromMillisecondsSinceEpoch(
-      int.parse(
-        (json["DataOraPartenza"] as String)
-          .replaceFirst("/Date(", "")
-          .replaceFirst(")/", ""),
-      ),
-    ).toUtc().add(Duration(hours: 1)),
-    oraArrivo: DateTime.fromMillisecondsSinceEpoch(
-      int.parse(
-        (json["DataOraArrivo"] as String)
-          .replaceFirst("/Date(", "")
-          .replaceFirst(")/", ""),
-      ),
-    ).toUtc().add(Duration(hours: 1)),
-    metriBordo: json["MetriBordo"],
-    metriPiedi: json["MetriPiedi"],
-    metriTotali: json["MetriTotali"],
-    minutiBordo: json["MinutiBordo"],
-    minutiPiedi: json["MinutiPiedi"],
-    minutiTotali: json["MinutiTotali"],
-    tratte: (json["Tratte"] as List).map((tratta) {
-      return Linea.fromJson(tratta["Linea"]);
-    }).toList(),
-  );
+  SoluzioneDiViaggio.fromJson(Map<String, dynamic> json, String contesto, int indice)
+      : this(
+          contesto: contesto,
+          indice: indice,
+          localitaSalita: json["LocalitaSalita"],
+          localitaDiscesa: json["LocalitaDiscesa"],
+          oraPartenza: DateTime.fromMillisecondsSinceEpoch(
+            int.parse(
+              (json["DataOraPartenza"] as String).replaceFirst("/Date(", "").replaceFirst(")/", ""),
+            ),
+          ).toUtc().add(Duration(hours: 1)),
+          oraArrivo: DateTime.fromMillisecondsSinceEpoch(
+            int.parse(
+              (json["DataOraArrivo"] as String).replaceFirst("/Date(", "").replaceFirst(")/", ""),
+            ),
+          ).toUtc().add(Duration(hours: 1)),
+          metriBordo: json["MetriBordo"],
+          metriPiedi: json["MetriPiedi"],
+          metriTotali: json["MetriTotali"],
+          minutiBordo: json["MinutiBordo"],
+          minutiPiedi: json["MinutiPiedi"],
+          minutiTotali: json["MinutiTotali"],
+          tratte: (json["Tratte"] as List).map((tratta) {
+            return Linea.fromJson(tratta["Linea"]);
+          }).toList(),
+        );
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:svt_app/models/Api.dart';
@@ -19,7 +21,6 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   bool _isLoading = false;
 
-
   GestorePreferiti _gestorePreferiti;
 
   final Duration delay = Duration(seconds: 1);
@@ -33,13 +34,12 @@ class _SearchState extends State<Search> {
 
   SearchResult _partenzaSelezionata;
   SearchResult _destinazioneSelezionata;
-  
+
   Timer _timerDestinazione, _timerPartenza;
 
   _SearchState() {
     _gestorePreferiti = Status.gestorePreferiti;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -139,8 +139,7 @@ class _SearchState extends State<Search> {
                               _erroreDestinazione = _destinazioneSelezionata == null ? "Seleziona la destinazione" : null;
                             });
 
-                            if (_partenzaSelezionata != null && _destinazioneSelezionata != null)
-                            {
+                            if (_partenzaSelezionata != null && _destinazioneSelezionata != null) {
                               setState(() {
                                 _isLoading = true;
                               });
@@ -170,7 +169,6 @@ class _SearchState extends State<Search> {
                               builder: (context) => Soluzioni(soluzioni),
                             ));
                             setState(() {});
-
                           },
                         ),
                       ),
