@@ -76,7 +76,38 @@ class Api {
       }),
     );
 
-    return (response.data["solutions"] as List).map((item) => SoluzioneDiViaggio.fromJson(item)).toList();
+    List<SoluzioneDiViaggio> soluzioni = [];
+
+    for (int i = 0; i < (response.data["solutions"] as List).length; i++)
+    {
+      soluzioni.add(SoluzioneDiViaggio.fromJson(
+        response.data["solutions"][i],
+        response.data["contextName"],
+        i + 1,
+      ));
+    }
+
+    return soluzioni;
+  }
+
+  static Future<List<String>> ottieniIndicazioniSoluzione(SoluzioneDiViaggio soluzione) async {
+    final response = await Dio().post(
+      "http://www.mobilitaveneto.net/TP/SVT/Tp/GetSolutionDetail",
+      data: FormData.fromMap({
+        "contesto": soluzione.contesto,
+        "numSoluzione": soluzione.indice,
+        "tratte": "",
+      }),
+    );
+
+    final document = parser.parse(response.data);
+
+    return document.querySelectorAll(".action").map((action) {
+      return action.text
+        .replaceFirst("( Mappa )", "")
+        .replaceFirst("( Orario - Mappa )", "")
+        .trim();
+    }).toList();
   }
 
   static Stream<List<Localita>> ottieniLocalita(String idLinea, int direzione) async* {

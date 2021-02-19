@@ -27,6 +27,7 @@ dependencies:
   hive_flutter: ^0.3.1
   intl: ^0.16.1
   flutter_svg: 
+  flutter_typeahead: ^2.0.0
   flutter:
     sdk: flutter
   flutter_localizations:
