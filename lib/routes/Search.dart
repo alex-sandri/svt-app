@@ -76,6 +76,9 @@ class _SearchState extends State<Search> {
                         _partenzaSelezionata = suggestion;
                       },
                       suggestionsCallback: Api.ricerca,
+                      noItemsFoundBuilder: (context) {
+                        return Text("Nessun risultato");
+                      },
                     ),
                     SizedBox(height: 20),
                     TypeAheadFormField<SearchResult>(
@@ -93,6 +96,9 @@ class _SearchState extends State<Search> {
                         _destinazioneSelezionata = suggestion;
                       },
                       suggestionsCallback: Api.ricerca,
+                      noItemsFoundBuilder: (context) {
+                        return Text("Nessun risultato");
+                      },
                     ),
                     SizedBox(height: 30),
                     if (_isLoading)
