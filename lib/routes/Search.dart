@@ -80,8 +80,8 @@ class _SearchState extends State<Search> {
                           errorText: _errorePartenza,
                         ),
                       ),
-                      itemBuilder: (context, itemData) {
-                        return Text(itemData.comune);
+                      itemBuilder: (context, item) {
+                        return Text(item.descrizione);
                       },
                       onSuggestionSelected: (suggestion) {
                         print(suggestion);
@@ -97,8 +97,8 @@ class _SearchState extends State<Search> {
                           errorText: _erroreDestinazione,
                         ),
                       ),
-                      itemBuilder: (context, itemData) {
-                        return Text(itemData.comune);
+                      itemBuilder: (context, item) {
+                        return Text(item.descrizione);
                       },
                       onSuggestionSelected: (suggestion) {
                         print(suggestion);
