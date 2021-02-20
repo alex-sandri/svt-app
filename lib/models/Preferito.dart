@@ -22,10 +22,17 @@ class Preferito {
   get nome => _nome;
   set nome(String nome) {
     nome = nome.trim();
-    if (nome.length <= 20 && nome.isNotEmpty)
-      _nome = nome;
-    else
-      throw Exception("il nome non puo essere vuoto e deve contenere meno di 20 caratteri");
+
+    if (nome.isEmpty)
+    {
+      throw Exception("Il nome non può essere vuoto");
+    }
+    else if (nome.length > 20)
+    {
+      throw Exception("Il nome deve contenere meno di 20 caratteri");
+    }
+
+    _nome = nome;
   }
 
   SoluzioneDiViaggio get soluzione => _soluzione;
