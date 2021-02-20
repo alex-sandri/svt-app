@@ -144,25 +144,12 @@ class _SearchState extends State<Search> {
                                 _isLoading = false;
                               });
 
-                              Navigator.of(context).push(MaterialPageRoute(
+                              await Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => Soluzioni(soluzioni),
                               ));
+
+                              setState(() {});
                             }
-
-                            setState(() {
-                              _isLoading = true;
-                            });
-
-                            final soluzioni = await Api.cercaSoluzioniDiViaggio(_partenzaSelezionata, _destinazioneSelezionata);
-
-                            setState(() {
-                              _isLoading = false;
-                            });
-
-                            await Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => Soluzioni(soluzioni),
-                            ));
-                            setState(() {});
                           },
                         ),
                       ),
