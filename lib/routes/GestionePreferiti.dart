@@ -31,6 +31,13 @@ class _GestionePreferitiState extends State<GestionePreferiti> {
             itemCount: _gestionePreferiti.quantita,
             itemBuilder: (context, index) => Dismissible(
                 key: Key(_gestionePreferiti[index].toString()),
+                background: Container(
+                  color: Colors.red,
+                  child: Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                  ),
+                ),
                 onDismissed: (direction) async {
                   await _gestionePreferiti.rimuoviPreferito(_gestionePreferiti[index]);
                   Scaffold.of(context).showSnackBar(SnackBar(content: Text("elemento ${_gestionePreferiti[index].nome} eliminato")));
