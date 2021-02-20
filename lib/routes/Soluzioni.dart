@@ -44,7 +44,7 @@ class Soluzioni extends StatelessWidget {
 
                 return ListTile(
                   isThreeLine: true,
-                  leading: Icon(Icons.north_east),
+                  leading: Icon(Icons.trip_origin),
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -67,7 +67,7 @@ class Soluzioni extends StatelessWidget {
                       ),
                     ],
                   ),
-                  trailing: Icon(Icons.south_east),
+                  trailing: Icon(Icons.place),
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
