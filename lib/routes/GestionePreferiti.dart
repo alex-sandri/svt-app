@@ -28,8 +28,18 @@ class _GestionePreferitiState extends State<GestionePreferiti> {
           ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: _gestionePreferiti.quantita,
-            itemBuilder: (context, index) => Dismissible(
+            itemCount: _gestionePreferiti.quantita > 0
+              ? _gestionePreferiti.quantita
+              : 1,
+            itemBuilder: (context, index) {
+              if (_gestionePreferiti.quantita == 0)
+              {
+                return ListTile(
+                  title: Text("Non hai ancora aggiunto nulla ai preferiti"),
+                );
+              }
+
+              return Dismissible(
                 key: Key(_gestionePreferiti[index].toString()),
                 background: Container(
                   color: Colors.red,
@@ -72,8 +82,10 @@ class _GestionePreferitiState extends State<GestionePreferiti> {
                       )
                     ],
                   ),
-                )),
-          )
+                ),
+              );
+            },
+          ),
         ],
       ),
     );
