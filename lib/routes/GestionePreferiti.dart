@@ -39,8 +39,11 @@ class _GestionePreferitiState extends State<GestionePreferiti> {
                   ),
                 ),
                 onDismissed: (direction) async {
+                  final String nome = _gestionePreferiti[index].nome;
+
                   await _gestionePreferiti.rimuoviPreferito(_gestionePreferiti[index]);
-                  Scaffold.of(context).showSnackBar(SnackBar(content: Text("elemento ${_gestionePreferiti[index].nome} eliminato")));
+
+                  Scaffold.of(context).showSnackBar(SnackBar(content: Text("Preferito '$nome' eliminato")));
                 },
                 child: ListTile(
                   onTap: () async {
