@@ -12,8 +12,10 @@ class AggiungiPreferito extends StatefulWidget {
 
 class _AggiungiPreferitoState extends State<AggiungiPreferito> {
   final SoluzioneDiViaggio soluzioneDiViaggio;
+
   TextEditingController etNome = TextEditingController();
-  String _errore = "";
+
+  String _errore;
 
   _AggiungiPreferitoState(this.soluzioneDiViaggio);
 
