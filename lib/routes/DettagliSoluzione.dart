@@ -21,6 +21,7 @@ class DettagliSoluzione extends StatelessWidget {
       child: Scaffold(
         appBar: SvtAppBar(),
         floatingActionButton: FloatingActionButton(
+          tooltip: "Aggiungi ai Preferiti",
           child: Icon(
             Icons.star,
             size: 30,
