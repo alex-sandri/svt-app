@@ -130,10 +130,16 @@ class _SearchState extends State<Search> {
                           onPressed: () async {
                             setState(() {
                               _errorePartenza = _partenzaSelezionata == null ? "Seleziona la partenza" : null;
-                              _erroreDestinazione = _destinazioneSelezionata == null ? "Seleziona la destinazione" : null;
+                              _erroreDestinazione = _destinazioneSelezionata == null
+                                ? "Seleziona la destinazione"
+                                : (
+                                    _partenzaSelezionata.nome == _destinazioneSelezionata.nome
+                                    ? "La destinazione deve essere diversa dalla partenza"
+                                    : null
+                                );
                             });
 
-                            if (_partenzaSelezionata != null && _destinazioneSelezionata != null) {
+                            if (_errorePartenza != null && _erroreDestinazione != null) {
                               setState(() {
                                 _isLoading = true;
                               });
