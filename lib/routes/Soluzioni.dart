@@ -26,7 +26,6 @@ class Soluzioni extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 30),
             ...soluzioni.map((soluzione) {
               return ListTile(
                 isThreeLine: true,
