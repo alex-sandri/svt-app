@@ -54,6 +54,8 @@ class _GestionePreferitiState extends State<GestionePreferiti> {
                   await _gestionePreferiti.rimuoviPreferito(_gestionePreferiti[index]);
 
                   Scaffold.of(context).showSnackBar(SnackBar(content: Text("Preferito '$nome' eliminato")));
+
+                  setState(() {});
                 },
                 child: ListTile(
                   onTap: () async {
@@ -70,14 +72,14 @@ class _GestionePreferitiState extends State<GestionePreferiti> {
                       Row(
                         children: [
                           Icon(Icons.trip_origin),
-                          Text(_gestionePreferiti[index].soluzione.localitaSalita, maxLines: 1, overflow: TextOverflow.ellipsis)
+                          Text(_gestionePreferiti[index].partenza.nome, maxLines: 1, overflow: TextOverflow.ellipsis)
                         ],
                       ),
                       SizedBox(height: 40),
                       Row(
                         children: [
                           Icon(Icons.place),
-                          Text(_gestionePreferiti[index].soluzione.localitaDiscesa, maxLines: 1, overflow: TextOverflow.ellipsis)
+                          Text(_gestionePreferiti[index].destinazione.nome, maxLines: 1, overflow: TextOverflow.ellipsis)
                         ],
                       )
                     ],
