@@ -17,8 +17,8 @@ void main() async {
   Hive.registerAdapter(LineaAdapter()); // 0
   Hive.registerAdapter(OrarioAdapter()); // 1
   Hive.registerAdapter(LocalitaAdapter()); // 2
-  Hive.registerAdapter(PreferitoAdapter());
-  Hive.registerAdapter(SoluzioneDiViaggioAdapter());
+  Hive.registerAdapter(PreferitoAdapter()); // 3
+  Hive.registerAdapter(SoluzioneDiViaggioAdapter()); // 4
 
   await Hive.openBox("cache");
   await Hive.openBox("preferiti");

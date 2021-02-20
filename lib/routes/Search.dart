@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:svt_app/models/Api.dart';
@@ -23,8 +21,6 @@ class _SearchState extends State<Search> {
 
   GestorePreferiti _gestorePreferiti;
 
-  final Duration delay = Duration(seconds: 1);
-
   TextEditingController _partenzaController = TextEditingController();
   TextEditingController _destinazioneController = TextEditingController();
 
@@ -34,8 +30,6 @@ class _SearchState extends State<Search> {
 
   SearchResult _partenzaSelezionata;
   SearchResult _destinazioneSelezionata;
-
-  Timer _timerDestinazione, _timerPartenza;
 
   _SearchState() {
     _gestorePreferiti = Status.gestorePreferiti;
