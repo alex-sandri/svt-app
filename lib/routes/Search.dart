@@ -170,18 +170,13 @@ class _SearchState extends State<Search> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () async {
+                        TextButton.icon(
+                          icon: Icon(Icons.settings),
+                          label: Text("Gestisci"),
+                          onPressed: () async {
                             await Navigator.push(context, MaterialPageRoute(builder: (context) => GestionePreferiti()));
                             setState(() {});
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Text(
-                              "Gestisci",
-                              style: TextStyle(color: Colors.blue, fontSize: 15),
-                            ),
-                          ),
                         ),
                       ],
                     ),
@@ -191,15 +186,29 @@ class _SearchState extends State<Search> {
                     SizedBox(
                       height: 150,
                       child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: _gestorePreferiti.quantita <= 5 ? _gestorePreferiti.quantita : 5,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return _gestorePreferiti[index].toWidget(onTap: () {
+                        shrinkWrap: true,
+                        itemCount: _gestorePreferiti.quantita <= 5
+                          ? (
+                              _gestorePreferiti.quantita > 0
+                                ? _gestorePreferiti.quantita
+                                : 1
+                            )
+                          : 5,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          if (_gestorePreferiti.quantita == 0)
+                          {
+                            return Text("Non hai ancora aggiunto nulla ai preferiti");
+                          }
+
+                          return _gestorePreferiti[index].toWidget(
+                            onTap: () {
                               Navigator.push(context, MaterialPageRoute(builder: (context) => DettagliSoluzione(_gestorePreferiti[index].soluzione)));
-                            });
-                          }),
-                    )
+                            },
+                          );
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
