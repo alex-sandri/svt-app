@@ -21,6 +21,7 @@ class DettagliSoluzione extends StatelessWidget {
       child: Scaffold(
         appBar: SvtAppBar(),
         floatingActionButton: FloatingActionButton(
+          tooltip: "Aggiungi ai Preferiti",
           child: Icon(
             Icons.star,
             size: 30,
@@ -31,16 +32,17 @@ class DettagliSoluzione extends StatelessWidget {
           },
         ),
         body: ListView(
-          padding: const EdgeInsets.all(10),
           children: [
-            Text(
-              "Dettaglio soluzione",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Text(
+                "Dettaglio soluzione",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-            SizedBox(height: 30),
             ListTile(
               leading: Icon(Icons.trip_origin),
               title: Text(DateFormat.Hm().format(soluzione.oraPartenza)),
