@@ -139,7 +139,7 @@ class _SearchState extends State<Search> {
                                 );
                             });
 
-                            if (_errorePartenza != null && _erroreDestinazione != null) {
+                            if (_errorePartenza == null && _erroreDestinazione == null) {
                               setState(() {
                                 _isLoading = true;
                               });
