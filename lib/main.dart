@@ -39,7 +39,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "SVT",
       theme: ThemeData.light().copyWith(
-        floatingActionButtonTheme: FloatingActionButtonThemeData(),
         scaffoldBackgroundColor: Colors.white,
         accentColor: Colors.red,
         backgroundColor: Colors.orange,
@@ -90,6 +89,9 @@ class MyApp extends StatelessWidget {
               borderRadius: BorderRadius.circular(5),
             )),
           ),
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: Colors.red,
         ),
       ),
       localizationsDelegates: [
