@@ -26,42 +26,58 @@ class Soluzioni extends StatelessWidget {
                 ),
               ),
             ),
-            ...soluzioni.map((soluzione) {
-              return ListTile(
-                isThreeLine: true,
-                leading: Icon(Icons.north_east),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(DateFormat.Hm().format(soluzione.oraPartenza)),
-                    Text(DateFormat.Hm().format(soluzione.oraArrivo)),
-                  ],
-                ),
-                subtitle: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Text(soluzione.localitaSalita),
-                    ),
-                    Expanded(
-                      child: Text(
-                        soluzione.localitaDiscesa,
-                        textAlign: TextAlign.end,
-                      ),
-                    ),
-                  ],
-                ),
-                trailing: Icon(Icons.south_east),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => DettagliSoluzione(soluzione),
-                    ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: soluzioni.isNotEmpty
+                ? soluzioni.length
+                : 1,
+              itemBuilder: (context, index) {
+                if (soluzioni.isEmpty)
+                {
+                  return ListTile(
+                    title: Text("Nessuna soluzione trovata"),
                   );
-                },
-              );
-            }),
+                }
+
+                final soluzione = soluzioni[index];
+
+                return ListTile(
+                  isThreeLine: true,
+                  leading: Icon(Icons.north_east),
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(DateFormat.Hm().format(soluzione.oraPartenza)),
+                      Text(DateFormat.Hm().format(soluzione.oraArrivo)),
+                    ],
+                  ),
+                  subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Text(soluzione.localitaSalita),
+                      ),
+                      Expanded(
+                        child: Text(
+                          soluzione.localitaDiscesa,
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                    ],
+                  ),
+                  trailing: Icon(Icons.south_east),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => DettagliSoluzione(soluzione),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
           ],
         ),
       ),
