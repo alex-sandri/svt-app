@@ -29,6 +29,7 @@ class Soluzioni extends StatelessWidget {
             SizedBox(height: 30),
             ...soluzioni.map((soluzione) {
               return ListTile(
+                isThreeLine: true,
                 leading: Icon(Icons.north_east),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
