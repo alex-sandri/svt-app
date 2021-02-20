@@ -73,6 +73,7 @@ class _SearchState extends State<Search> {
                     ),
                     SizedBox(height: 30),
                     TypeAheadFormField<SearchResult>(
+                      keepSuggestionsOnLoading: false,
                       textFieldConfiguration: TextFieldConfiguration(
                         controller: _partenzaController,
                         decoration: InputDecoration(
@@ -95,6 +96,7 @@ class _SearchState extends State<Search> {
                     ),
                     SizedBox(height: 20),
                     TypeAheadFormField<SearchResult>(
+                      keepSuggestionsOnLoading: false,
                       textFieldConfiguration: TextFieldConfiguration(
                         controller: _destinazioneController,
                         decoration: InputDecoration(
