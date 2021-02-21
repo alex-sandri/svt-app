@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/GestorePreferiti.dart';
 import 'package:svt_app/routes/Soluzioni.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
@@ -62,11 +61,8 @@ class _GestionePreferitiState extends State<GestionePreferiti> {
                 },
                 child: ListTile(
                   onTap: () async {
-                    final soluzioni = await Api.cercaSoluzioniDiViaggio(preferito.partenza, preferito.destinazione);
-
                     await Navigator.push(context, MaterialPageRoute(
                       builder: (context) => Soluzioni(
-                        soluzioni,
                         partenza: preferito.partenza,
                         destinazione: preferito.destinazione,
                       ),

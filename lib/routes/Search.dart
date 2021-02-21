@@ -153,7 +153,6 @@ class _SearchState extends State<Search> {
 
                               await Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => Soluzioni(
-                                  soluzioni,
                                   partenza: _partenzaSelezionata,
                                   destinazione: _destinazioneSelezionata,
                                 ),
@@ -210,15 +209,14 @@ class _SearchState extends State<Search> {
 
                           return preferito.toWidget(
                             onTap: () async {
-                              final soluzioni = await Api.cercaSoluzioniDiViaggio(preferito.partenza, preferito.destinazione);
-
-                              Navigator.push(context, MaterialPageRoute(
+                              await Navigator.push(context, MaterialPageRoute(
                                 builder: (context) => Soluzioni(
-                                  soluzioni,
                                   partenza: preferito.partenza,
                                   destinazione: preferito.destinazione,
                                 ),
                               ));
+
+                              setState(() {});
                             },
                           );
                         },
