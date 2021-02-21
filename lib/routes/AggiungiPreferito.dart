@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:svt_app/models/Preferito.dart';
-import 'package:svt_app/models/SoluzioneDiViaggio.dart';
+import 'package:svt_app/models/SearchResult.dart';
 
 class AggiungiPreferito extends StatefulWidget {
-  final SoluzioneDiViaggio soluzioneDiViaggio;
+  final SearchResult partenza;
+  final SearchResult destinazione;
 
-  AggiungiPreferito(this.soluzioneDiViaggio);
+  AggiungiPreferito({
+    @required this.partenza,
+    @required this.destinazione,
+  });
+
   @override
-  _AggiungiPreferitoState createState() => _AggiungiPreferitoState(soluzioneDiViaggio);
+  _AggiungiPreferitoState createState() => _AggiungiPreferitoState();
 }
 
 class _AggiungiPreferitoState extends State<AggiungiPreferito> {
-  final SoluzioneDiViaggio soluzioneDiViaggio;
-
   TextEditingController etNome = TextEditingController();
 
   String _errore;
-
-  _AggiungiPreferitoState(this.soluzioneDiViaggio);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,11 @@ class _AggiungiPreferitoState extends State<AggiungiPreferito> {
                 child: TextButton.icon(
                   onPressed: () {
                     try {
-                      Preferito p = Preferito.create(etNome.text, soluzioneDiViaggio);
+                      Preferito p = Preferito.create(
+                        etNome.text,
+                        partenza: widget.partenza,
+                        destinazione: widget.destinazione,
+                      );
                       Navigator.pop(context, p);
                     } catch (e) {
                       setState(() {

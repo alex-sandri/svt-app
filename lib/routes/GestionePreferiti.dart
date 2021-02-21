@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:svt_app/models/GestorePreferiti.dart';
-import 'package:svt_app/routes/DettagliSoluzione.dart';
+import 'package:svt_app/routes/Soluzioni.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 import 'package:svt_app/models/Status.dart';
 
@@ -39,8 +39,10 @@ class _GestionePreferitiState extends State<GestionePreferiti> {
                 );
               }
 
+              final preferito = _gestionePreferiti[index];
+
               return Dismissible(
-                key: Key(_gestionePreferiti[index].toString()),
+                key: Key(preferito.toString()),
                 background: Container(
                   color: Colors.red,
                   child: Icon(
@@ -49,19 +51,27 @@ class _GestionePreferitiState extends State<GestionePreferiti> {
                   ),
                 ),
                 onDismissed: (direction) async {
-                  final String nome = _gestionePreferiti[index].nome;
+                  final String nome = preferito.nome;
 
-                  await _gestionePreferiti.rimuoviPreferito(_gestionePreferiti[index]);
+                  await _gestionePreferiti.rimuoviPreferito(preferito);
 
                   Scaffold.of(context).showSnackBar(SnackBar(content: Text("Preferito '$nome' eliminato")));
+
+                  setState(() {});
                 },
                 child: ListTile(
                   onTap: () async {
-                    await Navigator.push(context, MaterialPageRoute(builder: (context) => DettagliSoluzione(_gestionePreferiti[index].soluzione)));
+                    await Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => Soluzioni(
+                        partenza: preferito.partenza,
+                        destinazione: preferito.destinazione,
+                      ),
+                    ));
+
                     setState(() {});
                   },
                   title: Text(
-                    _gestionePreferiti[index].nome,
+                    preferito.nome,
                     style: TextStyle(fontSize: 20),
                   ),
                   subtitle: Row(
@@ -70,14 +80,14 @@ class _GestionePreferitiState extends State<GestionePreferiti> {
                       Row(
                         children: [
                           Icon(Icons.trip_origin),
-                          Text(_gestionePreferiti[index].soluzione.localitaSalita, maxLines: 1, overflow: TextOverflow.ellipsis)
+                          Text(preferito.partenza.nome, maxLines: 1, overflow: TextOverflow.ellipsis)
                         ],
                       ),
                       SizedBox(height: 40),
                       Row(
                         children: [
                           Icon(Icons.place),
-                          Text(_gestionePreferiti[index].soluzione.localitaDiscesa, maxLines: 1, overflow: TextOverflow.ellipsis)
+                          Text(preferito.destinazione.nome, maxLines: 1, overflow: TextOverflow.ellipsis)
                         ],
                       )
                     ],

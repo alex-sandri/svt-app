@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:svt_app/models/SoluzioneDiViaggio.dart';
+import 'package:svt_app/models/SearchResult.dart';
 
 part 'Preferito.g.dart';
 
@@ -9,14 +9,24 @@ part 'Preferito.g.dart';
 class Preferito {
   @HiveField(0)
   String _nome;
+
   @HiveField(1)
-  SoluzioneDiViaggio _soluzione;
+  final SearchResult partenza;
 
-  Preferito(this._nome, this._soluzione);
+  @HiveField(2)
+  final SearchResult destinazione;
 
-  Preferito.create(String nome, SoluzioneDiViaggio soluzioneDiViaggio) {
+  Preferito(this._nome, {
+    @required this.partenza,
+    @required this.destinazione,
+  });
+
+  Preferito.create(String nome, {
+    @required this.partenza,
+    @required this.destinazione,
+  })
+  {
     this.nome = nome;
-    _soluzione = soluzioneDiViaggio;
   }
 
   get nome => _nome;
@@ -35,55 +45,55 @@ class Preferito {
     _nome = nome;
   }
 
-  SoluzioneDiViaggio get soluzione => _soluzione;
-
   bool operator ==(other) => other._nome == this._nome;
 
-  Widget toWidget({Function() onTap}) => Card(
-        color: Colors.white,
-        child: SizedBox(
-          width: 250,
-          child: InkWell(
-            onTap: onTap,
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    _nome,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 30),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.trip_origin,
-                        size: 20,
-                      ),
-                      SizedBox(width: 5),
-                      Text(_soluzione.localitaSalita, maxLines: 1, overflow: TextOverflow.ellipsis),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.place,
-                        size: 20,
-                      ),
-                      SizedBox(width: 5),
-                      Text(_soluzione.localitaDiscesa, maxLines: 1, overflow: TextOverflow.ellipsis),
-                    ],
-                  ),
-                ],
-              ),
+  Widget toWidget({Function() onTap}) {
+    return Card(
+      color: Colors.white,
+      child: SizedBox(
+        width: 250,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  _nome,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 30),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.trip_origin,
+                      size: 20,
+                    ),
+                    SizedBox(width: 5),
+                    Text(partenza.nome, maxLines: 1, overflow: TextOverflow.ellipsis),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.place,
+                      size: 20,
+                    ),
+                    SizedBox(width: 5),
+                    Text(destinazione.nome, maxLines: 1, overflow: TextOverflow.ellipsis),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
-      );
+      ),
+    );
+  }
 }
