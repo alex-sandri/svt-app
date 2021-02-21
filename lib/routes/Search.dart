@@ -141,16 +141,6 @@ class _SearchState extends State<Search> {
                             });
 
                             if (_errorePartenza == null && _erroreDestinazione == null) {
-                              setState(() {
-                                _isLoading = true;
-                              });
-
-                              final soluzioni = await Api.cercaSoluzioniDiViaggio(_partenzaSelezionata, _destinazioneSelezionata);
-
-                              setState(() {
-                                _isLoading = false;
-                              });
-
                               await Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => Soluzioni(
                                   partenza: _partenzaSelezionata,
