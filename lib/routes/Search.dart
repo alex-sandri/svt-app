@@ -4,7 +4,6 @@ import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/GestorePreferiti.dart';
 import 'package:svt_app/models/SearchResult.dart';
 import 'package:svt_app/models/Status.dart';
-import 'package:svt_app/routes/DettagliSoluzione.dart';
 import 'package:svt_app/routes/GestionePreferiti.dart';
 import 'package:svt_app/routes/Linee.dart';
 import 'package:svt_app/routes/Soluzioni.dart';
@@ -203,9 +202,15 @@ class _SearchState extends State<Search> {
                             return Text("Non hai ancora aggiunto nulla ai preferiti");
                           }
 
-                          return _gestorePreferiti[index].toWidget(
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => DettagliSoluzione(_gestorePreferiti[index].soluzione)));
+                          final preferito = _gestorePreferiti[index];
+
+                          return preferito.toWidget(
+                            onTap: () async {
+                              final soluzioni = await Api.cercaSoluzioniDiViaggio(preferito.partenza, preferito.destinazione);
+
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) => Soluzioni(soluzioni)
+                              ));
                             },
                           );
                         },

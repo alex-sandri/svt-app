@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:svt_app/models/Preferito.dart';
 import 'package:svt_app/models/SoluzioneDiViaggio.dart';
+import 'package:svt_app/models/Status.dart';
+import 'package:svt_app/routes/AggiungiPreferito.dart';
 import 'package:svt_app/routes/DettagliSoluzione.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 
@@ -79,6 +82,24 @@ class Soluzioni extends StatelessWidget {
               },
             ),
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          tooltip: "Aggiungi ai Preferiti",
+          child: Icon(
+            Icons.star,
+            size: 30,
+          ),
+          onPressed: () async {
+            final Preferito p = await showModalBottomSheet<Preferito>(
+              context: context,
+              builder: (context) => AggiungiPreferito(
+                partenza: partenza,
+                destinazione: destinazione,
+              ),
+            );
+
+            if (p != null) Status.gestorePreferiti.aggiungiPreferito(p);
+          },
         ),
       ),
     );
