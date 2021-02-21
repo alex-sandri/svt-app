@@ -30,11 +30,6 @@ class GestorePreferiti extends ChangeNotifier {
     return rimosso;
   }
 
-  Future<void> rimuoviPreferitoAt(int index) async {
-    _preferiti.removeAt(index);
-    await _aggiornaCache();
-  }
-
   Preferito operator [](int index) => _preferiti[index];
 
   int get quantita => this._preferiti.length;
