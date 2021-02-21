@@ -103,12 +103,6 @@ class Api {
 
     final document = parser.parse(response.data);
 
-    document.querySelectorAll(".tableOrario").forEach((orario) {
-      orario.querySelectorAll(".orarioSelected").forEach((fermata) {
-        print(fermata.children[0].text.trim());
-      });
-    });
-
     final indicazioni = document.querySelectorAll(".action").map((action) {
       return action.text
         .replaceFirst("( Mappa )", "")
@@ -116,8 +110,15 @@ class Api {
         .trim();
     }).toList();
 
+    final fermate = document.querySelectorAll(".tableOrario").map((orario) {
+      return orario.querySelectorAll(".orarioSelected").map((fermata) {
+        return fermata.children[0].text.trim();
+      }).toList();
+    }).toList();
+
     return ModelloDettagliSoluzione(
       indicazioni: indicazioni,
+      fermate: fermate,
     );
   }
 

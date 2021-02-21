@@ -75,17 +75,21 @@ class DettagliSoluzione extends StatelessWidget {
                   return Container();
                 }
 
+                final dettagli = snapshot.data;
+
+                print(dettagli.fermate);
+
                 return ExpansionTile(
                   leading: Icon(Icons.directions),
                   title: Text("Indicazioni"),
-                  children: snapshot.data.indicazioni.map((indicazione) {
+                  children: dettagli.indicazioni.map((indicazione) {
                     return ListTile(
                       leading: Stack(
                         alignment: Alignment.center,
                         children: [
                           Icon(Icons.circle),
                           Text(
-                            "${snapshot.data.indicazioni.indexOf(indicazione) + 1}",
+                            "${dettagli.indicazioni.indexOf(indicazione) + 1}",
                             style: TextStyle(
                               color: Colors.white,
                             ),
