@@ -65,7 +65,11 @@ class _GestionePreferitiState extends State<GestionePreferiti> {
                     final soluzioni = await Api.cercaSoluzioniDiViaggio(preferito.partenza, preferito.destinazione);
 
                     await Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => Soluzioni(soluzioni)
+                      builder: (context) => Soluzioni(
+                        soluzioni,
+                        partenza: preferito.partenza,
+                        destinazione: preferito.destinazione,
+                      ),
                     ));
 
                     setState(() {});

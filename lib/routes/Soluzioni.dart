@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:svt_app/models/Preferito.dart';
+import 'package:svt_app/models/SearchResult.dart';
 import 'package:svt_app/models/SoluzioneDiViaggio.dart';
 import 'package:svt_app/models/Status.dart';
 import 'package:svt_app/routes/AggiungiPreferito.dart';
@@ -10,7 +11,13 @@ import 'package:svt_app/widgets/SvtAppBar.dart';
 class Soluzioni extends StatelessWidget {
   final List<SoluzioneDiViaggio> soluzioni;
 
-  Soluzioni(this.soluzioni);
+  final SearchResult partenza;
+  final SearchResult destinazione;
+
+  Soluzioni(this.soluzioni, {
+    @required this.partenza,
+    @required this.destinazione,
+  });
 
   @override
   Widget build(BuildContext context) {
