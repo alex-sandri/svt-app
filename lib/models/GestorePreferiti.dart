@@ -6,7 +6,7 @@ class GestorePreferiti extends ChangeNotifier {
   List<Preferito> _preferiti;
 
   GestorePreferiti() {
-    _preferiti = new List();
+    _preferiti = (Hive.box("preferiti").get("soluzioni", defaultValue: []) as List)?.whereType<Preferito>()?.toList();
   }
 
   Future<void> _aggiornaCache() async {
@@ -33,10 +33,6 @@ class GestorePreferiti extends ChangeNotifier {
   Future<void> rimuoviPreferitoAt(int index) async {
     _preferiti.removeAt(index);
     await _aggiornaCache();
-  }
-
-  Future<void> ripristinaPreferiti() async {
-    _preferiti = (await Hive.box("preferiti").get("soluzioni") as List)?.whereType<Preferito>()?.toList() ?? [];
   }
 
   Preferito operator [](int index) => _preferiti[index];

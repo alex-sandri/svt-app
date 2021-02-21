@@ -28,8 +28,6 @@ void main() async {
   await Hive.openBox("cache");
   await Hive.openBox("preferiti");
 
-  await Status.gestorePreferiti.ripristinaPreferiti();
-
   runApp(
     ChangeNotifierProvider(
       create: (context) => GestorePreferiti(),
