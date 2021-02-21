@@ -62,11 +62,6 @@ class DettagliSoluzione extends StatelessWidget {
                 ],
               ),
             ),
-            ExpansionTile(
-              leading: Icon(Icons.directions_bus),
-              title: Text("Tratte"),
-              children: soluzione.tratte.map((tratta) => LineaListTile(tratta)).toList(),
-            ),
             FutureBuilder<ModelloDettagliSoluzione>(
               future: Api.ottieniIndicazioniSoluzione(soluzione),
               builder: (context, snapshot) {
@@ -77,28 +72,38 @@ class DettagliSoluzione extends StatelessWidget {
 
                 final dettagli = snapshot.data;
 
-                print(dettagli.fermate);
-
-                return ExpansionTile(
-                  leading: Icon(Icons.directions),
-                  title: Text("Indicazioni"),
-                  children: dettagli.indicazioni.map((indicazione) {
-                    return ListTile(
-                      leading: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Icon(Icons.circle),
-                          Text(
-                            "${dettagli.indicazioni.indexOf(indicazione) + 1}",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
+                return Column(
+                  children: [
+                    ExpansionTile(
+                      leading: Icon(Icons.directions_bus),
+                      title: Text("Tratte"),
+                      children: soluzione.tratte.map((tratta) => LineaListTile(
+                        linea: tratta,
+                        fermate: dettagli.fermate[soluzione.tratte.indexOf(tratta)],
+                      )).toList(),
+                    ),
+                    ExpansionTile(
+                      leading: Icon(Icons.directions),
+                      title: Text("Indicazioni"),
+                      children: dettagli.indicazioni.map((indicazione) {
+                        return ListTile(
+                          leading: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Icon(Icons.circle),
+                              Text(
+                                "${dettagli.indicazioni.indexOf(indicazione) + 1}",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      title: Text(indicazione),
-                    );
-                  }).toList(),
+                          title: Text(indicazione),
+                        );
+                      }).toList(),
+                    ),
+                  ],
                 );
               },
             ),
