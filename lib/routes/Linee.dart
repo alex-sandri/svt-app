@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/Linea.dart';
+import 'package:svt_app/widgets/LineaListTile.dart';
 import 'package:svt_app/widgets/Loading.dart';
-import 'package:svt_app/routes/LocalitaView.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 
 class Linee extends StatefulWidget {
@@ -114,23 +114,7 @@ class _LineeState extends State<Linee> {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: linee.length,
-                    itemBuilder: (context, index) {
-                      final Linea linea = linee[index];
-
-                      return ListTile(
-                        title: linea.titolo,
-                        subtitle: linea.sottotitlo,
-                        isThreeLine: true,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LocalitaView(linea),
-                            ),
-                          );
-                        },
-                      );
-                    }
+                    itemBuilder: (context, index) => LineaListTile(linee[index]),
                   ),
                 ],
               );
