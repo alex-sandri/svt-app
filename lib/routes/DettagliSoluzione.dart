@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:svt_app/models/Api.dart';
+import 'package:svt_app/models/ModelloDettagliSoluzione.dart';
 import 'package:svt_app/models/SoluzioneDiViaggio.dart';
 import 'package:svt_app/widgets/LineaListTile.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
@@ -66,7 +67,7 @@ class DettagliSoluzione extends StatelessWidget {
               title: Text("Tratte"),
               children: soluzione.tratte.map((tratta) => LineaListTile(tratta)).toList(),
             ),
-            FutureBuilder<List<String>>(
+            FutureBuilder<ModelloDettagliSoluzione>(
               future: Api.ottieniIndicazioniSoluzione(soluzione),
               builder: (context, snapshot) {
                 if (!snapshot.hasData)
@@ -77,14 +78,14 @@ class DettagliSoluzione extends StatelessWidget {
                 return ExpansionTile(
                   leading: Icon(Icons.directions),
                   title: Text("Indicazioni"),
-                  children: snapshot.data.map((indicazione) {
+                  children: snapshot.data.indicazioni.map((indicazione) {
                     return ListTile(
                       leading: Stack(
                         alignment: Alignment.center,
                         children: [
                           Icon(Icons.circle),
                           Text(
-                            "${snapshot.data.indexOf(indicazione) + 1}",
+                            "${snapshot.data.indicazioni.indexOf(indicazione) + 1}",
                             style: TextStyle(
                               color: Colors.white,
                             ),

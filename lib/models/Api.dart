@@ -5,6 +5,7 @@ import 'package:html/dom.dart';
 import 'package:intl/intl.dart';
 import 'package:svt_app/models/Coordinate.dart';
 import 'package:svt_app/models/Localita.dart';
+import 'package:svt_app/models/ModelloDettagliSoluzione.dart';
 import 'package:svt_app/models/Orario.dart';
 import 'package:svt_app/models/Linea.dart';
 import 'package:svt_app/models/SearchResult.dart';
@@ -90,7 +91,7 @@ class Api {
     return soluzioni;
   }
 
-  static Future<List<String>> ottieniIndicazioniSoluzione(SoluzioneDiViaggio soluzione) async {
+  static Future<ModelloDettagliSoluzione> ottieniIndicazioniSoluzione(SoluzioneDiViaggio soluzione) async {
     final response = await Dio().post(
       "http://www.mobilitaveneto.net/TP/SVT/Tp/GetSolutionDetail",
       data: FormData.fromMap({
@@ -102,12 +103,22 @@ class Api {
 
     final document = parser.parse(response.data);
 
-    return document.querySelectorAll(".action").map((action) {
+    document.querySelectorAll(".tableOrario").forEach((orario) {
+      orario.querySelectorAll(".orarioSelected").forEach((fermata) {
+        print(fermata.children[0].text.trim());
+      });
+    });
+
+    final indicazioni = document.querySelectorAll(".action").map((action) {
       return action.text
         .replaceFirst("( Mappa )", "")
         .replaceFirst("( Orario - Mappa )", "")
         .trim();
     }).toList();
+
+    return ModelloDettagliSoluzione(
+      indicazioni: indicazioni,
+    );
   }
 
   static Stream<List<Localita>> ottieniLocalita(String idLinea, int direzione) async* {
