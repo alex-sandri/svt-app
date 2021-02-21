@@ -18,7 +18,6 @@ class LocalitaView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(fermate);
     return Material(
       child: Scaffold(
         appBar: SvtAppBar(),
@@ -48,8 +47,8 @@ class LocalitaView extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return LocalitaListTile(
                       localita[index],
-                      highlight: fermate.contains(localita[index].nome),
-                      highlightIndex: fermate.indexOf(localita[index].nome),
+                      highlight: (fermate ?? []).contains(localita[index].nome),
+                      highlightIndex: (fermate ?? []).indexOf(localita[index].nome),
                     );
                   },
                 ),
