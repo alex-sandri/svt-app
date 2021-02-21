@@ -28,22 +28,4 @@ class Localita {
 
     return "$nome;$orario";
   }
-
-  Widget toWidget() {
-    return ExpansionTile(title: Text(nome), children: [
-      Padding(
-        padding: const EdgeInsets.only(bottom: 15),
-        child: Wrap(
-          spacing: 30,
-          runSpacing: 10,
-          children: orari
-              .map((e) => Text(
-                    e.toString(),
-                    style: TextStyle(fontSize: 20),
-                  ))
-              .toList(),
-        ),
-      )
-    ]);
-  }
 }
