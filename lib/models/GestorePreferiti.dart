@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:svt_app/models/Preferito.dart';
 import 'package:hive/hive.dart';
 
-class GestorePreferiti {
+class GestorePreferiti extends ChangeNotifier {
   List<Preferito> _preferiti;
 
   GestorePreferiti() {
@@ -10,6 +11,8 @@ class GestorePreferiti {
 
   Future<void> _aggiornaCache() async {
     await Hive.box("preferiti").put("soluzioni", _preferiti);
+
+    notifyListeners();
   }
 
   void aggiungiPreferito(Preferito preferito) async {
