@@ -11,7 +11,6 @@ import 'package:svt_app/models/Localita.dart';
 import 'package:svt_app/models/Orario.dart';
 import 'package:svt_app/models/Preferito.dart';
 import 'package:svt_app/models/SearchResult.dart';
-import 'package:svt_app/models/Status.dart';
 import 'package:svt_app/routes/Search.dart';
 
 void main() async {
