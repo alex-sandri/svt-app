@@ -48,7 +48,7 @@ class GestionePreferiti extends StatelessWidget {
                     onDismissed: (direction) async {
                       final String nome = preferito.nome;
 
-                      await Provider.of<GestorePreferiti>(context).rimuoviPreferito(preferito);
+                      await Provider.of<GestorePreferiti>(context, listen: false).rimuoviPreferito(preferito);
 
                       Scaffold.of(context).showSnackBar(SnackBar(content: Text("Preferito '$nome' eliminato")));
                     },

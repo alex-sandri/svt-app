@@ -120,7 +120,7 @@ class Soluzioni extends StatelessWidget {
 
             if (p != null)
             {
-              Provider.of<GestorePreferiti>(context).aggiungiPreferito(p);
+              Provider.of<GestorePreferiti>(context, listen: false).aggiungiPreferito(p);
             }
           },
         ),
