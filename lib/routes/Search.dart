@@ -122,7 +122,7 @@ class _SearchState extends State<Search> {
                         child: TextButton.icon(
                           icon: Icon(Icons.search),
                           label: Text("Cerca"),
-                          onPressed: () async {
+                          onPressed: () {
                             setState(() {
                               _errorePartenza = _partenzaSelezionata == null ? "Seleziona la partenza" : null;
                               _erroreDestinazione = _destinazioneSelezionata == null
@@ -135,14 +135,12 @@ class _SearchState extends State<Search> {
                             });
 
                             if (_errorePartenza == null && _erroreDestinazione == null) {
-                              await Navigator.of(context).push(MaterialPageRoute(
+                              Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => Soluzioni(
                                   partenza: _partenzaSelezionata,
                                   destinazione: _destinazioneSelezionata,
                                 ),
                               ));
-
-                              setState(() {});
                             }
                           },
                         ),
@@ -161,9 +159,12 @@ class _SearchState extends State<Search> {
                         TextButton.icon(
                           icon: Icon(Icons.settings),
                           label: Text("Gestisci"),
-                          onPressed: () async {
-                            await Navigator.push(context, MaterialPageRoute(builder: (context) => GestionePreferiti()));
-                            setState(() {});
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => GestionePreferiti()
+                              ),
+                            );
                           },
                         ),
                       ],
