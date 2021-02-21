@@ -1,15 +1,18 @@
+import 'package:flutter/material.dart';
 import 'package:svt_app/models/Preferito.dart';
 import 'package:hive/hive.dart';
 
-class GestorePreferiti {
+class GestorePreferiti extends ChangeNotifier {
   List<Preferito> _preferiti;
 
   GestorePreferiti() {
-    _preferiti = new List();
+    _preferiti = (Hive.box("preferiti").get("soluzioni", defaultValue: []) as List)?.whereType<Preferito>()?.toList();
   }
 
   Future<void> _aggiornaCache() async {
     await Hive.box("preferiti").put("soluzioni", _preferiti);
+
+    notifyListeners();
   }
 
   void aggiungiPreferito(Preferito preferito) async {
@@ -25,15 +28,6 @@ class GestorePreferiti {
     if (rimosso) await _aggiornaCache();
 
     return rimosso;
-  }
-
-  Future<void> rimuoviPreferitoAt(int index) async {
-    _preferiti.removeAt(index);
-    await _aggiornaCache();
-  }
-
-  Future<void> ripristinaPreferiti() async {
-    _preferiti = (await Hive.box("preferiti").get("soluzioni") as List)?.whereType<Preferito>()?.toList() ?? [];
   }
 
   Preferito operator [](int index) => _preferiti[index];

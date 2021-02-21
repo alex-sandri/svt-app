@@ -28,6 +28,7 @@ dependencies:
   intl: ^0.16.1
   flutter_svg: 
   flutter_typeahead: ^2.0.0
+  provider: ^4.3.3
   flutter:
     sdk: flutter
   flutter_localizations:

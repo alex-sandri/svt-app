@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/GestorePreferiti.dart';
 import 'package:svt_app/models/SearchResult.dart';
-import 'package:svt_app/models/Status.dart';
 import 'package:svt_app/routes/GestionePreferiti.dart';
 import 'package:svt_app/routes/Linee.dart';
 import 'package:svt_app/routes/Soluzioni.dart';
@@ -18,8 +18,6 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   bool _isLoading = false;
 
-  GestorePreferiti _gestorePreferiti;
-
   TextEditingController _partenzaController = TextEditingController();
   TextEditingController _destinazioneController = TextEditingController();
 
@@ -29,10 +27,6 @@ class _SearchState extends State<Search> {
 
   SearchResult _partenzaSelezionata;
   SearchResult _destinazioneSelezionata;
-
-  _SearchState() {
-    _gestorePreferiti = Status.gestorePreferiti;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +122,7 @@ class _SearchState extends State<Search> {
                         child: TextButton.icon(
                           icon: Icon(Icons.search),
                           label: Text("Cerca"),
-                          onPressed: () async {
+                          onPressed: () {
                             setState(() {
                               _errorePartenza = _partenzaSelezionata == null ? "Seleziona la partenza" : null;
                               _erroreDestinazione = _destinazioneSelezionata == null
@@ -141,14 +135,12 @@ class _SearchState extends State<Search> {
                             });
 
                             if (_errorePartenza == null && _erroreDestinazione == null) {
-                              await Navigator.of(context).push(MaterialPageRoute(
+                              Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => Soluzioni(
                                   partenza: _partenzaSelezionata,
                                   destinazione: _destinazioneSelezionata,
                                 ),
                               ));
-
-                              setState(() {});
                             }
                           },
                         ),
@@ -167,9 +159,12 @@ class _SearchState extends State<Search> {
                         TextButton.icon(
                           icon: Icon(Icons.settings),
                           label: Text("Gestisci"),
-                          onPressed: () async {
-                            await Navigator.push(context, MaterialPageRoute(builder: (context) => GestionePreferiti()));
-                            setState(() {});
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => GestionePreferiti()
+                              ),
+                            );
                           },
                         ),
                       ],
@@ -179,34 +174,36 @@ class _SearchState extends State<Search> {
                     ),
                     SizedBox(
                       height: 150,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: _gestorePreferiti.quantita <= 5
-                          ? (
-                              _gestorePreferiti.quantita > 0
-                                ? _gestorePreferiti.quantita
-                                : 1
-                            )
-                          : 5,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          if (_gestorePreferiti.quantita == 0)
-                          {
-                            return Text("Non hai ancora aggiunto nulla ai preferiti");
-                          }
+                      child: Consumer<GestorePreferiti>(
+                        builder: (context, gestorePreferiti, child) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: gestorePreferiti.quantita <= 5
+                              ? (
+                                  gestorePreferiti.quantita > 0
+                                    ? gestorePreferiti.quantita
+                                    : 1
+                                )
+                              : 5,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              if (gestorePreferiti.quantita == 0)
+                              {
+                                return Text("Non hai ancora aggiunto nulla ai preferiti");
+                              }
 
-                          final preferito = _gestorePreferiti[index];
+                              final preferito = gestorePreferiti[index];
 
-                          return preferito.toWidget(
-                            onTap: () async {
-                              await Navigator.push(context, MaterialPageRoute(
-                                builder: (context) => Soluzioni(
-                                  partenza: preferito.partenza,
-                                  destinazione: preferito.destinazione,
-                                ),
-                              ));
-
-                              setState(() {});
+                              return preferito.toWidget(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => Soluzioni(
+                                      partenza: preferito.partenza,
+                                      destinazione: preferito.destinazione,
+                                    ),
+                                  ));
+                                },
+                              );
                             },
                           );
                         },

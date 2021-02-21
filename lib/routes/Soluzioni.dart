@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:svt_app/models/Api.dart';
+import 'package:svt_app/models/GestorePreferiti.dart';
 import 'package:svt_app/models/Preferito.dart';
 import 'package:svt_app/models/SearchResult.dart';
 import 'package:svt_app/models/SoluzioneDiViaggio.dart';
-import 'package:svt_app/models/Status.dart';
 import 'package:svt_app/routes/AggiungiPreferito.dart';
 import 'package:svt_app/routes/DettagliSoluzione.dart';
 import 'package:svt_app/widgets/Loading.dart';
@@ -117,7 +118,10 @@ class Soluzioni extends StatelessWidget {
               ),
             );
 
-            if (p != null) Status.gestorePreferiti.aggiungiPreferito(p);
+            if (p != null)
+            {
+              Provider.of<GestorePreferiti>(context, listen: false).aggiungiPreferito(p);
+            }
           },
         ),
       ),
