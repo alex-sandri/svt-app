@@ -7,6 +7,7 @@ import 'package:svt_app/models/SearchResult.dart';
 import 'package:svt_app/routes/GestionePreferiti.dart';
 import 'package:svt_app/routes/Linee.dart';
 import 'package:svt_app/routes/Soluzioni.dart';
+import 'package:svt_app/widgets/PreferitoCard.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
@@ -192,18 +193,7 @@ class _SearchState extends State<Search> {
                                 return Text("Non hai ancora aggiunto nulla ai preferiti");
                               }
 
-                              final preferito = gestorePreferiti[index];
-
-                              return preferito.toWidget(
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) => Soluzioni(
-                                      partenza: preferito.partenza,
-                                      destinazione: preferito.destinazione,
-                                    ),
-                                  ));
-                                },
-                              );
+                              return PreferitoCard(gestorePreferiti[index]);
                             },
                           );
                         },
