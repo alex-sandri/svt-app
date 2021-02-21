@@ -66,7 +66,7 @@ class DettagliSoluzione extends StatelessWidget {
               title: Text("Tratte"),
               children: soluzione.tratte.map((tratta) {
                 return ListTile(
-                  title: tratta.titolo,
+                  title: Text(tratta.codice),
                   onTap: () {
                     Navigator.push(
                       context,
