@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:svt_app/models/Api.dart';
+import 'package:svt_app/models/ModelloDettagliSoluzione.dart';
 import 'package:svt_app/models/SoluzioneDiViaggio.dart';
 import 'package:svt_app/widgets/LineaListTile.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
@@ -61,12 +62,7 @@ class DettagliSoluzione extends StatelessWidget {
                 ],
               ),
             ),
-            ExpansionTile(
-              leading: Icon(Icons.directions_bus),
-              title: Text("Tratte"),
-              children: soluzione.tratte.map((tratta) => LineaListTile(tratta)).toList(),
-            ),
-            FutureBuilder<List<String>>(
+            FutureBuilder<ModelloDettagliSoluzione>(
               future: Api.ottieniIndicazioniSoluzione(soluzione),
               builder: (context, snapshot) {
                 if (!snapshot.hasData)
@@ -74,26 +70,40 @@ class DettagliSoluzione extends StatelessWidget {
                   return Container();
                 }
 
-                return ExpansionTile(
-                  leading: Icon(Icons.directions),
-                  title: Text("Indicazioni"),
-                  children: snapshot.data.map((indicazione) {
-                    return ListTile(
-                      leading: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Icon(Icons.circle),
-                          Text(
-                            "${snapshot.data.indexOf(indicazione) + 1}",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
+                final dettagli = snapshot.data;
+
+                return Column(
+                  children: [
+                    ExpansionTile(
+                      leading: Icon(Icons.directions_bus),
+                      title: Text("Tratte"),
+                      children: soluzione.tratte.map((tratta) => LineaListTile(
+                        linea: tratta,
+                        fermate: dettagli.fermate[soluzione.tratte.indexOf(tratta)],
+                      )).toList(),
+                    ),
+                    ExpansionTile(
+                      leading: Icon(Icons.directions),
+                      title: Text("Indicazioni"),
+                      children: dettagli.indicazioni.map((indicazione) {
+                        return ListTile(
+                          leading: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Icon(Icons.circle),
+                              Text(
+                                "${dettagli.indicazioni.indexOf(indicazione) + 1}",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      title: Text(indicazione),
-                    );
-                  }).toList(),
+                          title: Text(indicazione),
+                        );
+                      }).toList(),
+                    ),
+                  ],
                 );
               },
             ),

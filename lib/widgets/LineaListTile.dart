@@ -5,7 +5,12 @@ import 'package:svt_app/routes/LocalitaView.dart';
 class LineaListTile extends StatelessWidget {
   final Linea linea;
 
-  LineaListTile(this.linea);
+  final List<String> fermate;
+
+  LineaListTile({
+    @required this.linea,
+    this.fermate,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +38,10 @@ class LineaListTile extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => LocalitaView(linea),
+            builder: (context) => LocalitaView(
+              linea: linea,
+              fermate: fermate,
+            ),
           ),
         );
       },

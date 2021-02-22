@@ -3,30 +3,37 @@ import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/Linea.dart';
 import 'package:svt_app/models/Localita.dart';
 import 'package:svt_app/widgets/Loading.dart';
+import 'package:svt_app/widgets/LocalitaListTile.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 
 class LocalitaView extends StatelessWidget {
-  final Linea _linea;
+  final Linea linea;
 
-  LocalitaView(this._linea);
+  final List<String> fermate;
+
+  LocalitaView({
+    @required this.linea,
+    this.fermate,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Material(
       child: Scaffold(
         appBar: SvtAppBar(),
-        body: StreamBuilder(
-          stream: Api.ottieniLocalita(_linea.codice, _linea.direzione),
+        body: StreamBuilder<List<Localita>>(
+          stream: Api.ottieniLocalita(linea.codice, linea.direzione),
           builder: (context, snapshot) {
             if (!snapshot.hasData) return Loading();
-            List<Localita> localita = snapshot.data;
+
+            final localita = snapshot.data;
 
             return ListView(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: Text(
-                    "Linea ${_linea.codice}",
+                    "Linea ${linea.codice}",
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -37,7 +44,13 @@ class LocalitaView extends StatelessWidget {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: localita.length,
-                  itemBuilder: (context, index) => localita[index].toWidget(),
+                  itemBuilder: (context, index) {
+                    return LocalitaListTile(
+                      localita[index],
+                      highlight: (fermate ?? []).contains(localita[index].nome),
+                      highlightIndex: (fermate ?? []).indexOf(localita[index].nome),
+                    );
+                  },
                 ),
               ],
             );
