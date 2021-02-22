@@ -33,29 +33,45 @@ class PreferitoCard extends StatelessWidget {
                   preferito.nome,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 30),
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
                 ),
-                SizedBox(
-                  height: 30,
+                Expanded(
+                  child: Container(),
                 ),
                 Row(
                   children: [
                     Icon(
                       Icons.trip_origin,
-                      size: 20,
+                      size: 15,
                     ),
                     SizedBox(width: 5),
-                    Text(preferito.partenza.nome, maxLines: 1, overflow: TextOverflow.ellipsis),
+                    Text(
+                      preferito.partenza.nome,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 15
+                      ),
+                    ),
                   ],
                 ),
                 Row(
                   children: [
                     Icon(
                       Icons.place,
-                      size: 20,
+                      size: 15,
                     ),
                     SizedBox(width: 5),
-                    Text(preferito.destinazione.nome, maxLines: 1, overflow: TextOverflow.ellipsis),
+                    Text(
+                      preferito.destinazione.nome,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 15
+                      ),
+                    ),
                   ],
                 ),
               ],
