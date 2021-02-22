@@ -34,7 +34,6 @@ class PreferitoCard extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: 30),
-                  textAlign: TextAlign.center,
                 ),
                 SizedBox(
                   height: 30,
