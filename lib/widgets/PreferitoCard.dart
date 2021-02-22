@@ -52,7 +52,7 @@ class PreferitoCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontSize: 15
+                        fontSize: 15,
                       ),
                     ),
                   ],
@@ -69,7 +69,7 @@ class PreferitoCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontSize: 15
+                        fontSize: 15,
                       ),
                     ),
                   ],

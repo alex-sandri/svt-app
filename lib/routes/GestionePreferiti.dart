@@ -63,24 +63,51 @@ class GestionePreferiti extends StatelessWidget {
                       },
                       title: Text(
                         preferito.nome,
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
                       ),
-                      subtitle: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      isThreeLine: true,
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          SizedBox(height: 10),
                           Row(
                             children: [
-                              Icon(Icons.trip_origin),
-                              Text(preferito.partenza.nome, maxLines: 1, overflow: TextOverflow.ellipsis)
+                              Icon(
+                                Icons.trip_origin,
+                                size: 15,
+                              ),
+                              SizedBox(width: 5),
+                              Text(
+                                preferito.partenza.nome,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                ),
+                              ),
                             ],
                           ),
-                          SizedBox(height: 40),
                           Row(
                             children: [
-                              Icon(Icons.place),
-                              Text(preferito.destinazione.nome, maxLines: 1, overflow: TextOverflow.ellipsis)
+                              Icon(
+                                Icons.place,
+                                size: 15,
+                              ),
+                              SizedBox(width: 5),
+                              Text(
+                                preferito.destinazione.nome,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                ),
+                              ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),
