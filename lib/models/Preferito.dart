@@ -37,10 +37,6 @@ class Preferito {
     {
       throw Exception("Il nome non può essere vuoto");
     }
-    else if (nome.length > 20)
-    {
-      throw Exception("Il nome deve contenere meno di 20 caratteri");
-    }
 
     _nome = nome;
   }
