@@ -105,10 +105,7 @@ class Soluzioni extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           tooltip: "Aggiungi ai Preferiti",
-          child: Icon(
-            Icons.star,
-            size: 30,
-          ),
+          child: Icon(Icons.favorite),
           onPressed: () async {
             final Preferito p = await showModalBottomSheet<Preferito>(
               context: context,

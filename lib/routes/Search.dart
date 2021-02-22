@@ -174,7 +174,7 @@ class _SearchState extends State<Search> {
                       height: 15,
                     ),
                     SizedBox(
-                      height: 150,
+                      height: 110,
                       child: Consumer<GestorePreferiti>(
                         builder: (context, gestorePreferiti, child) {
                           return ListView.builder(
