@@ -4,7 +4,6 @@ import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/ModelloDettagliSoluzione.dart';
 import 'package:svt_app/models/SoluzioneDiViaggio.dart';
 import 'package:svt_app/routes/TimelineLinea.dart';
-import 'package:svt_app/widgets/LineaListTile.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 
 class DettagliSoluzione extends StatelessWidget {
