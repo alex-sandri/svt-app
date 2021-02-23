@@ -39,7 +39,7 @@ class LineaListTile extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) {
-              if (fermate != null)
+              if (fermate == null)
               {
                 return LocalitaView(linea);
               }
