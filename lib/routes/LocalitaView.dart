@@ -9,12 +9,7 @@ import 'package:svt_app/widgets/SvtAppBar.dart';
 class LocalitaView extends StatelessWidget {
   final Linea linea;
 
-  final List<String> fermate;
-
-  LocalitaView({
-    @required this.linea,
-    this.fermate,
-  });
+  LocalitaView(this.linea);
 
   @override
   Widget build(BuildContext context) {
@@ -44,18 +39,7 @@ class LocalitaView extends StatelessWidget {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: localita.length,
-                  itemBuilder: (context, index) {
-                    final int indiceFermata = (fermate ?? []).indexOf(
-                      localita[index].nome
-                        .replaceAll("^", "")
-                    );
-
-                    return LocalitaListTile(
-                      localita[index],
-                      highlight: indiceFermata >= 0,
-                      highlightIndex: indiceFermata,
-                    );
-                  },
+                  itemBuilder: (context, index) => LocalitaListTile(localita[index]),
                 ),
               ],
             );

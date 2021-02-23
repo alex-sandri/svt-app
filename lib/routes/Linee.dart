@@ -114,9 +114,7 @@ class _LineeState extends State<Linee> {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: linee.length,
-                    itemBuilder: (context, index) => LineaListTile(
-                      linea: linee[index]
-                    ),
+                    itemBuilder: (context, index) => LineaListTile(linee[index]),
                   ),
                 ],
               );

@@ -4,32 +4,11 @@ import 'package:svt_app/models/Localita.dart';
 class LocalitaListTile extends StatelessWidget {
   final Localita localita;
 
-  final bool highlight;
-  final int highlightIndex;
-
-  LocalitaListTile(this.localita, {
-    this.highlight = false,
-    this.highlightIndex,
-  }):
-    assert((highlight && highlightIndex != null) || !highlight);
+  LocalitaListTile(this.localita);
 
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      leading: highlight
-        ? Stack(
-            alignment: Alignment.center,
-            children: [
-              Icon(Icons.circle),
-              Text(
-                "${highlightIndex + 1}",
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          )
-        : null,
       title: Text(localita.nome),
       children: [
         Padding(
@@ -38,6 +17,7 @@ class LocalitaListTile extends StatelessWidget {
             spacing: 30,
             runSpacing: 10,
             children: localita.orari
+              .where((orario) => orario.isValid())
               .map((orario) {
                 return Text(
                   orario.toString(),

@@ -112,7 +112,10 @@ class Api {
 
     final fermate = document.querySelectorAll(".tableOrario").map((orario) {
       return orario.querySelectorAll(".orarioSelected").map((fermata) {
-        return fermata.children[0].text.trim();
+        return MapEntry(
+          fermata.children[0].text.trim(),
+          Orario.fromString(fermata.children[1].text.trim().replaceFirst(".", ":"))
+        );
       }).toList();
     }).toList();
 
@@ -159,7 +162,7 @@ class Api {
       List<Orario> orari = [];
 
       tabellaOrari.querySelectorAll("tr:nth-child(${i + 1}) > td").forEach((element) {
-        if (element.text.trim() != "") orari.add(Orario.fromString(element.text));
+        orari.add(Orario.fromString(element.text.trim()));
       });
 
       localita.add(Localita(nome: nomi[i], orari: orari));
