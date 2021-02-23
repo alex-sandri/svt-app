@@ -45,10 +45,15 @@ class LocalitaView extends StatelessWidget {
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: localita.length,
                   itemBuilder: (context, index) {
+                    final int indiceFermata = (fermate ?? []).indexOf(
+                      localita[index].nome
+                        .replaceAll("^", "")
+                    );
+
                     return LocalitaListTile(
                       localita[index],
-                      highlight: (fermate ?? []).contains(localita[index].nome),
-                      highlightIndex: (fermate ?? []).indexOf(localita[index].nome),
+                      highlight: indiceFermata >= 0,
+                      highlightIndex: indiceFermata,
                     );
                   },
                 ),
