@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:svt_app/models/Linea.dart';
 import 'package:svt_app/routes/LocalitaView.dart';
+import 'package:svt_app/routes/TimelineLinea.dart';
 
 class LineaListTile extends StatelessWidget {
   final Linea linea;
@@ -35,13 +36,19 @@ class LineaListTile extends StatelessWidget {
         : null,
       isThreeLine: linea.destinazioneAndata != null && linea.destinazioneRitorno != null,
       onTap: () {
-        Navigator.push(
-          context,
+        Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => LocalitaView(
-              linea: linea,
-              fermate: fermate,
-            ),
+            builder: (context) {
+              if (fermate != null)
+              {
+                return LocalitaView(linea);
+              }
+
+              return TimelineLinea(
+                linea: linea,
+                fermate: fermate,
+              );
+            }
           ),
         );
       },

@@ -6,10 +6,14 @@ import 'package:svt_app/widgets/Loading.dart';
 import 'package:svt_app/widgets/LocalitaListTile.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 
-class LocalitaView extends StatelessWidget {
+class TimelineLinea extends StatelessWidget {
   final Linea linea;
+  final List<String> fermate;
 
-  LocalitaView(this.linea);
+  TimelineLinea({
+    @required this.linea,
+    @required this.fermate,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +43,13 @@ class LocalitaView extends StatelessWidget {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: localita.length,
-                  itemBuilder: (context, index) => LocalitaListTile(localita[index]),
+                  itemBuilder: (context, index) {
+                    return LocalitaListTile(
+                      localita[index],
+                      highlight: (fermate ?? []).contains(localita[index].nome),
+                      highlightIndex: (fermate ?? []).indexOf(localita[index].nome),
+                    );
+                  },
                 ),
               ],
             );
