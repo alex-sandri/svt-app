@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:svt_app/models/Preferito.dart';
 import 'package:hive/hive.dart';
+import 'package:svt_app/models/SearchResult.dart';
 
 class GestorePreferiti extends ChangeNotifier {
   List<Preferito> _preferiti;
@@ -28,6 +29,19 @@ class GestorePreferiti extends ChangeNotifier {
     if (rimosso) await _aggiornaCache();
 
     return rimosso;
+  }
+
+  Future<void> rimuoviPreferitoDove({
+    @required SearchResult partenza,
+    @required SearchResult destinazione,
+  }) async {
+    _preferiti.removeWhere((preferito) => preferito.partenza == partenza && preferito.destinazione == destinazione);
+
+    await _aggiornaCache();
+  }
+
+  bool esistePreferito(SearchResult partenza, SearchResult destinazione) {
+    return _preferiti.any((preferito) => preferito.partenza == partenza && preferito.destinazione == destinazione);
   }
 
   Preferito operator [](int index) => _preferiti[index];

@@ -104,20 +104,36 @@ class Soluzioni extends StatelessWidget {
           }
         ),
         floatingActionButton: FloatingActionButton(
-          tooltip: "Aggiungi ai Preferiti",
-          child: Icon(Icons.favorite),
+          tooltip: Provider.of<GestorePreferiti>(context).esistePreferito(partenza, destinazione)
+            ? "Rimuovi dai Preferiti"
+            : "Aggiungi ai Preferiti",
+          child: Icon(
+            Provider.of<GestorePreferiti>(context).esistePreferito(partenza, destinazione)
+              ? Icons.favorite
+              : Icons.favorite_border
+          ),
           onPressed: () async {
-            final Preferito p = await showModalBottomSheet<Preferito>(
-              context: context,
-              builder: (context) => AggiungiPreferito(
+            if (Provider.of<GestorePreferiti>(context, listen: false).esistePreferito(partenza, destinazione))
+            {
+              await Provider.of<GestorePreferiti>(context, listen: false).rimuoviPreferitoDove(
                 partenza: partenza,
                 destinazione: destinazione,
-              ),
-            );
-
-            if (p != null)
+              );
+            }
+            else
             {
-              Provider.of<GestorePreferiti>(context, listen: false).aggiungiPreferito(p);
+              final Preferito p = await showModalBottomSheet<Preferito>(
+                context: context,
+                builder: (context) => AggiungiPreferito(
+                  partenza: partenza,
+                  destinazione: destinazione,
+                ),
+              );
+
+              if (p != null)
+              {
+                Provider.of<GestorePreferiti>(context, listen: false).aggiungiPreferito(p);
+              }
             }
           },
         ),
