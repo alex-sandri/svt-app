@@ -38,6 +38,7 @@ class LocalitaListTile extends StatelessWidget {
             spacing: 30,
             runSpacing: 10,
             children: localita.orari
+              .where((orario) => orario.isValid())
               .map((orario) {
                 return Text(
                   orario.toString(),
