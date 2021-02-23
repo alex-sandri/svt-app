@@ -4,6 +4,7 @@ import 'package:svt_app/models/Linea.dart';
 import 'package:svt_app/models/Localita.dart';
 import 'package:svt_app/widgets/Loading.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
+import 'package:timelines/timelines.dart';
 
 class TimelineLinea extends StatelessWidget {
   final Linea linea;
@@ -50,18 +51,24 @@ class TimelineLinea extends StatelessWidget {
                     ),
                   ),
                 ),
-                ListView.builder(
+                Timeline.tileBuilder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: localitaFermate.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        Text(localitaFermate[index].nome),
-                        Text(localitaFermate[index].orari[timeIndex].toString()),
-                      ],
-                    );
-                  },
+                  builder: TimelineTileBuilder.fromStyle(
+                    contentsAlign: ContentsAlign.reverse,
+                    contentsBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Text(localitaFermate[index].orari[timeIndex].toString()),
+                    ),
+                    oppositeContentsBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Text(localitaFermate[index].nome),
+                    ),
+                    itemCount: localitaFermate.length,
+                  ),
+                  theme: TimelineThemeData(
+                    color: Theme.of(context).accentColor,
+                  ),
                 ),
               ],
             );
