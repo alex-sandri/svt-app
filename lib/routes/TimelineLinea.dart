@@ -7,12 +7,10 @@ import 'package:timeline_tile/timeline_tile.dart';
 class TimelineLinea extends StatelessWidget {
   final Linea linea;
   final List<MapEntry<String, Orario>> fermate;
-  final DateTime from;
 
   TimelineLinea({
     @required this.linea,
     @required this.fermate,
-    @required this.from,
   });
 
   @override
