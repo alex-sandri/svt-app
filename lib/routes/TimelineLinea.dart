@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/Linea.dart';
 import 'package:svt_app/models/Localita.dart';
+import 'package:svt_app/models/Orario.dart';
 import 'package:svt_app/widgets/Loading.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
 class TimelineLinea extends StatelessWidget {
   final Linea linea;
-  final List<String> fermate;
+  final List<MapEntry<String, Orario>> fermate;
   final DateTime from;
 
   TimelineLinea({

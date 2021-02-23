@@ -112,7 +112,10 @@ class Api {
 
     final fermate = document.querySelectorAll(".tableOrario").map((orario) {
       return orario.querySelectorAll(".orarioSelected").map((fermata) {
-        return fermata.children[0].text.trim();
+        return MapEntry(
+          fermata.children[0].text.trim(),
+          Orario.fromString(fermata.children[1].text.trim().replaceFirst(".", ":"))
+        );
       }).toList();
     }).toList();
 
