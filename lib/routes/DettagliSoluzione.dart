@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/ModelloDettagliSoluzione.dart';
 import 'package:svt_app/models/SoluzioneDiViaggio.dart';
+import 'package:svt_app/routes/TimelineLinea.dart';
 import 'package:svt_app/widgets/LineaListTile.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 
@@ -77,9 +78,18 @@ class DettagliSoluzione extends StatelessWidget {
                     ExpansionTile(
                       leading: Icon(Icons.directions_bus),
                       title: Text("Tratte"),
-                      children: soluzione.tratte.map((tratta) => LineaListTile(
-                        linea: tratta,
-                        fermate: dettagli.fermate[soluzione.tratte.indexOf(tratta)],
+                      children: soluzione.tratte.map((tratta) => ListTile(
+                        title: Text(tratta.codice),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => TimelineLinea(
+                                linea: tratta,
+                                fermate: dettagli.fermate[soluzione.tratte.indexOf(tratta)],
+                              ),
+                            ),
+                          );
+                        },
                       )).toList(),
                     ),
                     ExpansionTile(
