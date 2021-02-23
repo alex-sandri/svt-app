@@ -4,7 +4,7 @@ import 'package:svt_app/models/Linea.dart';
 import 'package:svt_app/models/Localita.dart';
 import 'package:svt_app/widgets/Loading.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
-import 'package:timelines/timelines.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 
 class TimelineLinea extends StatelessWidget {
   final Linea linea;
@@ -51,25 +51,38 @@ class TimelineLinea extends StatelessWidget {
                     ),
                   ),
                 ),
-                Timeline.tileBuilder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  builder: TimelineTileBuilder.fromStyle(
-                    contentsAlign: ContentsAlign.reverse,
-                    contentsBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Text(localitaFermate[index].orari[timeIndex].toString()),
+                ...localitaFermate.map((fermata) {
+                  return TimelineTile(
+                    isFirst: localitaFermate.indexOf(fermata) == 0,
+                    isLast: localitaFermate.indexOf(fermata) == localitaFermate.length - 1,
+                    indicatorStyle: IndicatorStyle(
+                      width: 15,
+                      height: 15,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10
+                      ),
+                      color: Theme.of(context).accentColor,
                     ),
-                    oppositeContentsBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Text(localitaFermate[index].nome),
+                    beforeLineStyle: LineStyle(
+                      color: Theme.of(context).accentColor,
                     ),
-                    itemCount: localitaFermate.length,
-                  ),
-                  theme: TimelineThemeData(
-                    color: Theme.of(context).accentColor,
-                  ),
-                ),
+                    endChild: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            fermata.orari[timeIndex].toString(),
+                            style: TextStyle(
+                              fontSize: 25,
+                            ),
+                          ),
+                          Text(fermata.nome),
+                        ],
+                      ),
+                    ),
+                  );
+                }).toList(),
               ],
             );
           },

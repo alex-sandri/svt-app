@@ -29,7 +29,7 @@ dependencies:
   flutter_svg: 
   flutter_typeahead: ^2.0.0
   provider: ^4.3.3
-  timelines: ^0.0.2+1
+  timeline_tile: ^1.0.0
   flutter:
     sdk: flutter
   flutter_localizations:
