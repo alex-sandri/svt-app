@@ -44,11 +44,15 @@ class TimelineLinea extends StatelessWidget {
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: localita.length,
                   itemBuilder: (context, index) {
-                    return LocalitaListTile(
-                      localita[index],
-                      highlight: (fermate ?? []).contains(localita[index].nome),
-                      highlightIndex: (fermate ?? []).indexOf(localita[index].nome),
-                    );
+                    if (fermate.contains(
+                      localita[index].nome
+                        .replaceAll("^", "")
+                    ))
+                    {
+                      return LocalitaListTile(localita[index]);
+                    }
+
+                    return Container();
                   },
                 ),
               ],
