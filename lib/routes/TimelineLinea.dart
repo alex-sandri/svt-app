@@ -9,10 +9,12 @@ import 'package:svt_app/widgets/SvtAppBar.dart';
 class TimelineLinea extends StatelessWidget {
   final Linea linea;
   final List<String> fermate;
+  final DateTime from;
 
   TimelineLinea({
     @required this.linea,
     @required this.fermate,
+    @required this.from,
   });
 
   @override

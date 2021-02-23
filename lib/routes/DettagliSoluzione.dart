@@ -86,6 +86,7 @@ class DettagliSoluzione extends StatelessWidget {
                               builder: (context) => TimelineLinea(
                                 linea: tratta,
                                 fermate: dettagli.fermate[soluzione.tratte.indexOf(tratta)],
+                                from: soluzione.oraPartenza,
                               ),
                             ),
                           );
