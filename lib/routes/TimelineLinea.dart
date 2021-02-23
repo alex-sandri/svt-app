@@ -3,7 +3,6 @@ import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/Linea.dart';
 import 'package:svt_app/models/Localita.dart';
 import 'package:svt_app/widgets/Loading.dart';
-import 'package:svt_app/widgets/LocalitaListTile.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 
 class TimelineLinea extends StatelessWidget {
@@ -29,6 +28,16 @@ class TimelineLinea extends StatelessWidget {
 
             final localita = snapshot.data;
 
+            final localitaFermate = localita.where((localita) => fermate.contains(
+              localita.nome
+                .replaceAll("^", "")
+            )).toList();
+
+            final timeIndex = localitaFermate[0].orari.indexWhere((orario) =>
+              orario.ora == from.hour
+              && orario.minuti == from.minute
+            );
+
             return ListView(
               children: [
                 Padding(
@@ -44,17 +53,14 @@ class TimelineLinea extends StatelessWidget {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: localita.length,
+                  itemCount: localitaFermate.length,
                   itemBuilder: (context, index) {
-                    if (fermate.contains(
-                      localita[index].nome
-                        .replaceAll("^", "")
-                    ))
-                    {
-                      return LocalitaListTile(localita[index]);
-                    }
-
-                    return Container();
+                    return Column(
+                      children: [
+                        Text(localitaFermate[index].nome),
+                        Text(localitaFermate[index].orari[timeIndex].toString()),
+                      ],
+                    );
                   },
                 ),
               ],
