@@ -17,8 +17,6 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-  bool _isLoading = false;
-
   TextEditingController _partenzaController = TextEditingController();
   TextEditingController _destinazioneController = TextEditingController();
 
@@ -142,40 +140,34 @@ class _SearchState extends State<Search> {
                       ],
                     ),
                     SizedBox(height: 30),
-                    if (_isLoading)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [CircularProgressIndicator()],
-                      ),
-                    if (!_isLoading)
-                      Container(
-                        width: double.infinity,
-                        child: TextButton.icon(
-                          icon: Icon(Icons.search),
-                          label: Text("Cerca"),
-                          onPressed: () {
-                            setState(() {
-                              _errorePartenza = _partenzaSelezionata == null ? "Seleziona la partenza" : null;
-                              _erroreDestinazione = _destinazioneSelezionata == null
-                                ? "Seleziona la destinazione"
-                                : (
-                                    _partenzaSelezionata.nome == _destinazioneSelezionata.nome
-                                    ? "La destinazione deve essere diversa dalla partenza"
-                                    : null
-                                );
-                            });
+                    Container(
+                      width: double.infinity,
+                      child: TextButton.icon(
+                        icon: Icon(Icons.search),
+                        label: Text("Cerca"),
+                        onPressed: () {
+                          setState(() {
+                            _errorePartenza = _partenzaSelezionata == null ? "Seleziona la partenza" : null;
+                            _erroreDestinazione = _destinazioneSelezionata == null
+                              ? "Seleziona la destinazione"
+                              : (
+                                  _partenzaSelezionata.nome == _destinazioneSelezionata.nome
+                                  ? "La destinazione deve essere diversa dalla partenza"
+                                  : null
+                              );
+                          });
 
-                            if (_errorePartenza == null && _erroreDestinazione == null) {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Soluzioni(
-                                  partenza: _partenzaSelezionata,
-                                  destinazione: _destinazioneSelezionata,
-                                ),
-                              ));
-                            }
-                          },
-                        ),
+                          if (_errorePartenza == null && _erroreDestinazione == null) {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Soluzioni(
+                                partenza: _partenzaSelezionata,
+                                destinazione: _destinazioneSelezionata,
+                              ),
+                            ));
+                          }
+                        },
                       ),
+                    ),
                     SizedBox(height: 50),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
