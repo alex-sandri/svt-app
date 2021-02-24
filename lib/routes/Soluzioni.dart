@@ -76,7 +76,7 @@ class _SoluzioniState extends State<Soluzioni> {
             from: _from,
           ),
           builder: (context, snapshot) {
-            if (!snapshot.hasData)
+            if (snapshot.connectionState == ConnectionState.waiting)
             {
               return Loading();
             }
