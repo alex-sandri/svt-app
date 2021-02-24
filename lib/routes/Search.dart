@@ -146,18 +146,20 @@ class _SearchState extends State<Search> {
                         icon: Icon(Icons.search),
                         label: Text("Cerca"),
                         onPressed: () {
-                          setState(() {
-                            _errorePartenza = _partenzaSelezionata == null ? "Seleziona la partenza" : null;
-                            _erroreDestinazione = _destinazioneSelezionata == null
-                              ? "Seleziona la destinazione"
-                              : (
-                                  _partenzaSelezionata.nome == _destinazioneSelezionata.nome
-                                  ? "La destinazione deve essere diversa dalla partenza"
-                                  : null
-                              );
-                          });
+                          _errorePartenza = _partenzaSelezionata == null ? "Seleziona la partenza" : null;
+                          _erroreDestinazione = _destinazioneSelezionata == null ? "Seleziona la destinazione" : null;
 
-                          if (_errorePartenza == null && _erroreDestinazione == null) {
+                          if (_partenzaSelezionata != null && _destinazioneSelezionata != null)
+                          {
+                            _erroreDestinazione = _partenzaSelezionata.nome == _destinazioneSelezionata.nome
+                              ? "La destinazione deve essere diversa dalla partenza"
+                              : null;
+                          }
+
+                          setState(() {});
+
+                          if (_errorePartenza == null && _erroreDestinazione == null)
+                          {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => Soluzioni(
                                 partenza: _partenzaSelezionata,
