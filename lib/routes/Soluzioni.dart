@@ -24,7 +24,24 @@ class Soluzioni extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: Scaffold(
-        appBar: SvtAppBar(),
+        appBar: SvtAppBar(
+          actions: [
+            IconButton(
+              icon: Icon(Icons.multiple_stop),
+              tooltip: "Cerca ritorno",
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => Soluzioni(
+                      partenza: destinazione,
+                      destinazione: partenza,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
         body: FutureBuilder<List<SoluzioneDiViaggio>>(
           future: Api.cercaSoluzioniDiViaggio(partenza, destinazione),
           builder: (context, snapshot) {
