@@ -50,7 +50,7 @@ class TimelineLinea extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        fermata.value.toString(),
+                        fermata.value.format(context),
                         style: TextStyle(
                           fontSize: 25,
                         ),
