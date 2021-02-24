@@ -22,8 +22,19 @@ void main() async {
   Hive.registerAdapter(SearchResultTypeAdapter()); // 5
   Hive.registerAdapter(CoordinateAdapter()); // 6
 
-  await Hive.openBox("cache");
-  await Hive.openBox("preferiti");
+  try
+  {
+    await Hive.openBox("cache");
+    await Hive.openBox("preferiti");
+  }
+  on HiveError
+  {
+    await Hive.deleteBoxFromDisk("cache");
+    await Hive.deleteBoxFromDisk("preferiti");
+
+    await Hive.openBox("cache");
+    await Hive.openBox("preferiti");
+  }
 
   runApp(
     ChangeNotifierProvider(
