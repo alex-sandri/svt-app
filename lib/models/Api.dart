@@ -162,7 +162,10 @@ class Api {
       List<Orario> orari = [];
 
       tabellaOrari.querySelectorAll("tr:nth-child(${i + 1}) > td").forEach((element) {
-        orari.add(Orario.fromString(element.text.trim()));
+        if (element.text.trim().isNotEmpty)
+        {
+          orari.add(Orario.fromString(element.text.trim()));
+        }
       });
 
       localita.add(Localita(nome: nomi[i], orari: orari));
