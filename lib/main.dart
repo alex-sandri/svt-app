@@ -16,11 +16,11 @@ void main() async {
   await Hive.initFlutter();
 
   Hive.registerAdapter(LineaAdapter()); // 0
-  Hive.registerAdapter(LocalitaAdapter()); // 2
-  Hive.registerAdapter(PreferitoAdapter()); // 3
-  Hive.registerAdapter(SearchResultAdapter()); // 4
-  Hive.registerAdapter(SearchResultTypeAdapter()); // 5
-  Hive.registerAdapter(CoordinateAdapter()); // 6
+  Hive.registerAdapter(LocalitaAdapter()); // 1
+  Hive.registerAdapter(PreferitoAdapter()); // 2
+  Hive.registerAdapter(SearchResultAdapter()); // 3
+  Hive.registerAdapter(SearchResultTypeAdapter()); // 4
+  Hive.registerAdapter(CoordinateAdapter()); // 5
 
   try
   {

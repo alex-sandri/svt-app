@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 
 part 'Localita.g.dart';
 
-@HiveType(typeId: 2)
+@HiveType(typeId: 1)
 class Localita {
   @HiveField(0)
   final String nome;

@@ -5,7 +5,7 @@ import 'package:svt_app/models/SearchResult.dart';
 
 part 'Preferito.g.dart';
 
-@HiveType(typeId: 3)
+@HiveType(typeId: 2)
 class Preferito {
   @HiveField(0)
   String _nome;
