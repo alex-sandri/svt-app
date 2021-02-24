@@ -57,6 +57,24 @@ class _SoluzioniState extends State<Soluzioni> {
                 final time = await showTimePicker(
                   context: context,
                   initialTime: _from,
+                  cancelText: "Annulla",
+                  confirmText: "Conferma",
+                  builder: (context, child) {
+                    return Theme(
+                      data: Theme.of(context).copyWith(
+                        textButtonTheme: TextButtonThemeData(
+                          style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all(Colors.white),
+                            backgroundColor: MaterialStateProperty.all(Colors.red),
+                            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            )),
+                          ),
+                        ),
+                      ),
+                      child: child,
+                    );
+                  },
                 );
 
                 if (time != null)
