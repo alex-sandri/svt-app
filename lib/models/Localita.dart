@@ -17,14 +17,4 @@ class Localita {
   });
 
   TimeOfDay operator [](int index) => orari[index];
-
-  @override
-  String toString() {
-    String orario = "";
-    orari.forEach((element) {
-      orario += element.toString() + " ; ";
-    });
-
-    return "$nome;$orario";
-  }
 }
