@@ -11,7 +11,7 @@ import 'package:svt_app/routes/DettagliSoluzione.dart';
 import 'package:svt_app/widgets/Loading.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 
-class Soluzioni extends StatelessWidget {
+class Soluzioni extends StatefulWidget {
   final SearchResult partenza;
   final SearchResult destinazione;
 
@@ -19,6 +19,16 @@ class Soluzioni extends StatelessWidget {
     @required this.partenza,
     @required this.destinazione,
   });
+
+  @override
+  _SoluzioniState createState() => _SoluzioniState();
+}
+
+class _SoluzioniState extends State<Soluzioni> {
+  TimeOfDay _from = TimeOfDay(
+    hour: 0,
+    minute: 0,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -33,17 +43,32 @@ class Soluzioni extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => Soluzioni(
-                      partenza: destinazione,
-                      destinazione: partenza,
+                      partenza: widget.destinazione,
+                      destinazione: widget.partenza,
                     ),
                   ),
                 );
               },
             ),
+            IconButton(
+              icon: Icon(Icons.filter_list),
+              tooltip: "Filtra",
+              onPressed: () async {
+                final time = await showTimePicker(
+                  context: context,
+                  initialTime: _from,
+                );
+
+                if (time != null)
+                {
+                  // TODO
+                }
+              },
+            ),
           ],
         ),
         body: FutureBuilder<List<SoluzioneDiViaggio>>(
-          future: Api.cercaSoluzioniDiViaggio(partenza, destinazione),
+          future: Api.cercaSoluzioniDiViaggio(widget.partenza, widget.destinazione),
           builder: (context, snapshot) {
             if (!snapshot.hasData)
             {
@@ -121,20 +146,20 @@ class Soluzioni extends StatelessWidget {
           }
         ),
         floatingActionButton: FloatingActionButton(
-          tooltip: Provider.of<GestorePreferiti>(context).esistePreferito(partenza, destinazione)
+          tooltip: Provider.of<GestorePreferiti>(context).esistePreferito(widget.partenza, widget.destinazione)
             ? "Rimuovi dai Preferiti"
             : "Aggiungi ai Preferiti",
           child: Icon(
-            Provider.of<GestorePreferiti>(context).esistePreferito(partenza, destinazione)
+            Provider.of<GestorePreferiti>(context).esistePreferito(widget.partenza, widget.destinazione)
               ? Icons.favorite
               : Icons.favorite_border
           ),
           onPressed: () async {
-            if (Provider.of<GestorePreferiti>(context, listen: false).esistePreferito(partenza, destinazione))
+            if (Provider.of<GestorePreferiti>(context, listen: false).esistePreferito(widget.partenza, widget.destinazione))
             {
               await Provider.of<GestorePreferiti>(context, listen: false).rimuoviPreferitoDove(
-                partenza: partenza,
-                destinazione: destinazione,
+                partenza: widget.partenza,
+                destinazione: widget.destinazione,
               );
             }
             else
@@ -142,8 +167,8 @@ class Soluzioni extends StatelessWidget {
               final Preferito p = await showModalBottomSheet<Preferito>(
                 context: context,
                 builder: (context) => AggiungiPreferito(
-                  partenza: partenza,
-                  destinazione: destinazione,
+                  partenza: widget.partenza,
+                  destinazione: widget.destinazione,
                 ),
               );
 
