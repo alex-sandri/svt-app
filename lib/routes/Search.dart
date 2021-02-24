@@ -66,50 +66,80 @@ class _SearchState extends State<Search> {
                       ),
                     ),
                     SizedBox(height: 30),
-                    TypeAheadFormField<SearchResult>(
-                      keepSuggestionsOnLoading: false,
-                      textFieldConfiguration: TextFieldConfiguration(
-                        controller: _partenzaController,
-                        decoration: InputDecoration(
-                          labelText: "Partenza",
-                          errorText: _errorePartenza,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              TypeAheadFormField<SearchResult>(
+                                keepSuggestionsOnLoading: false,
+                                textFieldConfiguration: TextFieldConfiguration(
+                                  controller: _partenzaController,
+                                  decoration: InputDecoration(
+                                    labelText: "Partenza",
+                                    errorText: _errorePartenza,
+                                  ),
+                                ),
+                                itemBuilder: (context, item) => item.toWidget(),
+                                onSuggestionSelected: (suggestion) {
+                                  _partenzaController.text = suggestion.nome;
+                                  _partenzaSelezionata = suggestion;
+                                },
+                                suggestionsCallback: Api.ricerca,
+                                noItemsFoundBuilder: (context) {
+                                  return ListTile(
+                                    leading: Icon(Icons.clear),
+                                    title: Text("Nessun risultato"),
+                                  );
+                                },
+                              ),
+                              SizedBox(height: 20),
+                              TypeAheadFormField<SearchResult>(
+                                keepSuggestionsOnLoading: false,
+                                textFieldConfiguration: TextFieldConfiguration(
+                                  controller: _destinazioneController,
+                                  decoration: InputDecoration(
+                                    labelText: "Destinazione",
+                                    errorText: _erroreDestinazione,
+                                  ),
+                                ),
+                                itemBuilder: (context, item) => item.toWidget(),
+                                onSuggestionSelected: (suggestion) {
+                                  _destinazioneController.text = suggestion.nome;
+                                  _destinazioneSelezionata = suggestion;
+                                },
+                                suggestionsCallback: Api.ricerca,
+                                noItemsFoundBuilder: (context) {
+                                  return ListTile(
+                                    leading: Icon(Icons.clear),
+                                    title: Text("Nessun risultato"),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      itemBuilder: (context, item) => item.toWidget(),
-                      onSuggestionSelected: (suggestion) {
-                        _partenzaController.text = suggestion.nome;
-                        _partenzaSelezionata = suggestion;
-                      },
-                      suggestionsCallback: Api.ricerca,
-                      noItemsFoundBuilder: (context) {
-                        return ListTile(
-                          leading: Icon(Icons.clear),
-                          title: Text("Nessun risultato"),
-                        );
-                      },
-                    ),
-                    SizedBox(height: 20),
-                    TypeAheadFormField<SearchResult>(
-                      keepSuggestionsOnLoading: false,
-                      textFieldConfiguration: TextFieldConfiguration(
-                        controller: _destinazioneController,
-                        decoration: InputDecoration(
-                          labelText: "Destinazione",
-                          errorText: _erroreDestinazione,
+                        IconButton(
+                          icon: Icon(Icons.swap_vert),
+                          tooltip: "Scambia",
+                          onPressed: () {
+                            final temp = _partenzaSelezionata;
+
+                            _partenzaSelezionata = _destinazioneSelezionata;
+                            _destinazioneSelezionata = temp;
+
+                            _partenzaController.text = _partenzaSelezionata != null
+                              ? _partenzaSelezionata.nome
+                              : "";
+
+                            _destinazioneController.text = _destinazioneSelezionata != null
+                              ? _destinazioneSelezionata.nome
+                              : "";
+
+                            setState(() {});
+                          },
                         ),
-                      ),
-                      itemBuilder: (context, item) => item.toWidget(),
-                      onSuggestionSelected: (suggestion) {
-                        _destinazioneController.text = suggestion.nome;
-                        _destinazioneSelezionata = suggestion;
-                      },
-                      suggestionsCallback: Api.ricerca,
-                      noItemsFoundBuilder: (context) {
-                        return ListTile(
-                          leading: Icon(Icons.clear),
-                          title: Text("Nessun risultato"),
-                        );
-                      },
+                      ],
                     ),
                     SizedBox(height: 30),
                     if (_isLoading)
