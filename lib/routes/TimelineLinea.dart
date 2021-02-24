@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:svt_app/models/Linea.dart';
-import 'package:svt_app/models/Orario.dart';
 import 'package:svt_app/widgets/SvtAppBar.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
 class TimelineLinea extends StatelessWidget {
   final Linea linea;
-  final List<MapEntry<String, Orario>> fermate;
+  final List<MapEntry<String, TimeOfDay>> fermate;
 
   TimelineLinea({
     @required this.linea,
@@ -51,7 +50,7 @@ class TimelineLinea extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        fermata.value.toString(),
+                        fermata.value.format(context),
                         style: TextStyle(
                           fontSize: 25,
                         ),

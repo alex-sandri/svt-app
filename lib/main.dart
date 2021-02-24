@@ -4,11 +4,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:svt_app/adapters/TimeOfDayAdapter.dart';
 import 'package:svt_app/models/Coordinate.dart';
 import 'package:svt_app/models/GestorePreferiti.dart';
 import 'package:svt_app/models/Linea.dart';
 import 'package:svt_app/models/Localita.dart';
-import 'package:svt_app/models/Orario.dart';
 import 'package:svt_app/models/Preferito.dart';
 import 'package:svt_app/models/SearchResult.dart';
 import 'package:svt_app/routes/Search.dart';
@@ -16,16 +16,28 @@ import 'package:svt_app/routes/Search.dart';
 void main() async {
   await Hive.initFlutter();
 
-  Hive.registerAdapter(LineaAdapter()); // 0
-  Hive.registerAdapter(OrarioAdapter()); // 1
-  Hive.registerAdapter(LocalitaAdapter()); // 2
-  Hive.registerAdapter(PreferitoAdapter()); // 3
-  Hive.registerAdapter(SearchResultAdapter()); // 4
-  Hive.registerAdapter(SearchResultTypeAdapter()); // 5
-  Hive.registerAdapter(CoordinateAdapter()); // 6
+  Hive.registerAdapter(TimeOfDayAdapter());
 
-  await Hive.openBox("cache");
-  await Hive.openBox("preferiti");
+  Hive.registerAdapter(LineaAdapter()); // 0
+  Hive.registerAdapter(LocalitaAdapter()); // 1
+  Hive.registerAdapter(PreferitoAdapter()); // 2
+  Hive.registerAdapter(SearchResultAdapter()); // 3
+  Hive.registerAdapter(SearchResultTypeAdapter()); // 4
+  Hive.registerAdapter(CoordinateAdapter()); // 5
+
+  try
+  {
+    await Hive.openBox("cache");
+    await Hive.openBox("preferiti");
+  }
+  on HiveError
+  {
+    await Hive.deleteBoxFromDisk("cache");
+    await Hive.deleteBoxFromDisk("preferiti");
+
+    await Hive.openBox("cache");
+    await Hive.openBox("preferiti");
+  }
 
   runApp(
     ChangeNotifierProvider(

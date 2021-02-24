@@ -19,7 +19,7 @@ class LocalitaListTile extends StatelessWidget {
             children: localita.orari
               .map((orario) {
                 return Text(
-                  orario.toString(),
+                  orario.format(context),
                   style: TextStyle(fontSize: 20),
                 );
               })

@@ -5,7 +5,7 @@ import 'package:svt_app/models/Coordinate.dart';
 
 part 'SearchResult.g.dart';
 
-@HiveType(typeId: 4)
+@HiveType(typeId: 3)
 class SearchResult
 {
   @HiveField(0)
@@ -87,7 +87,7 @@ class SearchResult
   }
 }
 
-@HiveType(typeId: 5)
+@HiveType(typeId: 4)
 enum SearchResultType
 {
   @HiveField(0)

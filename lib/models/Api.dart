@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:html/parser.dart' as parser;
-import 'package:html/dom.dart';
+import 'package:html/dom.dart' as dom;
 import 'package:intl/intl.dart';
 import 'package:svt_app/models/Coordinate.dart';
 import 'package:svt_app/models/Localita.dart';
 import 'package:svt_app/models/ModelloDettagliSoluzione.dart';
-import 'package:svt_app/models/Orario.dart';
 import 'package:svt_app/models/Linea.dart';
 import 'package:svt_app/models/SearchResult.dart';
 import 'package:svt_app/models/SoluzioneDiViaggio.dart';
@@ -112,9 +112,14 @@ class Api {
 
     final fermate = document.querySelectorAll(".tableOrario").map((orario) {
       return orario.querySelectorAll(".orarioSelected").map((fermata) {
+        final timeText = fermata.children[1].text.trim();
+
         return MapEntry(
           fermata.children[0].text.trim(),
-          Orario.fromString(fermata.children[1].text.trim().replaceFirst(".", ":"))
+          TimeOfDay(
+            hour: int.parse(timeText.split(".")[0]),
+            minute: int.parse(timeText.split(".")[1]),
+          ),
         );
       }).toList();
     }).toList();
@@ -143,28 +148,33 @@ class Api {
 
     if (risposta.statusCode != 200) throw Exception("impossibile ottenre le località");
 
-    Document html = parser.parse(risposta.data);
+    dom.Document html = parser.parse(risposta.data);
 
-    List<Element> dati = html.querySelectorAll(".tableFermateOrari");
+    List<dom.Element> dati = html.querySelectorAll(".tableFermateOrari");
 
-    Element tabellaNomi = dati[0];
+    dom.Element tabellaNomi = dati[0];
 
     List<String> nomi = new List<String>();
     tabellaNomi.nodes[0].nodes.forEach((riga) {
       if (riga.text.trim() != "") nomi.add(riga.text.trim());
     });
 
-    Element tabellaOrari = dati[1];
+    dom.Element tabellaOrari = dati[1];
 
     List<Localita> localita = [];
 
     for (int i = 0; i < nomi.length; i++) {
-      List<Orario> orari = [];
+      List<TimeOfDay> orari = [];
 
       tabellaOrari.querySelectorAll("tr:nth-child(${i + 1}) > td").forEach((element) {
-        if (element.text.trim().isNotEmpty)
+        final text = element.text.trim();
+
+        if (text.isNotEmpty)
         {
-          orari.add(Orario.fromString(element.text.trim()));
+          orari.add(TimeOfDay(
+            hour: int.parse(text.split(":")[0]),
+            minute: int.parse(text.split(":")[1]),
+          ));
         }
       });
 

@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 
 part 'Coordinate.g.dart';
 
-@HiveType(typeId: 6)
+@HiveType(typeId: 5)
 class Coordinate
 {
   @HiveField(0)
