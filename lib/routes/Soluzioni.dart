@@ -61,7 +61,9 @@ class _SoluzioniState extends State<Soluzioni> {
 
                 if (time != null)
                 {
-                  // TODO
+                  setState(() {
+                    _from = time;
+                  });
                 }
               },
             ),
