@@ -113,6 +113,10 @@ class MyApp extends StatelessWidget {
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: Colors.red,
         ),
+        timePickerTheme: TimePickerThemeData(
+          dialHandColor: Colors.red,
+          hourMinuteTextColor: Colors.black,
+        ),
       ),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
