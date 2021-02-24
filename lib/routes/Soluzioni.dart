@@ -70,7 +70,11 @@ class _SoluzioniState extends State<Soluzioni> {
           ],
         ),
         body: FutureBuilder<List<SoluzioneDiViaggio>>(
-          future: Api.cercaSoluzioniDiViaggio(widget.partenza, widget.destinazione),
+          future: Api.cercaSoluzioniDiViaggio(
+            partenza: widget.partenza,
+            destinazione: widget.destinazione,
+            from: _from,
+          ),
           builder: (context, snapshot) {
             if (!snapshot.hasData)
             {
