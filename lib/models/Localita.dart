@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:svt_app/models/Orario.dart';
 
 part 'Localita.g.dart';
 
@@ -10,14 +9,14 @@ class Localita {
   final String nome;
 
   @HiveField(1)
-  final List<Orario> orari;
+  final List<TimeOfDay> orari;
 
   Localita({
     @required this.nome,
     @required this.orari,
   });
 
-  Orario operator [](int index) => orari[index];
+  TimeOfDay operator [](int index) => orari[index];
 
   @override
   String toString() {
