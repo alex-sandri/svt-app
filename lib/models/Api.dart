@@ -58,7 +58,11 @@ class Api {
     );
   }
 
-  static Future<List<SoluzioneDiViaggio>> cercaSoluzioniDiViaggio(SearchResult partenza, SearchResult destinazione) async {
+  static Future<List<SoluzioneDiViaggio>> cercaSoluzioniDiViaggio({
+    @required SearchResult partenza,
+    @required SearchResult destinazione,
+    @required TimeOfDay from,
+  }) async {
     final Coordinate coordinatePartenza = await partenza.ottieniCoordinate();
     final Coordinate coordinateDestinazione = await destinazione.ottieniCoordinate();
 
@@ -70,7 +74,7 @@ class Api {
         "dLat": coordinateDestinazione.latitudine,
         "dLng": coordinateDestinazione.longitudine,
         "data": DateFormat("dd/MM/yyyy").format(DateTime.now()),
-        "ora": "00:00",
+        "ora": "${from.hour.toString().padLeft(2, "0")}:${from.minute.toString().padLeft(2, "0")}",
         "tipoMezzo": -1,
         "tipoSoluzione": 0,
         "jsonTappe": "[]",
