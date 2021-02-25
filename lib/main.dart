@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:svt_app/adapters/TimeOfDayAdapter.dart';
+import 'package:svt_app/models/CacheManager.dart';
 import 'package:svt_app/models/Coordinate.dart';
 import 'package:svt_app/models/GestorePreferiti.dart';
 import 'package:svt_app/models/Linea.dart';
@@ -25,19 +26,8 @@ void main() async {
   Hive.registerAdapter(SearchResultTypeAdapter()); // 4
   Hive.registerAdapter(CoordinateAdapter()); // 5
 
-  try
-  {
-    await Hive.openBox("cache");
-    await Hive.openBox("preferiti");
-  }
-  on HiveError
-  {
-    await Hive.deleteBoxFromDisk("cache");
-    await Hive.deleteBoxFromDisk("preferiti");
-
-    await Hive.openBox("cache");
-    await Hive.openBox("preferiti");
-  }
+  await CacheManager.init();
+  await GestorePreferiti.init();
 
   runApp(
     ChangeNotifierProvider(
