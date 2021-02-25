@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart' as dom;
 import 'package:intl/intl.dart';
+import 'package:svt_app/models/CacheManager.dart';
 import 'package:svt_app/models/Coordinate.dart';
 import 'package:svt_app/models/Localita.dart';
 import 'package:svt_app/models/ModelloDettagliSoluzione.dart';
@@ -13,7 +14,7 @@ import 'package:svt_app/models/SoluzioneDiViaggio.dart';
 
 class Api {
   static Stream<List<Linea>> ottieniLinee() async* {
-    yield (Hive.box("cache").get("linee") as List)?.whereType<Linea>()?.toList();
+    yield (CacheManager.get("linee") as List)?.whereType<Linea>()?.toList();
 
     final response = await Dio().post("http://www.mobilitaveneto.net/TP/SVT/StampaOrari/GetDatiLineeSelezionate");
 
@@ -23,7 +24,7 @@ class Api {
 
     final List<Linea> linee = (response.data as List).map((linea) => Linea.fromJson(linea)).toList();
 
-    await Hive.box("cache").put("linee", linee);
+    await CacheManager.set("linee", linee);
 
     yield linee;
   }
@@ -135,7 +136,7 @@ class Api {
   }
 
   static Stream<List<Localita>> ottieniLocalita(String idLinea, int direzione) async* {
-    yield (Hive.box("cache").get("localita-$idLinea-$direzione") as List)?.whereType<Localita>()?.toList();
+    yield (CacheManager.get("localita-$idLinea-$direzione") as List)?.whereType<Localita>()?.toList();
 
     Dio dio = Dio();
     Map<String, dynamic> richiesta = new Map<String, dynamic>();
@@ -185,7 +186,7 @@ class Api {
       localita.add(Localita(nome: nomi[i], orari: orari));
     }
 
-    await Hive.box("cache").put("localita-$idLinea-$direzione", localita);
+    await CacheManager.set("localita-$idLinea-$direzione", localita);
 
     yield localita;
   }
