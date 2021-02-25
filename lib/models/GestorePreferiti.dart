@@ -16,7 +16,7 @@ class GestorePreferiti extends ChangeNotifier {
     _preferiti = (_box.get("soluzioni", defaultValue: []) as List)?.whereType<Preferito>()?.toList();
   }
 
-  Future<void> init() async {
+  static Future<void> init() async {
     await Hive.openBox(_boxName);
   }
 
