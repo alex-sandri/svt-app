@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart' as dom;
 import 'package:intl/intl.dart';
