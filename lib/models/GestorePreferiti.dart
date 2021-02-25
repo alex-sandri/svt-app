@@ -6,12 +6,22 @@ import 'package:svt_app/models/SearchResult.dart';
 class GestorePreferiti extends ChangeNotifier {
   List<Preferito> _preferiti;
 
+  static final _boxName = "preferiti-v1";
+
+  Box _box;
+
   GestorePreferiti() {
-    _preferiti = (Hive.box("preferiti").get("soluzioni", defaultValue: []) as List)?.whereType<Preferito>()?.toList();
+    _box = Hive.box(_boxName);
+
+    _preferiti = (_box.get("soluzioni", defaultValue: []) as List)?.whereType<Preferito>()?.toList();
+  }
+
+  Future<void> init() async {
+    await Hive.openBox(_boxName);
   }
 
   Future<void> _aggiornaCache() async {
-    await Hive.box("preferiti").put("soluzioni", _preferiti);
+    await _box.put("soluzioni", _preferiti);
 
     notifyListeners();
   }
