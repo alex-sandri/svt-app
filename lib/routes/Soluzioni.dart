@@ -25,10 +25,31 @@ class Soluzioni extends StatefulWidget {
 }
 
 class _SoluzioniState extends State<Soluzioni> {
+  List<SoluzioneDiViaggio> _soluzioni;
+
   TimeOfDay _from = TimeOfDay(
     hour: 0,
     minute: 0,
   );
+
+  Future<void> _load() async {
+    final soluzioni = await Api.cercaSoluzioniDiViaggio(
+      partenza: widget.partenza,
+      destinazione: widget.destinazione,
+      from: _from,
+    );
+
+    setState(() {
+      _soluzioni = soluzioni;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _load();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,27 +102,18 @@ class _SoluzioniState extends State<Soluzioni> {
                 {
                   setState(() {
                     _from = time;
+                    _soluzioni = null;
                   });
+
+                  await _load();
                 }
               },
             ),
           ],
         ),
-        body: FutureBuilder<List<SoluzioneDiViaggio>>(
-          future: Api.cercaSoluzioniDiViaggio(
-            partenza: widget.partenza,
-            destinazione: widget.destinazione,
-            from: _from,
-          ),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting)
-            {
-              return Loading();
-            }
-
-            final soluzioni = snapshot.data;
-
-            return ListView(
+        body: _soluzioni == null
+          ? Loading()
+          : ListView(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(10),
@@ -116,18 +128,18 @@ class _SoluzioniState extends State<Soluzioni> {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: soluzioni.isNotEmpty
-                    ? soluzioni.length
+                  itemCount: _soluzioni.isNotEmpty
+                    ? _soluzioni.length
                     : 1,
                   itemBuilder: (context, index) {
-                    if (soluzioni.isEmpty)
+                    if (_soluzioni.isEmpty)
                     {
                       return ListTile(
                         title: Text("Nessuna soluzione trovata"),
                       );
                     }
 
-                    final soluzione = soluzioni[index];
+                    final soluzione = _soluzioni[index];
 
                     return ListTile(
                       isThreeLine: true,
@@ -166,9 +178,7 @@ class _SoluzioniState extends State<Soluzioni> {
                   },
                 ),
               ],
-            );
-          }
-        ),
+            ),
         floatingActionButton: FloatingActionButton(
           tooltip: Provider.of<GestorePreferiti>(context).esistePreferito(widget.partenza, widget.destinazione)
             ? "Rimuovi dai Preferiti"
