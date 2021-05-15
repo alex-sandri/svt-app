@@ -50,7 +50,9 @@ class GestionePreferiti extends StatelessWidget {
 
                       await Provider.of<GestorePreferiti>(context, listen: false).rimuoviPreferito(preferito);
 
-                      Scaffold.of(context).showSnackBar(SnackBar(content: Text("Preferito '$nome' eliminato")));
+                      ScaffoldMessenger
+                        .of(context)
+                        .showSnackBar(SnackBar(content: Text("Preferito '$nome' eliminato")));
                     },
                     child: ListTile(
                       onTap: () {

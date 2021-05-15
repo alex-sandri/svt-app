@@ -157,7 +157,7 @@ class Api {
 
     dom.Element tabellaNomi = dati[0];
 
-    List<String> nomi = new List<String>();
+    List<String> nomi = [];
     tabellaNomi.nodes[0].nodes.forEach((riga) {
       if (riga.text.trim() != "") nomi.add(riga.text.trim());
     });

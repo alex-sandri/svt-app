@@ -86,7 +86,9 @@ class MyApp extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
           ),
         ),
-        cursorColor: Colors.orange,
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.orange,
+        ),
         textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
             foregroundColor: MaterialStateProperty.all(Colors.white),
