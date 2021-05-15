@@ -16,5 +16,5 @@ class CacheManager
     await CacheManager.init();
   }
 
-  static Future<void> init() async => _box = await Hive.openBox("cache-v1");
+  static Future<void> init() async => _box = await Hive.openBox("cache-v2");
 }

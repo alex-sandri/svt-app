@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/ModelloDettagliSoluzione.dart';
 import 'package:svt_app/models/SoluzioneDiViaggio.dart';
@@ -30,12 +29,12 @@ class DettagliSoluzione extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.trip_origin),
-              title: Text(DateFormat.Hm().format(soluzione.oraPartenza)),
+              title: Text(soluzione.oraPartenza.format(context)),
               subtitle: Text(soluzione.localitaSalita),
             ),
             ListTile(
               leading: Icon(Icons.place),
-              title: Text(DateFormat.Hm().format(soluzione.oraArrivo)),
+              title: Text(soluzione.oraArrivo.format(context)),
               subtitle: Text(soluzione.localitaDiscesa),
             ),
             ListTile(

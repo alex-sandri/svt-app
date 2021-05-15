@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:svt_app/models/Api.dart';
 import 'package:svt_app/models/GestorePreferiti.dart';
@@ -147,8 +146,8 @@ class _SoluzioniState extends State<Soluzioni> {
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(DateFormat.Hm().format(soluzione.oraPartenza)),
-                          Text(DateFormat.Hm().format(soluzione.oraArrivo)),
+                          Text(soluzione.oraPartenza.format(context)),
+                          Text(soluzione.oraArrivo.format(context)),
                         ],
                       ),
                       subtitle: Row(

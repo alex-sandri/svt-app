@@ -8,8 +8,8 @@ class SoluzioneDiViaggio {
   final String localitaSalita;
   final String localitaDiscesa;
 
-  final DateTime oraPartenza;
-  final DateTime oraArrivo;
+  final TimeOfDay oraPartenza;
+  final TimeOfDay oraArrivo;
 
   final int metriBordo;
   final int metriPiedi;
@@ -42,16 +42,22 @@ class SoluzioneDiViaggio {
     indice: json["Numero"],
     localitaSalita: json["LocalitaSalita"],
     localitaDiscesa: json["LocalitaDiscesa"],
-    oraPartenza: DateTime.fromMillisecondsSinceEpoch(
-      int.parse(
-        (json["DataOraPartenza"] as String).replaceFirst("/Date(", "").replaceFirst(")/", ""),
-      ),
-    ).toUtc().add(Duration(hours: 1)),
-    oraArrivo: DateTime.fromMillisecondsSinceEpoch(
-      int.parse(
-        (json["DataOraArrivo"] as String).replaceFirst("/Date(", "").replaceFirst(")/", ""),
-      ),
-    ).toUtc().add(Duration(hours: 1)),
+    oraPartenza: TimeOfDay.fromDateTime(
+      DateTime.fromMillisecondsSinceEpoch(
+        int
+          .parse((json["DataOraPartenza"] as String).replaceFirst("/Date(", "").replaceFirst(")/", "")),
+      )
+        .toUtc()
+        .add(Duration(hours: 2)),
+    ),
+    oraArrivo: TimeOfDay.fromDateTime(
+      DateTime.fromMillisecondsSinceEpoch(
+        int
+          .parse((json["DataOraArrivo"] as String).replaceFirst("/Date(", "").replaceFirst(")/", "")),
+      )
+        .toUtc()
+        .add(Duration(hours: 2)),
+    ),
     metriBordo: json["MetriBordo"],
     metriPiedi: json["MetriPiedi"],
     metriTotali: json["MetriTotali"],
